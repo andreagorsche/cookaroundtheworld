@@ -1,0 +1,31 @@
+.NavMenu {
+    background-color: #AF9FC9;
+    font-size: 22px;
+}
+  
+a {
+    color: #ffffff;
+    transition: color ease-in-out 0.3s;
+  }
+  
+  a:hover {
+    text-decoration: solid;
+  }
+  
+  a:hover i {
+    color: rgb(68, 25, 68);
+    transition: color ease-in-out 0.3s;
+  }
+  
+  i {
+    color: #ffffff;
+    font-size: 1.6rem;
+    padding: 12px;
+    vertical-align: middle;
+  }
+  
+  i:hover {
+    cursor: pointer;
+    transition: color ease-in-out 0.3s;
+    color: rgb(68, 25, 68);
+  }

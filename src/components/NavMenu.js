@@ -1,9 +1,10 @@
 import React from "react";
 import {Navbar, Container, Nav} from "react-bootstrap";
 import cookbook from "../assets/cookbook.png";
+import styles from "../styles/NavMenu.module.css"
 
 const NavMenu = () => {
-  return <Navbar collapseOnSelect expand="md" fixed="top" bg="dark" variant="dark"> <Container>
+  return <Navbar className={styles.NavMenu} collapseOnSelect expand="md" fixed="top"> <Container>
   <Navbar.Brand href="#home"><img src={cookbook} alt="logo" height="50"/></Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
