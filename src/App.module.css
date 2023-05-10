@@ -3,3 +3,35 @@
     background-color: #EDE3FF;
     min-height: 100vh;
 }
+
+.Main {
+    padding-top: 150px;
+}
+
+a {
+    color: #ffffff;
+    transition: color ease-in-out 0.3s;
+  }
+  
+  a:hover {
+    text-decoration: none;
+  }
+  
+  a:hover i {
+    color: rgb(68, 25, 68);
+    transition: color ease-in-out 0.3s;
+  }
+  
+
+  i {
+    color: #ffffff;
+    font-size: 1.6rem;
+    padding: 12px;
+    vertical-align: middle;
+  }
+  
+  i:hover {
+    cursor: pointer;
+    transition: color ease-in-out 0.3s;
+    color: rgb(68, 25, 68);
+  }
