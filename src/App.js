@@ -2,6 +2,9 @@ import styles from "./App.module.css";
 import NavMenu from "./components/NavMenu";
 import Container from "react-bootstrap/Container";
 import {Route, Switch} from 'react-router-dom'
+import "./api/axiosDefaults";
+import RegisterForm from "./assets/pages/auth/RegisterForm";
+
 
 function App() {
   return (
@@ -11,7 +14,7 @@ function App() {
         <Switch>
           <Route exact path ="/" render = {() => <h1>Recipes</h1>}/>
           <Route exact path ="/login" render = {() => <h1>Login</h1>}/>
-          <Route exact path ="/register" render = {() => <h1>Register</h1>}/>
+          <Route exact path ="/register" render = {() => <RegisterForm/>}/>
           <Route render = {()=><p>Page not found!</p>}/>
         </Switch>
       </Container>

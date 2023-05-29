@@ -1,3 +1,4 @@
+
 .App{
     font-family: "Dancing Script", sans-serif;
     background-color: #EDE3FF;
@@ -6,6 +7,13 @@
 
 .Main {
     padding-top: 150px;
+}
+
+.Content {
+  background-color: #AF9FC9;
+  padding: 10px;
+  border-radius: 2px;
+  border: 1px solid #dadadf;
 }
 
 a {
@@ -34,4 +42,10 @@ a {
     cursor: pointer;
     transition: color ease-in-out 0.3s;
     color: rgb(68, 25, 68);
+  }
+
+  .CommunityImage {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
   }
