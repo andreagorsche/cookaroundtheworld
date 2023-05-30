@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import chef_group from "../../../assets/chef_group.png"; 
 import styles from "../../../styles/LoginRegister.module.css";
 import btnStyles from "../../../styles/button.module.css";
 import appStyles from "../../../App.module.css";
 
 import { Form, Button, Col, Row, Container } from "react-bootstrap";
+import axios from "axios";
 
 const RegisterForm = () => {
 		const [registerData, setRegisterData] = useState({
@@ -14,21 +15,35 @@ const RegisterForm = () => {
 			define_password: "",
 			confirm_password2: "",
 		});
-const { username, email, define_password, confirm_password } = registerData;
 
-const handleChange = (event) => {
-		setRegisterData({
-			...registerData,
-			[event.target.name]: event.target.value,
-		});
-	};
+	const { username, email, define_password, confirm_password } = registerData;
+
+	const history = useHistory();
+
+	const handleChange = (event) => {
+			setRegisterData({
+				...registerData,
+				[event.target.name]: event.target.value,
+			});
+		};
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		try {
+		  await axios.post("/dj-rest-auth/registration/", registerData);
+		  history.push("/login");
+		} catch (err) {
+		  setErrors(err.response?.data);
+		}
+	  };
+
 	return (
 		<Row className={styles.Row}>
 			<Col className="my-auto py-2 p-md-2" md={6}>
 				<Container className={`${appStyles.Content} p-4 `}>
 					<h1 className={styles.Header}>Join our cooking community!</h1>
 
-					<Form>
+					<Form onSubmit={handleSubmit}>
 					<img src={chef_group} className={`${appStyles.CommunityImage}`} alt="community" height="100"/>
 					<Form.Group controlId="username">
 						<Form.Label className="d-none">Username</Form.Label>
