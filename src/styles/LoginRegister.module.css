@@ -1,8 +1,4 @@
-.Row {
-    height: calc(100vh - 80px);
-  }
-
-  .Input {
+.Input {
   background: #ffffff;
   border: 1px solid #f0f1f9;
   box-sizing: border-box;
@@ -20,7 +16,7 @@
     text-align: center;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #ffffff; 
   }
   
   .Link {
@@ -35,7 +31,7 @@
   }
   
   .Container {
-    padding: 30px 10px;
+    padding: 20px 10px;
   }
   
   .SignInCol {

@@ -19,15 +19,18 @@
 a {
     color: #ffffff;
     transition: color ease-in-out 0.3s;
+    text-decoration: none;
   }
   
   a:hover {
     text-decoration: none;
+    color: rgb(68, 25, 68);
   }
   
   a:hover i {
     color: rgb(68, 25, 68);
     transition: color ease-in-out 0.3s;
+    text-decoration: none;
   }
   
 
@@ -45,7 +48,6 @@ a {
   }
 
   .CommunityImage {
-    object-fit: cover;
     height: 100%;
     width: 100%;
   }
