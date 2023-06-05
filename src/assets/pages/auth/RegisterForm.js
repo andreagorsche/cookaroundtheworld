@@ -13,11 +13,11 @@ const RegisterForm = () => {
 		const [registerData, setRegisterData] = useState({
 			username: "",
 			email: "",
-			define_password: "",
-			confirm_password: "",
+			password1: "",
+			password2: "",
 		});
 
-	const {username, email, define_password, confirm_password } = registerData;
+	const {username, email, password1, password2 } = registerData;
 
 	const [errors, setErrors] = useState({});
 
@@ -82,34 +82,34 @@ const RegisterForm = () => {
               				</Alert>
             			))}
 
-						<Form.Group controlId="define_password">
+						<Form.Group controlId="password1">
 							<Form.Label className="d-none">Password</Form.Label>
 							<Form.Control 
 								className = {styles.Input}
 								type="password" 
 								placeholder="Enter password" 
-								name="define_password"
-								value={define_password} 
+								name="password1"
+								value={password1} 
 								onChange={handleChange}
 							/>
 						</Form.Group>
-						{errors.define_password?.map((message, idx) => (
+						{errors.password1?.map((message, idx) => (
               				<Alert variant="warning" key={idx}>
                 				{message}
               				</Alert>
             			))}
-						<Form.Group controlId="confirm_password">
+						<Form.Group controlId="password2">
 							<Form.Label className="d-none">Password</Form.Label>
 							<Form.Control 
 								className = {styles.Input}
 								type="password" 
 								placeholder="Confirm password" 
-								name="confirm_password"
-								value={confirm_password} 
+								name="password2"
+								value={password2} 
 								onChange={handleChange}
 						/>
 						</Form.Group>
-						{errors.confirm_password?.map((message, idx) => (
+						{errors.password2?.map((message, idx) => (
               				<Alert variant="warning" key={idx}>
                 				{message}
               				</Alert>
@@ -118,6 +118,11 @@ const RegisterForm = () => {
 						type="submit">
 						Register
 						</Button>
+						{errors.non_field_errors?.map((message, idx) => (
+              				<Alert key={idx} variant="warning" className="mt-3">
+                				{message}
+              				</Alert>
+            			))}
 					</Form>
 
 				</Container>
