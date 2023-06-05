@@ -22,19 +22,19 @@ const NavMenu = () => {
               activeClassName = {styles.Active} 
               to = "/"
             >
-              <i className="fa-solid fa-utensils"></i>Recipes
+              <i className="fa-solid fa-utensils">Recipes</i>
           </NavLink>
           <NavLink 
             className = {styles.NavLink} 
             activeClassName = {styles.Active} 
             to = "/login">
-            <i className="fa-regular fa-user"></i>Login
+            <i className="fa-regular fa-user">Login</i>
           </NavLink>
           <NavLink 
             className = {styles.NavLink} 
             activeClassName = {styles.Active} 
             to = "/register">
-            <i className="fa-solid fa-user-plus"></i>Register
+            <i className="fa-solid fa-user-plus">Register</i>
           </NavLink>
         </Nav>
       </Navbar.Collapse>
