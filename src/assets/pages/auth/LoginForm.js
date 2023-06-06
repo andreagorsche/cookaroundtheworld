@@ -18,6 +18,8 @@ function LoginForm() {
 
     const {username, password} = loginData;
 
+    const [errors, setErrors] = useState({});
+
     const history = useHistory();
     
     const handleChange = (event) => {
@@ -33,6 +35,7 @@ function LoginForm() {
 		  await axios.post("/dj-rest-auth/login/", loginData);
 		  history.push("/");
 		} catch (err) {
+            setErrors(err.response?.data);
 		}
 	  };
 
@@ -55,6 +58,11 @@ function LoginForm() {
 					onChange={handleChange}
                 />
             </Form.Group>
+                {errors.username?.map((message, idx) => (
+              		<Alert variant="warning" key={idx}>
+                		{message}
+              		</Alert>
+            	))}
                 
             <Form.Group controlId="Password">
                 <Form.Label>Password</Form.Label>
@@ -67,13 +75,22 @@ function LoginForm() {
 					onChange={handleChange}
                 />
             </Form.Group>
+                {errors.password?.map((message, idx) => (
+              		<Alert variant="warning" key={idx}>
+                		{message}
+              		</Alert>
+            	))}
 
             <Button 
                 className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
                 type="submit">
                 Login
             </Button>
-
+            {errors.non_field_errors?.map((message, idx) => (
+              	<Alert key={idx} variant="warning" className="mt-3">
+                	{message}
+              	</Alert>
+            ))}
             </Form>
         </Container>
         <Container className={`mt-3 ${appStyles.Content}`}>
