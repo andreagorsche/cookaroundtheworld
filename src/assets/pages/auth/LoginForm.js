@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
@@ -15,7 +15,20 @@ import styles from "../../../styles/LoginRegister.module.css";
 import btnStyles from "../../../styles/button.module.css";
 import appStyles from "../../../App.module.css";
 
-function SignInForm() {
+function LoginForm() {
+    const [loginData, setLoginData] = useState({
+        username: "",
+        password: "",
+    });
+
+    const {username, password} = loginData;
+    
+    const handleChange = (event) => {
+        setLoginData({
+            ...loginData,
+            [event.target.name]: event.target.value,
+        });
+    };
 
   return (
     <Row className="justify-content-md-center align-items-center">
@@ -25,13 +38,15 @@ function SignInForm() {
           <Form>
             <img src={chef_group} className={`${appStyles.CommunityImage}`} alt="community" height="100"/>
             <h1>Login</h1>
-            <Form.Group controlId="Email">
-                <Form.Label>Email address</Form.Label>
+            <Form.Group controlId="Username">
+                <Form.Label>Username</Form.Label>
                 <Form.Control 
-                    type="email" 
-                    name="email" 
-                    placeholder="Enter email"
+                    type="text" 
+                    name="username" 
+                    placeholder="Enter username"
                     className = {styles.Input}
+                    value={username}
+					onChange={handleChange}
                 />
             </Form.Group>
                 
@@ -42,6 +57,8 @@ function SignInForm() {
                     name="password" 
                     placeholder="Enter password"
                     className = {styles.Input}
+                    value={password}
+					onChange={handleChange}
                 />
             </Form.Group>
 
@@ -63,4 +80,4 @@ function SignInForm() {
   );
 }
 
-export default SignInForm;
+export default LoginForm;
