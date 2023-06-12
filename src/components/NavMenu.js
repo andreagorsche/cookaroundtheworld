@@ -4,6 +4,7 @@ import cookbook from "../assets/cookbook.png";
 import styles from "../styles/NavMenu.module.css"
 import {NavLink} from "react-router-dom";
 import { useCurrentUser } from "../contexts/CurrentUserContext";
+import Avatar from "./Avatar";
 
 const NavMenu = () => {
   const currentUser = useCurrentUser();
@@ -40,7 +41,7 @@ const NavMenu = () => {
       className = {styles.NavLink}  
       to={`/profiles/${currentUser?.profile_id}`}
       >
-      <img src={currentUser?.profile_image}/>
+       <Avatar src={currentUser?.profile_image} text="Profile" height={35} />
     </NavLink>
   )
   </>;
