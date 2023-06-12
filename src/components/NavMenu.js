@@ -8,6 +8,14 @@ import { useCurrentUser } from "../contexts/CurrentUserContext";
 const NavMenu = () => {
   const currentUser = useCurrentUser();
 
+  const createRecipeIcon = (
+    <NavLink 
+    className = {styles.NavLink} 
+    activeClassName = {styles.Active} 
+    to = "/recipes/create">
+    <i className="fa-solid fa-utensils">Create Recipe</i>
+  </NavLink> 
+  )
   const loggedInIcons = <>{currentUser?.username}</>;
   const loggedOutIcons = (
     <>
@@ -34,6 +42,7 @@ const NavMenu = () => {
             <img src={cookbook} alt="logo" height="50"/>
           </Navbar.Brand>
         </NavLink>
+        {currentUser && createRecipeIcon}
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto text-right">
