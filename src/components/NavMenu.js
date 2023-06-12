@@ -13,10 +13,37 @@ const NavMenu = () => {
     className = {styles.NavLink} 
     activeClassName = {styles.Active} 
     to = "/recipes/create">
-    <i className="fa-solid fa-utensils">Create Recipe</i>
+    <i class="fa-solid fa-feather">Create Recipe</i>
   </NavLink> 
   )
-  const loggedInIcons = <>{currentUser?.username}</>;
+  const loggedInIcons = <>
+  (
+    <NavLink 
+      className = {styles.NavLink} 
+      activeClassName = {styles.Active} 
+      to = "/feeding">
+      <i class="fa-solid fa-scroll">Feed-ing</i>
+    </NavLink>
+    <NavLink 
+      className = {styles.NavLink} 
+      activeClassName = {styles.Active} 
+      to = "/favorites">
+      <i class="fa-solid fa-thumbs-up">Favorites</i>
+    </NavLink>
+    <NavLink 
+      className = {styles.NavLink}  
+      to = "/" 
+      >
+      <i className="fa-solid fa-user">Log Out</i>
+    </NavLink>
+    <NavLink 
+      className = {styles.NavLink}  
+      to={`/profiles/${currentUser?.profile_id}`}
+      >
+      <img src={currentUser?.profile_image}/>
+    </NavLink>
+  )
+  </>;
   const loggedOutIcons = (
     <>
       <NavLink 
