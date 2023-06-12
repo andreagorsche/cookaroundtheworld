@@ -7,10 +7,13 @@ import chef_group from "../../../assets/chef_group.png";
 import styles from "../../../styles/LoginRegister.module.css";
 import btnStyles from "../../../styles/button.module.css";
 import appStyles from "../../../App.module.css";
+import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 
 import axios from "axios";
 
 function LoginForm() {
+    const setCurrentUser = useSetCurrentUser();
+
     const [loginData, setLoginData] = useState({
         username: "",
         password: "",
@@ -33,6 +36,7 @@ function LoginForm() {
 		event.preventDefault();
 		try {
 		  await axios.post("/dj-rest-auth/login/", loginData);
+      setCurrentUser(data.user);
 		  history.push("/");
 		} catch (err) {
             setErrors(err.response?.data);
