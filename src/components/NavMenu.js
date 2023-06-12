@@ -3,11 +3,21 @@ import {Navbar, Container, Nav} from "react-bootstrap";
 import cookbook from "../assets/cookbook.png";
 import styles from "../styles/NavMenu.module.css"
 import {NavLink} from "react-router-dom";
-import { useCurrentUser } from "../contexts/CurrentUserContext";
+import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContext";
 import Avatar from "./Avatar";
 
 const NavMenu = () => {
   const currentUser = useCurrentUser();
+  const setCurrentUser = useSetCurrentUser();
+
+  const handleSignOut = async () => {
+    try {
+      await axios.post("dj-rest-auth/logout/");
+      setCurrentUser(null);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const createRecipeIcon = (
     <NavLink 
@@ -18,7 +28,7 @@ const NavMenu = () => {
   </NavLink> 
   )
   const loggedInIcons = <>
-  (
+  
     <NavLink 
       className = {styles.NavLink} 
       activeClassName = {styles.Active} 
@@ -34,6 +44,7 @@ const NavMenu = () => {
     <NavLink 
       className = {styles.NavLink}  
       to = "/" 
+      onClick={handleSignOut}
       >
       <i className="fa-solid fa-user">Log Out</i>
     </NavLink>
@@ -43,7 +54,7 @@ const NavMenu = () => {
       >
        <Avatar src={currentUser?.profile_image} text="Profile" height={35} />
     </NavLink>
-  )
+  
   </>;
   const loggedOutIcons = (
     <>
