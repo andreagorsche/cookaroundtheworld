@@ -5,10 +5,14 @@ import styles from "../styles/NavMenu.module.css"
 import {NavLink} from "react-router-dom";
 import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContext";
 import Avatar from "./Avatar";
+import axios from "axios";
+import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 
 const NavMenu = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
+
+  const {expanded, setExpended, ref} = useClickOutsideToggle();
 
   const handleSignOut = async () => {
     try {
@@ -26,8 +30,9 @@ const NavMenu = () => {
     to = "/recipes/create">
     <i class="fa-solid fa-feather">Create Recipe</i>
   </NavLink> 
-  )
-  const loggedInIcons = <>
+  );
+  
+  const loggedInIcons = (<>
   
     <NavLink 
       className = {styles.NavLink} 
@@ -52,10 +57,11 @@ const NavMenu = () => {
       className = {styles.NavLink}  
       to={`/profiles/${currentUser?.profile_id}`}
       >
-       <Avatar src={currentUser?.profile_image} text="Profile" height={35} />
+      <Avatar src={currentUser?.profile_image} text="Profile" height={35} />
     </NavLink>
   
-  </>;
+  </>
+  );
   const loggedOutIcons = (
     <>
       <NavLink 
@@ -82,7 +88,11 @@ const NavMenu = () => {
           </Navbar.Brand>
         </NavLink>
         {currentUser && createRecipeIcon}
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Toggle 
+          ref = {ref}
+          onClick={} => setExpanded(!expanded)}
+          aria-controls="responsive-navbar-nav" 
+        />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto text-right">
             <NavLink 

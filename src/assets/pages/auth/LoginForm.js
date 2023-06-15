@@ -59,7 +59,7 @@ function LoginForm() {
                     placeholder="Enter username"
                     className = {styles.Input}
                     value={username}
-					onChange={handleChange}
+					          onChange={handleChange}
                 />
             </Form.Group>
                 {errors.username?.map((message, idx) => (
@@ -76,7 +76,7 @@ function LoginForm() {
                     placeholder="Enter password"
                     className = {styles.Input}
                     value={password}
-					onChange={handleChange}
+					          onChange={handleChange}
                 />
             </Form.Group>
                 {errors.password?.map((message, idx) => (
