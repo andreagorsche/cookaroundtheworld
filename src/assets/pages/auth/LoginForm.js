@@ -5,7 +5,7 @@ import { Form, Button, Col, Row, Container, Alert } from "react-bootstrap";
 import chef_group from "../../../assets/chef_group.png"; 
 
 import styles from "../../../styles/LoginRegister.module.css";
-import btnStyles from "../../../styles/button.module.css";
+import btnStyles from "../../../styles/Button.module.css";
 import appStyles from "../../../App.module.css";
 import { useSetCurrentUser } from "../../../contexts/CurrentUserContext";
 
