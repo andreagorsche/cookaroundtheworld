@@ -12,7 +12,7 @@ const NavMenu = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
 
-  const {expanded, setExpended, ref} = useClickOutsideToggle();
+  const {expanded, setExpanded, ref} = useClickOutsideToggle();
 
   const handleSignOut = async () => {
     try {
@@ -90,7 +90,7 @@ const NavMenu = () => {
         {currentUser && createRecipeIcon}
         <Navbar.Toggle 
           ref = {ref}
-          onClick={} => setExpanded(!expanded)}
+          onClick={() => setExpanded(!expanded)}
           aria-controls="responsive-navbar-nav" 
         />
         <Navbar.Collapse id="responsive-navbar-nav">
