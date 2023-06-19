@@ -19,6 +19,8 @@ import { Image } from "react-bootstrap";
 import { useHistory } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 
+import Alert from "react-bootstrap/Alert";
+
 function CreateRecipeForm() {
 
   const [errors, setErrors] = useState({});
@@ -86,6 +88,11 @@ function CreateRecipeForm() {
           onChange={handleChange}
         />
       </Form.Group>
+      {errors?.title?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
       <Form.Group>
         <Form.Label>Cuisine</Form.Label>
         <Form.Control
@@ -95,6 +102,12 @@ function CreateRecipeForm() {
           onChange={handleChange}
         />
       </Form.Group>
+      {errors?.cuisine?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
+
       <Form.Group>
         <Form.Label>Time Effort</Form.Label>
         <Form.Control
@@ -104,6 +117,11 @@ function CreateRecipeForm() {
           onChange={handleChange}
         />
       </Form.Group>
+      {errors?.timeeffort?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
       <Form.Group>
         <Form.Label>Ingredients</Form.Label>
         <Form.Control
@@ -113,6 +131,11 @@ function CreateRecipeForm() {
           onChange={handleChange}
         />
       </Form.Group>
+      {errors?.ingredients?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
       <Form.Group>
         <Form.Label>Description</Form.Label>
         <Form.Control
@@ -123,10 +146,15 @@ function CreateRecipeForm() {
           onChange={handleChange}
         />
       </Form.Group>
+      {errors?.description?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
     
       <Button
         className={`${btnStyles.Button} ${btnStyles.Blue}`}
-        onClick={() => {}}
+        onClick={() => history.goBack()}
       >
         cancel
       </Button>
@@ -179,6 +207,11 @@ function CreateRecipeForm() {
               />
 
             </Form.Group>
+            {errors?.image?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
             <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>
