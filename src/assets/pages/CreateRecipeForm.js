@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -16,6 +16,9 @@ import Asset from "../../components/Asset";
 
 import { Image } from "react-bootstrap";
 
+import { useHistory } from "react-router";
+import { axiosReq } from "../../api/axiosDefaults";
+
 function CreateRecipeForm() {
 
   const [errors, setErrors] = useState({});
@@ -29,6 +32,9 @@ function CreateRecipeForm() {
     image: "",
     });
   const { title, cuisine, timeeffort, ingredients, description, image } = postRecipe;
+
+  const imageInput = useRef(null);
+  const history = useHistory();
   
   const handleChange = (event) => {
     setRecipeData({
@@ -47,6 +53,28 @@ function CreateRecipeForm() {
     }
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("cuisine", cuisine);
+    formData.append("timeeffort", timeeffort);
+    formData.append("ingredients", ingredients);
+    formData.append("description", description);
+    formData.append("image", imageInput.current.files[0]);
+
+    try {
+      const { data } = await axiosReq.post("/posts/", formData);
+      history.push(`/posts/${data.id}`);
+    } catch (err) {
+      console.log(err);
+      if (err.response?.status !== 401) {
+        setErrors(err.response?.data);
+      }
+    }
+  };
+
   const textFields = (
     <div className="text-center">
       <Form.Group>
@@ -55,7 +83,7 @@ function CreateRecipeForm() {
           type="text"
           name="title"
           value={title}
-          onchange={handleChange}
+          onChange={handleChange}
         />
       </Form.Group>
       <Form.Group>
@@ -64,7 +92,7 @@ function CreateRecipeForm() {
           type="text"
           name="cuisine"
           value={cuisine}
-          onchange={handleChange}
+          onChange={handleChange}
         />
       </Form.Group>
       <Form.Group>
@@ -73,7 +101,7 @@ function CreateRecipeForm() {
           type="text"
           name="timeeffort"
           value={timeeffort}
-          onchange={handleChange}
+          onChange={handleChange}
         />
       </Form.Group>
       <Form.Group>
@@ -82,7 +110,7 @@ function CreateRecipeForm() {
           type="text"
           name="ingredients"
           value={ingredients}
-          onchange={handleChange}
+          onChange={handleChange}
         />
       </Form.Group>
       <Form.Group>
@@ -92,7 +120,7 @@ function CreateRecipeForm() {
           rows={6}
           name="description"
           value={description}
-          onchange={handleChange}
+          onChange={handleChange}
         />
       </Form.Group>
     
@@ -109,7 +137,7 @@ function CreateRecipeForm() {
   );
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Row>
         <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
           <Container
@@ -146,6 +174,8 @@ function CreateRecipeForm() {
                 id="image-upload"
                 accept="image/*"
                 onChange={handleChangeImage}
+                ref={imageInput}
+
               />
 
             </Form.Group>
