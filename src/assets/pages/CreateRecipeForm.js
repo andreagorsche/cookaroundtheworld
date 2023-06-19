@@ -17,7 +17,23 @@ import Asset from "../../components/Asset";
 function CreateRecipeForm() {
 
   const [errors, setErrors] = useState({});
-
+  
+  const [postData, setPostData] = useState({
+    title: "",
+    cuisine: "",
+    timeeffort: "",
+    ingredients: "",
+    description: "",
+    image: "",
+    });
+  const { title, cuisine, timeeffort, ingredients, description, image } = postData;
+  
+  const handleChange = (event) => {
+    setPostData({
+      ...postData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const textFields = (
     <div className="text-center">
@@ -26,6 +42,8 @@ function CreateRecipeForm() {
         <Form.Control
           type="text"
           name="title"
+          value={title}
+          onchange={handleChange}
         />
       </Form.Group>
       <Form.Group>
@@ -33,6 +51,8 @@ function CreateRecipeForm() {
         <Form.Control
           type="text"
           name="cuisine"
+          value={cuisine}
+          onchange={handleChange}
         />
       </Form.Group>
       <Form.Group>
@@ -40,6 +60,8 @@ function CreateRecipeForm() {
         <Form.Control
           type="text"
           name="timeeffort"
+          value={timeeffort}
+          onchange={handleChange}
         />
       </Form.Group>
       <Form.Group>
@@ -47,6 +69,8 @@ function CreateRecipeForm() {
         <Form.Control
           type="text"
           name="ingredients"
+          value={ingredients}
+          onchange={handleChange}
         />
       </Form.Group>
       <Form.Group>
@@ -55,15 +79,10 @@ function CreateRecipeForm() {
           as="textarea"
           rows={6}
           name="description"
+          value={description}
+          onchange={handleChange}
         />
       </Form.Group>
-
-    
-      title = models.CharField(max_length=50, default='')
-    cuisine = models.CharField(max_length=13, choices=CUISINE_CHOICES, default='american')
-    time_effort = models.CharField(max_length=20, default="")
-    ingredients = models.TextField(default="")
-    description = models.TextField(default="")
     
       <Button
         className={`${btnStyles.Button} ${btnStyles.Blue}`}
