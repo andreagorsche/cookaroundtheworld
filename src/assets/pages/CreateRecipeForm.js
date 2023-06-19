@@ -14,11 +14,13 @@ import btnStyles from "../../styles/Button.module.css";
 
 import Asset from "../../components/Asset";
 
+import { Image } from "react-bootstrap";
+
 function CreateRecipeForm() {
 
   const [errors, setErrors] = useState({});
   
-  const [postData, setPostData] = useState({
+  const [postRecipe, setRecipeData] = useState({
     title: "",
     cuisine: "",
     timeeffort: "",
@@ -26,13 +28,23 @@ function CreateRecipeForm() {
     description: "",
     image: "",
     });
-  const { title, cuisine, timeeffort, ingredients, description, image } = postData;
+  const { title, cuisine, timeeffort, ingredients, description, image } = postRecipe;
   
   const handleChange = (event) => {
-    setPostData({
-      ...postData,
+    setRecipeData({
+      ...postRecipe,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const handleChangeImage = (event) => {
+    if (event.target.files.length) {
+      URL.revokeObjectURL(image);
+      setRecipeData({
+        ...postRecipe,
+        image: URL.createObjectURL(event.target.files[0]),
+      });
+    }
   };
 
   const textFields = (
@@ -104,16 +116,37 @@ function CreateRecipeForm() {
             className={`${appStyles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
           >
             <Form.Group className="text-center">
-              
+              {image ? (
+                <>
+                  <figure>
+                    <Image className={appStyles.Image} src={image} rounded />
+                  </figure>
+                  <div>
+                    <Form.Label
+                      className={`${btnStyles.Button} ${btnStyles.Blue} btn`}
+                      htmlFor="image-upload"
+                    >
+                      Change the image
+                    </Form.Label>
+                  </div>
+                </>
+              ) : (
                 <Form.Label
                   className="d-flex justify-content-center"
                   htmlFor="image-upload"
                 >
-                   <Asset
+                  <Asset
                     src={upload}
-                    message="Click/Tap to upload your recipe image"
+                    message="Click or tap to upload an image"
                   />
                 </Form.Label>
+              )}
+                
+                <Form.File
+                id="image-upload"
+                accept="image/*"
+                onChange={handleChangeImage}
+              />
 
             </Form.Group>
             <div className="d-md-none">{textFields}</div>
