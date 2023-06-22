@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import chef_group from "../../../assets/chef_group.png"; 
+import chef_group from "../../assets/chef_group.png"; 
 
-import styles from "../../../styles/LoginRegister.module.css";
-import btnStyles from "../../../styles/Button.module.css";
-import appStyles from "../../../App.module.css";
+import styles from "../../styles/LoginRegister.module.css";
+import btnStyles from "../../styles/Button.module.css";
+import appStyles from "../../App.module.css";
 
 import { Form, Button, Col, Row, Container, Alert } from "react-bootstrap";
 import axios from "axios";
@@ -31,9 +31,11 @@ const RegisterForm = () => {
 		};
 
 	const handleSubmit = async (event) => {
+		console.log("Register data: ", registerData)
 		event.preventDefault();
 		try {
 		  await axios.post("/dj-rest-auth/registration/", registerData);
+		  
 		  history.push("/login");
 		} catch (err) {
 		  setErrors(err.response?.data);

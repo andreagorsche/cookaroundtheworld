@@ -12,12 +12,12 @@ import styles from "../../styles/CreateRecipeEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 
-import Asset from "../../../components/Asset";
+import Asset from "../../components/Asset.js";
 
 import { Image } from "react-bootstrap";
 
 import { useHistory } from "react-router";
-import { axiosReq } from "../../../api/axiosDefaults";
+import { axiosReq } from "../../api/axiosDefaults";
 
 import Alert from "react-bootstrap/Alert";
 
@@ -67,8 +67,8 @@ function CreateRecipeForm() {
     formData.append("image", imageInput.current.files[0]);
 
     try {
-      const { data } = await axiosReq.post("/posts/", formData);
-      history.push(`/posts/${data.id}`);
+      const { data } = await axiosReq.post("/recipes/", formData);
+      history.push(`/recipes/${data.id}`);
     } catch (err) {
       console.log(err);
       if (err.response?.status !== 401) {

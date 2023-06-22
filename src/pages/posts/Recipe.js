@@ -6,3 +6,4 @@ export const Recipe = (props) => {
     <div>Recipe Placeholder Text</div>
   )
 }
+export default Recipe;

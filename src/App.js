@@ -3,10 +3,10 @@ import NavMenu from "./components/NavMenu";
 import Container from "react-bootstrap/Container";
 import {Route, Switch} from 'react-router-dom'
 import "./api/axiosDefaults";
-import RegisterForm from "./assets/pages/auth/RegisterForm";
-import LoginForm from "./assets/pages/auth/LoginForm";
-import CreateRecipeForm from "./assets/pages/CreateRecipeForm";
-import RecipePage from "./assets/pages/RecipePage";
+import RegisterForm from "./pages/auth/RegisterForm";
+import LoginForm from "./pages/auth/LoginForm";
+import CreateRecipeForm from "./pages/posts/CreateRecipeForm";
+import RecipePage from "./pages/posts/RecipePage";
 
 
 function App() {

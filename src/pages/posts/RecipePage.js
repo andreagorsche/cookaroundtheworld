@@ -7,19 +7,20 @@ import Container from "react-bootstrap/Container";
 import appStyles from "../../App.module.css";
 import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
+import Recipe from "./Recipe";
 
-function PostPage() {
+function RecipePage() {
   const { id } = useParams();
-  const [post, setPost] = useState({ results: [] });
+  const [recipe, setRecipe] = useState({ results: [] });
 
   useEffect(() => {
     const handleMount = async () => {
       try {
-        const [{ data: post }] = await Promise.all([
-          axiosReq.get(`/posts/${id}`),
+        const [{ data: recipe }] = await Promise.all([
+          axiosReq.get(`/recipes/${id}`),
         ]);
-        setPost({ results: [post] });
-        console.log(post);
+        setRecipe({ results: [recipe] });
+        console.log(recipe);
       } catch (err) {
         console.log(err);
       }
@@ -32,7 +33,7 @@ function PostPage() {
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <p>Popular profiles for mobile</p>
-        <Recipe {...post.results[0]} setRecipes={setRecipe} RecipePage />        
+        <Recipe {...recipe.results[0]} setRecipes={setRecipe} RecipePage />        
         <Container className={appStyles.Content}>Comments</Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
@@ -42,4 +43,4 @@ function PostPage() {
   );
 }
 
-export default PostPage;
+export default RecipePage;

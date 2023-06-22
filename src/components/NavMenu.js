@@ -12,6 +12,8 @@ const NavMenu = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
 
+  console.log(currentUser)
+
   const {expanded, setExpanded, ref} = useClickOutsideToggle();
 
   const handleSignOut = async () => {
@@ -59,6 +61,8 @@ const NavMenu = () => {
       >
       <Avatar src={currentUser?.profile_image} text="Profile" height={35} />
     </NavLink>
+    {currentUser && currentUser.username}
+
   
   </>
   );
