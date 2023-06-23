@@ -95,12 +95,21 @@ function CreateRecipeForm() {
       ))}
       <Form.Group>
         <Form.Label>Cuisine</Form.Label>
-        <Form.Control
-          type="text"
-          name="cuisine"
-          value={cuisine}
-          onChange={handleChange}
-        />
+        <Form.Control as="select" name="cuisine" onChange={handleChange}>
+          <option value="american">American</option>
+          <option value="austrian">Austrian</option>
+          <option value="caribean">Caribean</option>
+          <option value="chinese">Chinese</option>
+          <option value="french">French</option>
+          <option value="german">German</option>
+          <option value="greek">Greek</option>
+          <option value="indian">Indian</option>
+          <option value="italian">Italian</option>
+          <option value="mediteranian">Mediteranian</option>
+          <option value="mexican">Mexican</option>
+          <option value="slovak">Slovak</option>
+          <option value="spanish">Spanish</option>
+        </Form.Control>
       </Form.Group>
       {errors?.cuisine?.map((message, idx) => (
         <Alert variant="warning" key={idx}>
