@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import appStyles from "../../App.module.css";
 import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
-import Recipe from "./Recipe";
+import Recipe from "./Recipe.js";
 
 function RecipePage() {
   const { id } = useParams();

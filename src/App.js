@@ -7,7 +7,7 @@ import RegisterForm from "./pages/auth/RegisterForm";
 import LoginForm from "./pages/auth/LoginForm";
 import CreateRecipeForm from "./pages/posts/CreateRecipeForm";
 import RecipePage from "./pages/posts/RecipePage";
-
+import ProfilePage from "./pages/profiles/ProfilePage";
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
           <Route exact path ="/register" render = {() => <RegisterForm/>}/>
           <Route exact path="/recipes/create" render={() => <CreateRecipeForm />} />
           <Route exact path="/posts/:id" render={() => <RecipePage />} />
+          <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
           <Route render = {()=><p>Page not found!</p>}/>
         </Switch>
       </Container>
