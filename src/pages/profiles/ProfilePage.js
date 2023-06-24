@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from "react";
-
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-
 import Asset from "../../components/Asset";
-
 import styles from "../../styles/ProfilePage.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
-
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
-import {
-  useProfileData, useSetProfileData,
-} from "../../contexts/ProfileDataContext";
+import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
 import { Image } from "react-bootstrap";
-
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -30,12 +23,10 @@ function ProfilePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [{ data: pageProfile }] = await Promise.all([
-          axiosReq.get(`/profiles/${id}/`),
-        ]);
+        const { data } = await axiosReq.get(`/profiles/${id}/`);
         setProfileData((prevState) => ({
           ...prevState,
-          pageProfile: { results: [pageProfile] },
+          pageProfile: { results: [data] },
         }));
         setHasLoaded(true);
       } catch (err) {
@@ -45,12 +36,11 @@ function ProfilePage() {
     fetchData();
   }, [id, setProfileData]);
 
-
   const mainProfile = (
     <>
       <Row noGutters className="px-3 text-center">
         <Col lg={3} className="text-lg-left">
-        <Image
+          <Image
             className={styles.ProfileImage}
             roundedCircle
             src={profile?.image}
@@ -61,7 +51,7 @@ function ProfilePage() {
           <p>Profile stats</p>
         </Col>
         <Col lg={3} className="text-lg-right">
-        <p>Follow button</p>
+          <p>Follow button</p>
         </Col>
         <Col className="p-3">Profile content</Col>
       </Row>
@@ -90,7 +80,6 @@ function ProfilePage() {
           )}
         </Container>
       </Col>
-     
     </Row>
   );
 }
