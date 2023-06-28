@@ -11,15 +11,15 @@
     margin: 0 0;
   }
   
-  .Heart {
+  .ThumbUp {
     color: #f85032;
   }
   
-  .Heart:hover {
+  .Thumb:hover {
     color: #2142b2;
   }
   
-  .HeartOutline:hover {
+  .ThumbOutline:hover {
     color: #f85032;
   }
   

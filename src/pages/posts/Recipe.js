@@ -69,18 +69,18 @@ const Recipe = (props) => {
             </OverlayTrigger>
           ) : like_id ? (
             <span onClick={() => {}}>
-              <i className={`fa-solid fa-thumbs-up ${styles.Heart}`} />
+              <i className={`fa-solid fa-thumbs-up ${styles.ThumbUp}`} />
             </span>
           ) : currentUser ? (
             <span onClick={() => {}}>
-              <i className={`far fa-heart ${styles.HeartOutline}`} />
+              <i className={`fa-solid fa-thumbs-up ${styles.ThumbOutline}`} />
             </span>
           ) : (
             <OverlayTrigger
               placement="top"
               overlay={<Tooltip>Log in to like posts!</Tooltip>}
             >
-              <i className="far fa-heart" />
+              <i className="fa-solid fa-thumbs-up" />
             </OverlayTrigger>
           )}
           {likes_count}
