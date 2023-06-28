@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from "../../styles/Recipe.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import { Card, Media } from "react-bootstrap";
+import { Card, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 
@@ -59,7 +59,36 @@ const Recipe = (props) => {
       <Card.Body>
         Description:{description && <Card.Text>{description}</Card.Text>}
       </Card.Body>
-     
+      <div className={styles.PostBar}>
+          {is_owner ? (
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>An excellent chef like you doesn't have to like their own recipes!</Tooltip>}
+            >
+             <i className="fa-light fa-thumbs-up" />
+            </OverlayTrigger>
+          ) : like_id ? (
+            <span onClick={() => {}}>
+              <i className={`fa-solid fa-thumbs-up ${styles.Heart}`} />
+            </span>
+          ) : currentUser ? (
+            <span onClick={() => {}}>
+              <i className={`far fa-heart ${styles.HeartOutline}`} />
+            </span>
+          ) : (
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>Log in to like posts!</Tooltip>}
+            >
+              <i className="far fa-heart" />
+            </OverlayTrigger>
+          )}
+          {likes_count}
+          <Link to={`/recipes/${id}`}>
+            <i className="far fa-comments" />
+          </Link>
+          {comments_count}
+        </div>
     </Card>
   )
 }

@@ -30,7 +30,7 @@ const NavMenu = () => {
     className = {styles.NavLink} 
     activeClassName = {styles.Active} 
     to = "/recipes/create">
-    <i class="fa-solid fa-feather"> Create Recipe </i>
+    <i className="fa-solid fa-feather"> Create Recipe </i>
   </NavLink> 
   );
   
@@ -40,13 +40,13 @@ const NavMenu = () => {
       className = {styles.NavLink} 
       activeClassName = {styles.Active} 
       to = "/feeding">
-      <i class="fa-solid fa-scroll"> Feed-ing </i>
+      <i className="fa-solid fa-scroll"> Feed-ing </i>
     </NavLink>
     <NavLink 
       className = {styles.NavLink} 
       activeClassName = {styles.Active} 
       to = "/favorites">
-      <i class="fa-solid fa-thumbs-up"> Favorites </i>
+      <i className="fa-solid fa-thumbs-up"> Favorites </i>
     </NavLink>
     <NavLink 
       className = {styles.NavLink}  
