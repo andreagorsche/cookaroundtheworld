@@ -46,9 +46,17 @@ const Recipe = (props) => {
       </Link>
       <Card.Body>
         {title && <Card.Title className="text-center">{title}</Card.Title>}
-        Cuisine:{cuisine && <Card.Text>{cuisine}</Card.Text>}
+      </Card.Body>
+      <Card.Body>
+        Cuisine:{cuisine && <Card.Text>{cuisine}</Card.Text>} 
+      </Card.Body>
+      <Card.Body>
         Ingredients:{ingredients && <Card.Title className="text-center">{ingredients}</Card.Title>}
+      </Card.Body>
+      <Card.Body>     
         Time Effort:{time_effort && <Card.Title className="text-center">{time_effort}</Card.Title>}
+      </Card.Body>
+      <Card.Body>
         Description:{description && <Card.Text>{description}</Card.Text>}
       </Card.Body>
      
