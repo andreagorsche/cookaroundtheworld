@@ -1,10 +1,9 @@
 import React from "react";
-import {Navbar, Container, Nav} from "react-bootstrap";
+import {Container, Nav} from "react-bootstrap";
 import cookbook from "../assets/cookbook.png";
 import styles from "../styles/NavMenu.module.css"
 import {NavLink} from "react-router-dom";
 import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContext";
-import Avatar from "./Avatar";
 import axios from "axios";
 import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 
@@ -30,40 +29,38 @@ const NavMenu = () => {
     className = {styles.NavLink} 
     activeClassName = {styles.Active} 
     to = "/recipes/create">
-    <i class="fa-solid fa-feather">Create Recipe</i>
+    <i class="fa-solid fa-feather"> Create Recipe </i>
   </NavLink> 
   );
   
-  const loggedInIcons = (<>
-  
+  const loggedInIcons = (
+  <>
     <NavLink 
       className = {styles.NavLink} 
       activeClassName = {styles.Active} 
       to = "/feeding">
-      <i class="fa-solid fa-scroll">Feed-ing</i>
+      <i class="fa-solid fa-scroll"> Feed-ing </i>
     </NavLink>
     <NavLink 
       className = {styles.NavLink} 
       activeClassName = {styles.Active} 
       to = "/favorites">
-      <i class="fa-solid fa-thumbs-up">Favorites</i>
+      <i class="fa-solid fa-thumbs-up"> Favorites </i>
     </NavLink>
     <NavLink 
       className = {styles.NavLink}  
       to = "/" 
       onClick={handleSignOut}
       >
-      <i className="fa-solid fa-user">Log Out</i>
+      <i className="fa-solid fa-user"> Log Out </i>
     </NavLink>
     <NavLink 
       className = {styles.NavLink}  
       to={`/profiles/${currentUser?.profile_id}`}
       >
-      <Avatar src={currentUser?.profile_image} text="Profile" height={35} />
+     <i class="fa-solid fa-spoon">{currentUser && currentUser.username}</i>
     </NavLink>
-    {currentUser && currentUser.username}
-
-  
+    
   </>
   );
   const loggedOutIcons = (
@@ -72,32 +69,32 @@ const NavMenu = () => {
         className = {styles.NavLink} 
         activeClassName = {styles.Active} 
         to = "/login">
-        <i className="fa-regular fa-user">Login</i>
+        <i className="fa-regular fa-user"> Login </i>
       </NavLink>
       <NavLink 
         className = {styles.NavLink} 
         activeClassName = {styles.Active} 
         to = "/register">
-        <i className="fa-solid fa-user-plus">Register</i>
+        <i className="fa-solid fa-user-plus"> Register </i>
       </NavLink>
     </>
   );
 
   return (
-    <Navbar className={styles.NavMenu} collapseOnSelect expand="md" fixed="top"> 
+    <NavMenu className={styles.NavMenu} collapseOnSelect expand="md" fixed="top"> 
       <Container>
         <NavLink to = "/">
-          <Navbar.Brand>
+          <NavMenu.Brand>
             <img src={cookbook} alt="logo" height="50"/>
-          </Navbar.Brand>
+          </NavMenu.Brand>
         </NavLink>
         {currentUser && createRecipeIcon}
-        <Navbar.Toggle 
+        <NavMenu.Toggle 
           ref = {ref}
           onClick={() => setExpanded(!expanded)}
           aria-controls="responsive-navbar-nav" 
         />
-        <Navbar.Collapse id="responsive-navbar-nav">
+        <NavMenu.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto text-right">
             <NavLink 
               exact
@@ -105,15 +102,15 @@ const NavMenu = () => {
               activeClassName = {styles.Active} 
               to = "/"
             >
-              <i className="fa-solid fa-utensils">Recipes</i>
+              <i className="fa-solid fa-utensils"> Recipes </i>
           </NavLink>
           
           {currentUser ? loggedInIcons : loggedOutIcons}
 
         </Nav>
-      </Navbar.Collapse>
+      </NavMenu.Collapse>
     </Container>
-  </Navbar>
+  </NavMenu>
   );
 };
 
