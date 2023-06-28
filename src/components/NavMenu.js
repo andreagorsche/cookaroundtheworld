@@ -1,9 +1,10 @@
 import React from "react";
-import {Container, Nav} from "react-bootstrap";
+import {Navbar, Container, Nav} from "react-bootstrap";
 import cookbook from "../assets/cookbook.png";
 import styles from "../styles/NavMenu.module.css"
 import {NavLink} from "react-router-dom";
 import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContext";
+import Avatar from "./Avatar";
 import axios from "axios";
 import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 
@@ -33,8 +34,8 @@ const NavMenu = () => {
   </NavLink> 
   );
   
-  const loggedInIcons = (
-  <>
+  const loggedInIcons = (<>
+  
     <NavLink 
       className = {styles.NavLink} 
       activeClassName = {styles.Active} 
@@ -54,15 +55,15 @@ const NavMenu = () => {
       >
       <i className="fa-solid fa-user"> Log Out </i>
     </NavLink>
-    <NavLink 
-      className = {styles.NavLink}  
-      to={`/profiles/${currentUser?.profile_id}`}
+    <NavLink
+        className={styles.NavLink}
+        to={`/profiles/${currentUser?.profile_id}`}
       >
-     <i class="fa-solid fa-spoon">{currentUser && currentUser.username}</i>
-    </NavLink>
-    
-  </>
+        <Avatar src={currentUser?.profile_image} text={currentUser && currentUser.username} height={40} />
+      </NavLink>
+    </>
   );
+
   const loggedOutIcons = (
     <>
       <NavLink 
@@ -81,20 +82,20 @@ const NavMenu = () => {
   );
 
   return (
-    <NavMenu className={styles.NavMenu} collapseOnSelect expand="md" fixed="top"> 
+    <Navbar className={styles.NavMenu} collapseOnSelect expand="md" fixed="top"> 
       <Container>
         <NavLink to = "/">
-          <NavMenu.Brand>
+          <Navbar.Brand>
             <img src={cookbook} alt="logo" height="50"/>
-          </NavMenu.Brand>
+          </Navbar.Brand>
         </NavLink>
         {currentUser && createRecipeIcon}
-        <NavMenu.Toggle 
+        <Navbar.Toggle 
           ref = {ref}
           onClick={() => setExpanded(!expanded)}
           aria-controls="responsive-navbar-nav" 
         />
-        <NavMenu.Collapse id="responsive-navbar-nav">
+        <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto text-right">
             <NavLink 
               exact
@@ -102,15 +103,15 @@ const NavMenu = () => {
               activeClassName = {styles.Active} 
               to = "/"
             >
-              <i className="fa-solid fa-utensils"> Recipes </i>
+              <i className="fa-solid fa-utensils">Recipes</i>
           </NavLink>
           
           {currentUser ? loggedInIcons : loggedOutIcons}
 
         </Nav>
-      </NavMenu.Collapse>
+      </Navbar.Collapse>
     </Container>
-  </NavMenu>
+  </Navbar>
   );
 };
 

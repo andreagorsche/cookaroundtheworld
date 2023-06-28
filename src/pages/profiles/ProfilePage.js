@@ -1,4 +1,3 @@
-/*
 import React, { useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -86,4 +85,3 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
-*/

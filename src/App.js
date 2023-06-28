@@ -12,7 +12,7 @@ import ProfilePage from "./pages/profiles/ProfilePage";
 function App() {
   return (
     <div className={styles.App}>
-      <NavMenu/>
+    <NavMenu/>
       <Container className={styles.Main}>
         <Switch>
           <Route exact path ="/" render = {() => <h1>Recipes</h1>}/>
