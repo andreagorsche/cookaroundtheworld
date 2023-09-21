@@ -30,7 +30,7 @@ const NavMenu = () => {
     className = {styles.NavLink} 
     activeClassName = {styles.Active} 
     to = "/recipes/create">
-    <i className="fa-solid fa-feather"> Create Recipe </i>
+    <i className="fa-solid fa-feather"></i> Create Recipe
   </NavLink> 
   );
   
@@ -40,20 +40,20 @@ const NavMenu = () => {
       className = {styles.NavLink} 
       activeClassName = {styles.Active} 
       to = "/feeding">
-      <i className="fa-solid fa-scroll"> Feed-ing </i>
+      <i className="fa-solid fa-scroll"></i> Feed-ing 
     </NavLink>
     <NavLink 
       className = {styles.NavLink} 
       activeClassName = {styles.Active} 
       to = "/favorites">
-      <i className="fa-solid fa-thumbs-up"> Favorites </i>
+      <i className="fa-solid fa-thumbs-up"></i> Favorites 
     </NavLink>
     <NavLink 
       className = {styles.NavLink}  
       to = "/" 
       onClick={handleSignOut}
       >
-      <i className="fa-solid fa-user"> Log Out </i>
+      <i className="fa-solid fa-user"></i> Log Out 
     </NavLink>
     <NavLink
         className={styles.NavLink}
@@ -70,13 +70,13 @@ const NavMenu = () => {
         className = {styles.NavLink} 
         activeClassName = {styles.Active} 
         to = "/login">
-        <i className="fa-regular fa-user"> Login </i>
+        <i className="fa-regular fa-user"></i> Login 
       </NavLink>
       <NavLink 
         className = {styles.NavLink} 
         activeClassName = {styles.Active} 
         to = "/register">
-        <i className="fa-solid fa-user-plus"> Register </i>
+        <i className="fa-solid fa-user-plus"></i> Register
       </NavLink>
     </>
   );
@@ -103,7 +103,7 @@ const NavMenu = () => {
               activeClassName = {styles.Active} 
               to = "/"
             >
-              <i className="fa-solid fa-utensils">Recipes</i>
+              <i className="fa-solid fa-utensils"></i> Recipes
           </NavLink>
           
           {currentUser ? loggedInIcons : loggedOutIcons}
