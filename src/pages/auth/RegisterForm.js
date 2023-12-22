@@ -35,10 +35,11 @@ const RegisterForm = () => {
 		event.preventDefault();
 		try {
 		  await axios.post("/dj-rest-auth/registration/", registerData);
-		  
 		  history.push("/login");
-		} catch (err) {
-		  setErrors(err.response?.data);
+		} 
+		catch (err) {
+			console.error("Registration error:", err);
+		  	setErrors(err.response?.data);
 		}
 	  };
 

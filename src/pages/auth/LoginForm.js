@@ -39,7 +39,8 @@ function LoginForm() {
       setCurrentUser(data.user);
 		  history.push("/");
 		} catch (err) {
-            setErrors(err.response?.data);
+        console.error("Login error:", err);
+        setErrors(err.response?.data);
 		}
 	  };
 

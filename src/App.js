@@ -19,8 +19,8 @@ function App() {
           <Route exact path="/recipes/create" render={() => <CreateRecipeForm />} /> 
           <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
           <Route exact path="/recipes/:id" render={() => <RecipePage />} />
-          <Route exact path ="/register" render = {() => <RegisterForm/>}/>
-          <Route exact path ="/login" render = {() => <LoginForm/>}/>
+          <Route exact path ="/register" render = {() => <RegisterForm />}/>
+          <Route exact path ="/login" render = {() => <LoginForm />}/>
           <Route render = {()=><p>Page not found!</p>}/>
         </Switch>
       </Container>
