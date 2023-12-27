@@ -36,6 +36,7 @@ function LoginForm() {
 		event.preventDefault();
 		try {
 		  const { data } = await axios.post("/dj-rest-auth/login/", loginData);
+      console.log("Login successful. Token:", data.key);
       setCurrentUser(data.user);
 		  history.push("/");
 		} catch (err) {

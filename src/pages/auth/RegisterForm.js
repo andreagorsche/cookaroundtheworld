@@ -21,6 +21,8 @@ const RegisterForm = () => {
 
 	const [errors, setErrors] = useState({});
 
+	const [registrationSuccess, setRegistrationSuccess] = useState(false);
+
 	const history = useHistory();
 
 	const handleChange = (event) => {
@@ -35,7 +37,7 @@ const RegisterForm = () => {
 		event.preventDefault();
 		try {
 		  await axios.post("/dj-rest-auth/registration/", registerData);
-		  history.push("/login");
+		  setRegistrationSuccess(true);
 		} 
 		catch (err) {
 			console.error("Registration error:", err);
@@ -48,7 +50,14 @@ const RegisterForm = () => {
 			<Col xs={12} sm={8} md={6}>
 				<Container className={`${appStyles.Content} p-4 `}>
 					<h1 className={styles.Header}>Join our cooking community!</h1>
-
+					{registrationSuccess ? (
+        			<Alert variant="success">
+          			Registration successful!{" "}
+          			<Link to="/login" className={styles.SuccessLink}>
+    				Click here to login.
+          			</Link>
+       				</Alert>
+      				) : (
 					<Form onSubmit={handleSubmit}>
 						<img src={chef_group} className={`${appStyles.CommunityImage}`} alt="community" height="100"/>
 						<Form.Group controlId="username">
@@ -127,13 +136,14 @@ const RegisterForm = () => {
               				</Alert>
             			))}
 					</Form>
-
+					)}
 				</Container>
 				<Container className={`mt-3 ${appStyles.Content}`}>
 					<Link className={styles.Link} to="/signin">
 						Already have an account? <span>Log in</span>
 					</Link>
 				</Container>
+			
 			</Col>
 		</Row>
 	);
