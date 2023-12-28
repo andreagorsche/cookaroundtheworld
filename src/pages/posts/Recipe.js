@@ -27,6 +27,8 @@ const Recipe = (props) => {
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner;  
 
+    console.log('Profile Image URL:', profile_image);
+
   return (
     <Card className={styles.Recipe}>
       <Card.Body>
@@ -63,7 +65,7 @@ const Recipe = (props) => {
           {is_owner ? (
             <OverlayTrigger
               placement="top"
-              overlay={<Tooltip>An excellent chef like you doesn't have to like their own recipes!</Tooltip>}
+              overlay={<Tooltip>An excellent chef like you doesn't have to rate their own recipes!</Tooltip>}
             >
              <i className="fa-light fa-thumbs-up" />
             </OverlayTrigger>
@@ -78,7 +80,7 @@ const Recipe = (props) => {
           ) : (
             <OverlayTrigger
               placement="top"
-              overlay={<Tooltip>Log in to like posts!</Tooltip>}
+              overlay={<Tooltip>Log in to rate posts!</Tooltip>}
             >
               <i className="fa-solid fa-thumbs-up" />
             </OverlayTrigger>

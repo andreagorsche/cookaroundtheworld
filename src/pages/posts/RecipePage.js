@@ -14,10 +14,11 @@ function RecipePage() {
   useEffect(() => {
     const handleMount = async () => {
       try {
-        const [{ data: recipeData }] = await Promise.all([
+        const [{ data: recipe }] = await Promise.all([
           axiosReq.get(`/recipes/${id}`),
         ]);
-        setRecipe({ results: [recipeData] });
+        setRecipe({ results: [recipe] });
+        console.log(recipe);
       } catch (err) {
         console.log(err);
       }
@@ -25,10 +26,6 @@ function RecipePage() {
 
     handleMount();
   }, [id]);
-
-  useEffect(() => {
-    console.log(recipe);
-  }, [recipe]);
 
   return (
     <Row className="justify-content-center" >
