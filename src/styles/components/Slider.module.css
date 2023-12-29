@@ -1,0 +1,36 @@
+
+.carousel {
+    height: 85vh; /* Adjust the height to complement the navbar height */
+  }
+  
+  .carousel-item img {
+    height: 100%; /* Make the image fill the height of its container */
+    object-fit: cover; /* Maintain image aspect ratio while covering the container */
+  }
+  
+  .carousel-inner .carousel-item .carousel-caption {
+      background-color:#f6be00b3;
+      margin-bottom: 6rem;
+  }
+  
+  .carousel-inner .carousel-item .carousel-caption h3, p {
+      color: black;
+      text-align: center;
+  }
+  
+  .carousel .carousel-indicators button {
+  background-color: white;
+  margin-bottom: 6rem;
+  }
+  
+  .carousel-control-next-icon {
+    background-image: url("/src/assets/spoon_right.png");
+    width: 70px;
+    height: 70px;
+  }
+  
+  .carousel-control-prev-icon {
+    background-image: url("/src/assets/spoon_left.png");
+    width: 70px;
+    height: 70px;
+  }

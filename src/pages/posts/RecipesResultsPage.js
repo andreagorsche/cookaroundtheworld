@@ -6,9 +6,9 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
 import appStyles from "../../App.module.css";
-import styles from "../../styles/RecipesResultsPage.module.css";
+import styles from "../../styles/pages/posts/RecipesResultsPage.module.css";
 
-function PostsPage() {
+function RecipesResultsPage() {
   
   return (
     <Row className="h-100">
@@ -23,4 +23,4 @@ function PostsPage() {
   );
 }
 
-export default PostsPage;
+export default RecipesResultsPage;

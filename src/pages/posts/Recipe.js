@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "../../styles/Recipe.module.css";
+import styles from "../../styles/pages/posts/Recipe.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { Card, Media, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";

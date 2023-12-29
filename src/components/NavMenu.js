@@ -1,7 +1,7 @@
 import React from "react";
 import {Navbar, Container, Nav} from "react-bootstrap";
 import cookbook from "../assets/cookbook.png";
-import styles from "../styles/NavMenu.module.css"
+import styles from "../styles/components/NavMenu.module.css"
 import {NavLink} from "react-router-dom";
 import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContext";
 import Avatar from "./Avatar";
