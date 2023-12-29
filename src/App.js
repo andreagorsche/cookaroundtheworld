@@ -8,6 +8,10 @@ import LoginForm from "./pages/auth/LoginForm";
 import CreateRecipeForm from "./pages/posts/CreateRecipeForm";
 import RecipePage from "./pages/posts/RecipePage"; 
 import ProfilePage from "./pages/profiles/ProfilePage"; 
+import { useCurrentUser } from "./contexts/CurrentUserContext";
+
+const currentUser = useCurrentUser();
+const profile_id = currentUser?.profile_id
 
 function App() {
   return (
@@ -15,7 +19,16 @@ function App() {
     <NavMenu/>
       <Container className={styles.Main}>
         <Switch>
-          <Route exact path ="/" render = {() => <h1>Recipes</h1>}/>
+          <Route exact path ="/" render = {() => <RecipesResultsPage message ="No recipes found for these search criteria. Please adjust your search."/>}/>
+          <Route exact path ="/feeding" render = {() => <RecipesResultsPage 
+          message ="No recipes found for these search criteria. Please adjust your search or follow other chefs."
+          filter={`owner__followed__owner__profile=${profile_id}&`}
+          />}/>
+          <Route exact path ="/favorites" render = {() => <RecipesResultsPage 
+          message ="No recipes found for these search criteria. Please adjust your search or like more recipes."
+          filter={`likes__owner__profile=${profile_id}&ordering=-likes__created_at&`}
+          />}/>
+
           <Route exact path="/recipes/create" render={() => <CreateRecipeForm />} /> 
           <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
           <Route exact path="/recipes/:id" render={() => <RecipePage />} />
