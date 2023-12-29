@@ -1,11 +1,11 @@
 
-.carousel {
-    height: 85vh; /* Adjust the height to complement the navbar height */
+.mycarousel {
+    width: 100vw;
   }
   
   .carousel-item img {
-    height: 100%; /* Make the image fill the height of its container */
-    object-fit: cover; /* Maintain image aspect ratio while covering the container */
+    width: 100vw;
+    object-fit: cover; 
   }
   
   .carousel-inner .carousel-item .carousel-caption {

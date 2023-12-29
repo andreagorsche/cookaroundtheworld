@@ -1,0 +1,18 @@
+/* RecipeCard.css */
+
+.card-container {
+    position: relative;
+    width: 18rem;
+  }
+  
+  .pin {
+    position: absolute;
+    top: -10px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    width: 20px;
+    height: 10px;
+    background-color: #e74c3c; 
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+  

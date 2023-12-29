@@ -33,17 +33,31 @@ function LoginForm() {
     };
 
     const handleSubmit = async (event) => {
-		event.preventDefault();
-		try {
-		  const { data } = await axios.post("/dj-rest-auth/login/", loginData);
-      console.log("Login successful. Token:", data.key);
-      setCurrentUser(data.user);
-		  history.push("/");
-		} catch (err) {
+      event.preventDefault();
+      try {
+        const response = await axios.post("/dj-rest-auth/login/", loginData);
+    
+        // Extract the access token from the response
+        const accessToken = response.data.access_token;
+    
+        // Store the access token in localStorage (you can also use sessionStorage)
+        localStorage.setItem('access_token', accessToken);
+    
+        console.log("Login successful. Access Token:", accessToken);
+    
+        // Optionally, you can store other user-related data
+        const user = response.data.user;
+        localStorage.setItem('user', JSON.stringify(user));
+    
+        // Use setCurrentUser or any other logic to manage the user state
+        setCurrentUser(user);
+    
+        history.push("/");
+      } catch (err) {
         console.error("Login error:", err);
         setErrors(err.response?.data);
-		}
-	  };
+      }
+    };
 
   return (
     <Row className="justify-content-md-center align-items-center">

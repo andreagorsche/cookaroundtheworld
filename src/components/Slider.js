@@ -11,7 +11,7 @@ function Slider({ slides }) {
   };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
+    <Carousel id="myCarousel"  activeIndex={index} onSelect={handleSelect}>
       {slides.map((slide, idx) => (
         <Carousel.Item key={idx}>
           {typeof slide.image === 'string' ? (

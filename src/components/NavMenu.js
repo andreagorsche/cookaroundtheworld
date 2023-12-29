@@ -82,7 +82,7 @@ const NavMenu = () => {
   );
 
   return (
-    <Navbar className={styles.NavMenu} collapseOnSelect expand="md" fixed="top"> 
+    <Navbar className={`${styles.NavMenu} ${styles.TransparentNav}`} collapseOnSelect expand="md" fixed="top">
       <Container>
         <NavLink to = "/">
           <Navbar.Brand>
@@ -103,7 +103,7 @@ const NavMenu = () => {
               activeClassName = {styles.Active} 
               to = "/"
             >
-              <i className="fa-solid fa-utensils"></i> Recipes
+              <i className="fa-solid fa-utensils"></i> Welcome
           </NavLink>
           
           {currentUser ? loggedInIcons : loggedOutIcons}

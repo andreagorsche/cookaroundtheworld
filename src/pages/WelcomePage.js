@@ -3,6 +3,7 @@ import Slider from '../components/Slider'
 import Slider1 from '../assets/images/Slider1.jpg';
 import Slider2 from '../assets/images/Slider2.jpg';
 import Slider3 from '../assets/images/Slider3.jpg';
+import RecipeCard from '../components/RecipeCard';
 
 const WelcomePage = () => {
   return (
@@ -26,6 +27,7 @@ const WelcomePage = () => {
       },
     ]}
   />
+  <RecipeCard />
   </>
   )
 }
