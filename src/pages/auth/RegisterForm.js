@@ -52,9 +52,9 @@ const RegisterForm = () => {
 					<h1 className={styles.Header}>Join our cooking community!</h1>
 					{registrationSuccess ? (
         			<Alert variant="success">
-          			Registration successful!{" "}
+          			Thank you for your registration! To complete your registration, please confirm your email address.{" "}
           			<Link to="/login" className={styles.SuccessLink}>
-    				Click here to login.
+    				Email address confirmed? Click here to login.
           			</Link>
        				</Alert>
       				) : (
