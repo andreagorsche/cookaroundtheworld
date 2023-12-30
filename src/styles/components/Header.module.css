@@ -1,0 +1,14 @@
+.fullscreen-header {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff;
+    margin: 0;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
