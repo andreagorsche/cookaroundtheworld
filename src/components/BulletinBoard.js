@@ -3,9 +3,11 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import RecipeCard from "./RecipeCard";
-import { axiosReq } from "../../api/axiosDefaults";
+import { axiosReq } from "../api/axiosDefaults";
+import styles from "../styles/components/BulletinBoard.module.css"; 
+ 
 
-function BulletinBoard({ message }) {
+function BulletinBoard({ intro, backgroundImage }) {
   const [recipes, setRecipes] = useState({ results: [] });
   const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -29,8 +31,14 @@ function BulletinBoard({ message }) {
     fetchRecipes();
   }, []);
 
+  const bgStyle = {
+    backgroundImage: `url(${backgroundImage})`,
+  };
+
   return (
-    <Container>
+    <Container style={bgStyle} className={styles.bulletinboard}>
+      <h1>Bulletin Board</h1>
+      {intro && <p>{intro}</p>}
       <Row className="justify-content-center">
         {hasLoaded ? (
           recipes.results.map((recipe) => (
@@ -38,7 +46,7 @@ function BulletinBoard({ message }) {
               <RecipeCard
                 title={recipe.title}
                 description={recipe.description}
-                imageUrl={recipe.imageUrl}
+                imageUrl={recipe.image}
               />
             </Col>
           ))

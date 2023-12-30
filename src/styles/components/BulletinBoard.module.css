@@ -1,7 +1,5 @@
-    .blackboard {
-        background-image: url('../../assets/images/bulletinboard.jpg');
-        /* Additional background properties */
-        background-size: cover; /* Adjust based on your design requirements */
+    .bulletinboard {
+        background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
       }

@@ -3,7 +3,8 @@ import Slider from '../components/Slider'
 import Slider1 from '../assets/images/Slider1.jpg';
 import Slider2 from '../assets/images/Slider2.jpg';
 import Slider3 from '../assets/images/Slider3.jpg';
-import RecipeCard from '../components/RecipeCard';
+import BulletinBoard from '../components/BulletinBoard'
+import bulletinBoardImg from '../assets/images/bulletinboard.jpg';
 
 const WelcomePage = () => {
   return (
@@ -27,7 +28,7 @@ const WelcomePage = () => {
       },
     ]}
   />
-  <RecipeCard />
+    <BulletinBoard intro = 'Searching for the newest and hottest dishes? Here are our top 3 recipes at the moment:' backgroundImage={bulletinBoardImg} />
   </>
   )
 }

@@ -4,6 +4,7 @@ import Card from "react-bootstrap/Card";
 import styles from "../styles/components/RecipeCard.module.css"; 
 
 function RecipeCard({ title, description, imageUrl }) {
+  console.log('Image URL:', imageUrl);
   return (
     <Card className={styles.recipeCard}>
       <Card.Img variant="top" src={imageUrl} />
