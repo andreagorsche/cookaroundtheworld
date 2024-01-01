@@ -12,6 +12,7 @@ import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
 import { Image } from "react-bootstrap";
 import HeaderImageCircle from "../../components/HeaderImageCircle";
+import Intro from "../../components/Intro";
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -37,53 +38,18 @@ function ProfilePage() {
     fetchData();
   }, [id, setProfileData]);
 
-  const mainProfile = (
-    <>
-      <Row noGutters className="px-3 text-center">
-        <Col lg={3} className="text-lg-left">
-          <Image
-            className={styles.ProfileImage}
-            roundedCircle
-            src={profile?.image}
-          />
-        </Col>
-        <Col lg={6}>
-          <h3 className="m-2">Profile username</h3>
-          <p>Profile stats</p>
-        </Col>
-        <Col lg={3} className="text-lg-right">
-          <p>Follow button</p>
-        </Col>
-        <Col className="p-3">Profile content</Col>
-      </Row>
-    </>
-  );
 
-  const mainProfilePosts = (
-    <>
-      <hr />
-      <p className="text-center">Profile owner's posts</p>
-      <hr />
-    </>
-  );
 
   return (
     <>
   <HeaderImageCircle HeaderTitle={profile?.username} imageUrl={profile?.image} />
-    <Row>
-      <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <Container className={appStyles.Content}>
-          {hasLoaded ? (
-            <>
-              {mainProfile}
-              {mainProfilePosts}
-            </>
-          ) : (
-            <Asset spinner />
-          )}
-        </Container>
-      </Col>
-    </Row>
+  <Intro
+          firstWord="Chef"
+          secondWord={profile?.username}
+          secondPhrase=""
+          firstParagraph={profile?.bio}
+          />
+
     </>
   );
 }
