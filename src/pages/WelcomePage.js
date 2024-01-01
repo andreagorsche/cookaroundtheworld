@@ -5,6 +5,7 @@ import Slider2 from '../assets/images/Slider2.jpg';
 import Slider3 from '../assets/images/Slider3.jpg';
 import BulletinBoard from '../components/BulletinBoard'
 import bulletinBoardImg from '../assets/images/bulletinboard.jpg';
+import Intro from '../components/Intro';
 
 const WelcomePage = () => {
   return (
@@ -28,6 +29,15 @@ const WelcomePage = () => {
       },
     ]}
   />
+     <Intro
+          firstWord="Cook"
+          secondWord="Around"
+          secondPhrase="the World"
+          firstParagraph="Our cooks from all around the world inspire you to try new local recipes from all over the world."
+          secondParagraph="Stop always cooking the same 5 dishes on repeat. Get creative, get involved, become an international cook." 
+          image1={IntroPic1}
+          image2={IntroPic2}
+          />
     <BulletinBoard intro = 'Searching for the newest and hottest dishes? Here are our top 3 recipes at the moment:' backgroundImage={bulletinBoardImg} />
   </>
   )

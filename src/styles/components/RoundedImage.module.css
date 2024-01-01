@@ -1,0 +1,17 @@
+/* RoundedImage.css */
+.rounded-image-container {
+    border: 3px solid white; /* Adjust the border width and color as needed */
+    border-radius: 20px; /* Adjust the border-radius to create rounded corners */
+    overflow: hidden; /* Ensure that the border doesn't affect the image overflow */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin:0;
+    width: 250px;
+  }
+  
+  .rounded-image {
+    width: 250px; /* Make sure the image takes the full width of the container */
+    height: auto; /* Maintain the aspect ratio */
+  }
+  

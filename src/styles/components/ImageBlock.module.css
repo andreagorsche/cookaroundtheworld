@@ -1,0 +1,12 @@
+.image-block-container {
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+    padding-left: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    margin:0%;
+  }
