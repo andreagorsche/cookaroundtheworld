@@ -9,6 +9,10 @@ import appStyles from "../../App.module.css";
 import { Form, Button, Col, Row, Container, Alert } from "react-bootstrap";
 import axios from "axios";
 
+import Header from "../../components/Header";
+import JoinHeader from "../../assets/images/JoinHeader.jpg"
+
+
 const RegisterForm = () => {
 		const [registerData, setRegisterData] = useState({
 			username: "",
@@ -46,10 +50,11 @@ const RegisterForm = () => {
 	  };
 
 	return (
+		<>
+    	<Header imageUrl={JoinHeader} title = "Join our cooking community" />
 		<Row className="justify-content-md-center align-items-center">
 			<Col xs={12} sm={8} md={6}>
 				<Container className={`${appStyles.Content} p-4 `}>
-					<h1 className={styles.Header}>Join our cooking community!</h1>
 					{registrationSuccess ? (
         			<Alert variant="success">
           			Thank you for your registration! To complete your registration, please confirm your email address.{" "}
@@ -59,7 +64,6 @@ const RegisterForm = () => {
        				</Alert>
       				) : (
 					<Form onSubmit={handleSubmit}>
-						<img src={chef_group} className={`${appStyles.CommunityImage}`} alt="community" height="100"/>
 						<Form.Group controlId="username">
 							<Form.Label className="d-none">Username</Form.Label>
 							<Form.Control
@@ -146,6 +150,7 @@ const RegisterForm = () => {
 			
 			</Col>
 		</Row>
+		</>
 	);
 };
 

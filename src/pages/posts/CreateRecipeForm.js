@@ -21,7 +21,7 @@ import { axiosReq } from "../../api/axiosDefaults";
 
 import Alert from "react-bootstrap/Alert";
 import Header from "../../components/Header.js"
-import JoinHeader from '../../assets/images/JoinHeader.jpg'
+import CreateRecipes from '../../assets/images/CreateRecipes.jpg'
 
 
 function CreateRecipeForm() {
@@ -178,7 +178,7 @@ function CreateRecipeForm() {
 
   return (
     <>
-    <Header imageUrl={JoinHeader}  />
+    <Header imageUrl={CreateRecipes} title = "Create your new Recipes" />
     <Form onSubmit={handleSubmit}>
       <Row>
         <Col className="py-2 p-0 p-md-2" md={7} lg={8}>

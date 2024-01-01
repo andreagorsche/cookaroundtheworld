@@ -15,7 +15,7 @@ const Footer = () => {
       </Col>
 
       <Col title="Copyright" className="footer-column">
-        <p className='footer-text'>&copy; 2023 dogmind. All Rights Reserved.</p>
+        <p className='footer-text'>&copy; 2023 Cook Around The World. All Rights Reserved.</p>
       </Col>
 
       <Col title="Social Media" className="footer-column social-icons">

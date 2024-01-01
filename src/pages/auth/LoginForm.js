@@ -3,11 +3,13 @@ import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Col, Row, Container, Alert } from "react-bootstrap";
 
 import chef_group from "../../assets/chef_group.png"; 
+import JoinHeader from "../../assets/images/JoinHeader.jpg"
 
 import styles from "../../styles/pages/auth/LoginRegister.module.css";
 import btnStyles from "../../styles/components/Button.module.css";
 import appStyles from "../../App.module.css";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+import Header from "../../components/Header";
 
 import axios from "axios";
 
@@ -60,6 +62,8 @@ function LoginForm() {
     };
 
   return (
+    <>
+    <Header imageUrl={JoinHeader} title = "Welcome Back!" />
     <Row className="justify-content-md-center align-items-center">
       <Col className="my-auto p-0 p-md-2" md={6}>
         <Container className={`${appStyles.Content} p-4 `}>
@@ -120,6 +124,7 @@ function LoginForm() {
         </Container>
       </Col>
     </Row>
+    </>
   );
 }
 
