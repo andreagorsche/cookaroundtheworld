@@ -22,7 +22,7 @@ function App() {
   return (
     <div className={styles.App}>
     <NavMenu/>
-      <Container className={styles.Main}>
+    <Container fluid className={styles.Main} style={{ paddingLeft: 0, paddingRight: 0 }}>
         <Switch>
           <Route exact path ="/" render = {() => <WelcomePage />}/>
           <Route exact path ="/feeding" render = {() => <RecipesResultsPage 

@@ -11,6 +11,7 @@ import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
 import { Image } from "react-bootstrap";
+import HeaderImageCircle from "../../components/HeaderImageCircle";
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -67,6 +68,8 @@ function ProfilePage() {
   );
 
   return (
+    <>
+  <HeaderImageCircle HeaderTitle={profile?.username} imageUrl={profile?.image} />
     <Row>
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <Container className={appStyles.Content}>
@@ -81,6 +84,7 @@ function ProfilePage() {
         </Container>
       </Col>
     </Row>
+    </>
   );
 }
 

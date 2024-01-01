@@ -6,6 +6,8 @@ import Slider3 from '../assets/images/Slider3.jpg';
 import BulletinBoard from '../components/BulletinBoard'
 import bulletinBoardImg from '../assets/images/bulletinboard.jpg';
 import Intro from '../components/Intro';
+import IntroPic1 from '../assets/images/IntroPic1.jpg';
+import IntroPic2 from '../assets/images/IntroPic2.jpg';
 
 const WelcomePage = () => {
   return (
