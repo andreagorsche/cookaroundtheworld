@@ -1,0 +1,34 @@
+
+.footer {
+    display: flex;
+    background-color: black;
+    padding: 10px;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  
+  .footer-column {
+    flex: 1;
+    margin: 0 10px; 
+  }
+  
+  .footer-text {
+    color: white; 
+    margin: 20px; 
+    text-decoration: none;
+  }
+  
+  .social-icons {
+    display: flex; 
+    align-items: center; 
+    justify-content:center;
+  }
+  
+  .social-icon {
+    color: white; 
+    font-size: 24px; 
+    margin-right: 80px;
+  }

@@ -11,7 +11,9 @@ import ProfilePage from "./pages/profiles/ProfilePage";
 import RecipesResultsPage from "./pages/posts/RecipesResultsPage"; 
 import WelcomePage from "./pages/WelcomePage"; 
 import { useCurrentUser } from "./contexts/CurrentUserContext";
-
+import Impressum from "./legal/Impressum";
+import DataProtection from "./legal/DataProtection";
+import Footer from "./components/Footer";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -31,16 +33,19 @@ function App() {
           message ="No recipes found for these search criteria. Please adjust your search or like more recipes."
           filter={`ratings__owner__profile=${profile_id}&ordering=-ratings_created_at&`}
           />}/>
-
           <Route exact path="/recipes/create" render={() => <CreateRecipeForm />} /> 
           <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
           <Route exact path="/recipes/:id" render={() => <RecipePage />} />
           <Route exact path ="/register" render = {() => <RegisterForm />}/>
           <Route exact path ="/login" render = {() => <LoginForm />}/>
           <Route render = {()=><p>Page not found!</p>}/>
+          <Route path="/dataprotection" element={<DataProtection />} />
+          <Route path="/impressum" element={<Impressum />} />
         </Switch>
       </Container>
+      <Footer />
       </div>
+
   );
 }
 
