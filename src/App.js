@@ -8,16 +8,16 @@ import LoginForm from "./pages/auth/LoginForm";
 import CreateRecipeForm from "./pages/posts/CreateRecipeForm";
 import RecipePage from "./pages/posts/RecipePage"; 
 import ProfilePage from "./pages/profiles/ProfilePage"; 
-import RecipesResultsPage from "./pages/posts/RecipesResultsPage"; 
 import WelcomePage from "./pages/WelcomePage"; 
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 import Impressum from "./legal/Impressum";
 import DataProtection from "./legal/DataProtection";
 import Footer from "./components/Footer";
+import FoodFeed from "./pages/posts/FoodFeed";
 
 function App() {
   const currentUser = useCurrentUser();
-  const profile_id = currentUser?.profile_id
+  const profile_id = currentUser?.profile_id || "";
 
   return (
     <div className={styles.App}>
@@ -25,13 +25,12 @@ function App() {
     <Container fluid className={styles.Main} style={{ paddingLeft: 0, paddingRight: 0 }}>
         <Switch>
           <Route exact path ="/" render = {() => <WelcomePage />}/>
-          <Route exact path ="/feeding" render = {() => <RecipesResultsPage 
+          <Route exact path ="/foodfeed" render = {() => <FoodFeed 
           message ="No recipes found for these search criteria. Please adjust your search or follow other chefs."
-          filter={`owner__followed__owner__profile=${profile_id}&`}
           />}/>
-          <Route exact path ="/favorites" render = {() => <RecipesResultsPage 
+          <Route exact path ="/favorites" render = {() => <FoodFeed 
           message ="No recipes found for these search criteria. Please adjust your search or like more recipes."
-          filter={`ratings__owner__profile=${profile_id}&ordering=-ratings_created_at&`}
+          filter={`saved__owner__profile=${profile_id}&ordering=-saved_created_at&`}
           />}/>
           <Route exact path="/recipes/create" render={() => <CreateRecipeForm />} /> 
           <Route exact path="/profiles/:id" render={() => <ProfilePage />} />

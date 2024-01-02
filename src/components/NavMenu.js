@@ -39,8 +39,8 @@ const NavMenu = () => {
     <NavLink 
       className = {styles.NavLink} 
       activeClassName = {styles.Active} 
-      to = "/feeding">
-      <i className="fa-solid fa-scroll"></i> Feed-ing 
+      to = "/foodfeed">
+      <i className="fa-solid fa-scroll"></i> Food-Feed 
     </NavLink>
     <NavLink 
       className = {styles.NavLink} 
