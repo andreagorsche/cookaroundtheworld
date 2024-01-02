@@ -10,9 +10,10 @@ import styles from "../../styles/pages/posts/FoodFeed.module.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { axiosReq } from "../../api/axiosDefaults";
 
-import Recipe from "./Recipe";
+import RecipeCard from "../../components/RecipeCard";
 import Asset from "../../components/Asset";
 import NoCooking from "../../assets/images/no_cooking.png"
+
 
 
 function FoodFeed({message, filter=""}) {
@@ -38,12 +39,17 @@ function FoodFeed({message, filter=""}) {
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <p>Popular profiles mobile</p>
         {hasLoaded ? (
           <>
             {recipes.results.length ? (
               recipes.results.map((recipe) => (
-                <Recipe key={recipe.id} {...recipe} setRecipes={setRecipes} />
+                <Col key={recipe.id} xs={12} sm={6} md={4} lg={4} xl={4}>
+                  <RecipeCard
+                    title={recipe.title}
+                    description={recipe.description}
+                    imageUrl={recipe.image}
+                  />
+                </Col>
               ))
             ) : (
               <Container className={appStyles.Content}>
@@ -57,10 +63,8 @@ function FoodFeed({message, filter=""}) {
           </Container>
         )}
       </Col>
-      <Col md={4} className="d-none d-lg-block p-0 p-lg-2">
-        <p>Popular profiles for desktop</p>
-      </Col>
     </Row>
   );
+  
 }
 export default FoodFeed;
