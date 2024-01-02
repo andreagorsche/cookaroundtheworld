@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import appStyles from "../../App.module.css";
 import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
-import Recipe from "./Recipe";
+import RecipeCard from "../../components/RecipeCard";
 
 function RecipePage() {
   const { id } = useParams();
@@ -18,9 +18,9 @@ function RecipePage() {
           axiosReq.get(`/recipes/${id}`),
         ]);
         setRecipe({ results: [recipe] });
-        console.log(recipe);
+        console.log('RecipePage - Fetched Recipe:', recipe);
       } catch (err) {
-        console.log(err);
+        console.log('RecipePage - Fetch Error:', err);
       }
     };
 
@@ -30,7 +30,7 @@ function RecipePage() {
   return (
     <Row className="justify-content-center" >
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <Recipe {...recipe.results[0]} setRecipes={setRecipe} recipePage/>
+      <RecipeCard key={recipe.id} id={recipe.id} title={recipe.title} cuisine={recipe.cuisine} imageUrl={recipe.imageUrl} />
         <Container className={appStyles.Content}>
           Comments
         </Container>

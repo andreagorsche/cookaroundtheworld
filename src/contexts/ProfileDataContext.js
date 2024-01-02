@@ -18,18 +18,19 @@ export const ProfileDataProvider = ({ children }) => {
   useEffect(() => {
     const handleMount = async () => {
       try {
-        const { data } = await axiosReq.get(
-          `/profiles/${currentUser.id}/`
-        );
-        setProfileData((prevState) => ({
-          ...prevState,
-          pageProfile: { results: [data] },
-        }));
+        if (currentUser && currentUser.id) {
+          const { data } = await axiosReq.get(`/profiles/${currentUser.id}/`);
+          setProfileData((prevState) => ({
+            ...prevState,
+            pageProfile: { results: [data] },
+          }));
+        }
       } catch (err) {
-        console.log(err);
+        console.error('Error fetching profile data:', err);
+        console.error('Error response data:', err.response?.data);
       }
     };
-
+  
     handleMount();
   }, [currentUser]);
 
