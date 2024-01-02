@@ -1,0 +1,29 @@
+.circle-row {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px; 
+    
+  }
+  
+  .circle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .circle p {
+    font-size: 20px; 
+    background-color: blue;
+    font-weight: bold;
+    color: #fff; 
+    border-radius: 5%;
+    
+    margin: 0;
+  }
+  
+  .circle span {
+    font-size: 14px; 
+    
+    color: #fff; 
+    
+  }

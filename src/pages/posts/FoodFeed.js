@@ -16,7 +16,7 @@ import NoCooking from "../../assets/images/no_cooking.png"
 
 
 
-function FoodFeed({message, filter=""}) {
+function FoodFeed({message, id}) {
   const [recipes, setRecipes] = useState({results:[]});
   const [hasLoaded, setHasLoaded] = useState(false);
   const {pathname} = useLocation ();
@@ -24,7 +24,7 @@ function FoodFeed({message, filter=""}) {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const { data } = await axiosReq.get(`/recipes/?${filter}`);
+        const { data } = await axiosReq.get(`/recipes/?${id}`);
         setRecipes(data);
         setHasLoaded(true);
       } catch (err) {
@@ -34,7 +34,7 @@ function FoodFeed({message, filter=""}) {
 
     setHasLoaded(false);
     fetchRecipes();
-  }, [filter, pathname]);
+  }, [id, pathname]);
 
   return (
     <Row className="h-100">

@@ -18,10 +18,10 @@ function RecipePage() {
           axiosReq.get(`/recipes/${id}`),
         ]);
         setRecipe({ results: [recipe] });
-        console.log('RecipePage - Fetched Recipe:', recipe);
+        console.log(recipe);
       } catch (err) {
-        console.log('RecipePage - Fetch Error:', err);
-      }
+        console.log(err);
+            }
     };
 
     handleMount();

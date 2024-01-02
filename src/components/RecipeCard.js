@@ -8,10 +8,7 @@ import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContex
 
 function RecipeCard({ id, title, cuisine, imageUrl, owner }) {
   const currentUser = useCurrentUser();
-  console.log('RecipeCard - Recipe ID:', id);
-  console.log('RecipeCard - Owner:', owner);
-  console.log('RecipeCard - Owner Profile Image:', owner?.owner_profile_image);
-
+  
   return (
     <Card className={styles.recipeCard}>
     <Avatar src={owner?.owner.image.url} text={owner && owner.username} height={40} />
