@@ -6,12 +6,17 @@ import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContext";
 
-function RecipeCard({ id, title, cuisine, imageUrl, owner }) {
+function RecipeCard({ id, title, cuisine, imageUrl, owner, recipe }) {
   const currentUser = useCurrentUser();
-  
+  const profileImage = owner?.profile_image;
+  const username = owner?.username;
+
+
+  console.log('RecipeCard - Recipe ID:', id);
+  console.log('Image URL:', imageUrl);
   return (
     <Card className={styles.recipeCard}>
-    <Avatar src={owner?.owner.image.url} text={owner && owner.username} height={40} />
+    <Avatar src={profileImage} text={username} height={40} />
       <Card.Img variant="top" src={imageUrl} />
       <Card.Body>
       <Card.Title>{title}</Card.Title>

@@ -14,6 +14,7 @@ import { Image } from "react-bootstrap";
 import HeaderImageCircle from "../../components/HeaderImageCircle";
 import Intro from "../../components/Intro";
 import CircleRow from "../../components/CircleRow"
+import RecipeCard from "../../components/RecipeCard";
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -54,6 +55,7 @@ function ProfilePage() {
        data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
        labels={['Recipes', 'Followers', 'Following']}
         />
+        <RecipeCard />
     </>
     
   );

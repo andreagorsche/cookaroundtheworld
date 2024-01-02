@@ -44,11 +44,7 @@ function FoodFeed({message, id}) {
             {recipes.results.length ? (
               recipes.results.map((recipe) => (
                 <Col key={recipe.id} xs={12} sm={6} md={4} lg={4} xl={4}>
-                  <RecipeCard
-                    title={recipe.title}
-                    description={recipe.description}
-                    imageUrl={recipe.image}
-                  />
+                <RecipeCard key={recipe.id} id={recipe.id} title={recipe.title} cuisine={recipe.cuisine} imageUrl={recipe.image} />
                 </Col>
               ))
             ) : (
