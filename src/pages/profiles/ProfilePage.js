@@ -42,10 +42,10 @@ function ProfilePage() {
 
   return (
     <>
-  <HeaderImageCircle HeaderTitle={profile?.username} imageUrl={profile?.image} />
+  <HeaderImageCircle HeaderTitle={profile?.owner} imageUrl={profile?.image} />
   <Intro
           firstWord="Chef"
-          secondWord={profile?.username}
+          secondWord={profile?.owner}
           secondPhrase=""
           firstParagraph={profile?.bio}
           />

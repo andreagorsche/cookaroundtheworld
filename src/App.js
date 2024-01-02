@@ -26,11 +26,10 @@ function App() {
         <Switch>
           <Route exact path ="/" render = {() => <WelcomePage />}/>
           <Route exact path ="/foodfeed" render = {() => <FoodFeed 
-          message ="No recipes found for these search criteria. Please adjust your search or follow other chefs."
+          message ="No recipes found for these search criteria. Please adjust your search."
           />}/>
-          <Route exact path ="/favorites" render = {() => <FoodFeed 
-          message ="No recipes found for these search criteria. Please adjust your search or like more recipes."
-          filter={`saved__owner__profile=${profile_id}&ordering=-saved_created_at&`}
+          <Route exact path ="/favorites" render = {() => <FoodFeed message="No saved recipes found. 
+          Please save recipes in the food feed for display here." filter="?saved=true" 
           />}/>
           <Route exact path="/recipes/create" render={() => <CreateRecipeForm />} /> 
           <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
