@@ -6,3 +6,8 @@
         margin: 0;
         padding: 0;
       }
+
+      .bulletinboard h1,
+.bulletinboard p {
+  margin: 0; /* Reset margins for the heading and paragraph */
+}

@@ -32,3 +32,27 @@ figure {
   text-align: center;
   display: inline-block;
 }
+
+.App a {
+  font-size: 1.3rem;
+  padding-left: 1%;
+  color: indigo;
+  transition: color ease-in-out 0.3 sec;
+  text-decoration: none;
+}
+
+.App a:hover {
+  text-decoration: none;
+  color: white,
+}
+
+.App a:hover i {
+  color: white;
+  transition: color ease-in-out 0.3s;
+}
+
+.App i {
+  color: indigo;
+  transition: color ease-in-out 0.3 sec;
+  text-decoration: none;
+}

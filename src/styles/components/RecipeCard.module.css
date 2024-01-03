@@ -16,3 +16,8 @@
     clip-path: polygon(0 0, 100% 0, 50% 100%);
   }
   
+  .recipeImage {
+    width: 100%; 
+    height: auto;
+    max-height: 200px;
+  } 

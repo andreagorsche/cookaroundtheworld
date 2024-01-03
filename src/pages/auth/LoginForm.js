@@ -63,14 +63,12 @@ function LoginForm() {
 
   return (
     <>
-    <Header imageUrl={JoinHeader} title = "Welcome Back!" />
+    <Header imageUrl={JoinHeader} />
     <Row className="justify-content-md-center align-items-center">
       <Col className="my-auto p-0 p-md-2" md={6}>
         <Container className={`${appStyles.Content} p-4 `}>
-          <h1 className={styles.Header}>Welcome back!</h1>
           <Form onSubmit={handleSubmit}>
-            <img src={chef_group} className={`${appStyles.CommunityImage}`} alt="community" height="100"/>
-            <h1>Login</h1>
+            <h1>Welcome back!</h1>
             <Form.Group controlId="Username">
                 <Form.Label>Username</Form.Label>
                 <Form.Control 
