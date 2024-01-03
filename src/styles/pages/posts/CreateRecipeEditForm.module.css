@@ -9,3 +9,7 @@
   height: auto;
   display: block;
 }
+
+.container{
+  min-height: 343px;
+}

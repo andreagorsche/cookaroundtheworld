@@ -51,7 +51,7 @@ const RegisterForm = () => {
 
 	return (
 		<>
-    	<Header imageUrl={JoinHeader} title = "Join our cooking community" />
+    	<Header imageUrl={JoinHeader} title = "Join Our Cooking Community" />
 		<Row className="justify-content-md-center align-items-center">
 			<Col xs={12} sm={8} md={6}>
 				<Container className={`${appStyles.Content} p-4 `}>
