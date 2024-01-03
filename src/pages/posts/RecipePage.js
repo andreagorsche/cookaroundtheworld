@@ -8,10 +8,12 @@ import Header from "../../components/Header";
 import Intro from "../../components/Intro";
 import RecipeCard from "../../components/RecipeCard";
 import HeaderImageCircle from "../../components/HeaderImageCircle";
+import Rating from '../../components/Rating';
 
 function RecipePage() {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({ results: [] });
+  const [userRating, setUserRating] = useState(0);
 
   useEffect(() => {
     const handleMount = async () => {
@@ -48,7 +50,8 @@ function RecipePage() {
       <Row className="justify-content-center">
         <Col className="py-2 p-0 p-lg-2" lg={8}>
            <Container className="text-center">
-            Rating
+           <p>User Rating: {userRating}</p>
+            <Rating onRate={(rating) => setUserRating(rating)} />
           </Container>
           <Container className="text-center">
             Comments
