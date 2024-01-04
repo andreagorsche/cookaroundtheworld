@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { axiosReq } from "../../api/axiosDefaults";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
-import Header from "../../components/Header";
-import Intro from "../../components/Intro";
-import RecipeCard from "../../components/RecipeCard";
-import HeaderImageCircle from "../../components/HeaderImageCircle";
-import Rating from '../../components/Rating';
+// RecipePage.js
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import { axiosReq } from '../../api/axiosDefaults';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
+import Header from '../../components/Header';
+import Intro from '../../components/Intro';
+import Rating from '../../components/Rating.js';
 
-function RecipePage() {
+function RecipePage({ onRate }) {
   const { id } = useParams();
-  const [recipe, setRecipe] = useState({ results: [] });
+  const [recipeData, setRecipeData] = useState({ results: [] });
   const [userRating, setUserRating] = useState(0);
 
   useEffect(() => {
     const handleMount = async () => {
       try {
         const { data } = await axiosReq.get(`/recipes/${id}`);
-        setRecipe({ results: [data] });
+        setRecipeData({ results: [data] });
         console.log(data);
       } catch (err) {
         console.log(err);
@@ -29,10 +28,22 @@ function RecipePage() {
     handleMount();
   }, [id]);
 
-  const { title, image, cuisine, ingredients, time_effort, description, updated_at, is_owner, recipePage, comments_count, likes_count, like_id } = recipe.results[0] || {};
-  const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
-  const headerImageUrl = recipe.results[0]?.image;
+  const handleRate = (value) => {
+    onRate(recipeData.results[0].id, value);
+    setUserRating(value);
+  };
 
+  const {
+    title,
+    cuisine,
+    description,
+    time_effort,
+    ingredients,
+    is_owner,
+    // Add other properties you need...
+  } = recipeData.results[0] || {};
+  const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
+  const headerImageUrl = recipeData.results[0]?.image;
 
   return (
     <>
@@ -49,9 +60,9 @@ function RecipePage() {
       />
       <Row className="justify-content-center">
         <Col className="py-2 p-0 p-lg-2" lg={8}>
-           <Container className="text-center">
-           <p>User Rating: {userRating}</p>
-            <Rating onRate={(rating) => setUserRating(rating)} />
+          <Container className="text-center">
+            <div onClick={() => handleRate(userRating + 1)}>Rating</div>
+            <Rating recipe={recipeData.results[0]} onRate={onRate} isOwner={is_owner} />
           </Container>
           <Container className="text-center">
             Comments
