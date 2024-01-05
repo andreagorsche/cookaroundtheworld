@@ -7,9 +7,9 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
-import Rating from '../../components/Rating.js';
+import Rating from '../../components/RatingVote.js';
 
-function RecipePage({ onRate }) {
+function RecipePage() {
   const { id } = useParams();
   const [recipeData, setRecipeData] = useState({ results: [] });
   const [userRating, setUserRating] = useState(0);
@@ -29,7 +29,6 @@ function RecipePage({ onRate }) {
   }, [id]);
 
   const handleRate = (value) => {
-    onRate(recipeData.results[0].id, value);
     setUserRating(value);
   };
 
@@ -61,8 +60,12 @@ function RecipePage({ onRate }) {
       <Row className="justify-content-center">
         <Col className="py-2 p-0 p-lg-2" lg={8}>
           <Container className="text-center">
-            <div onClick={() => handleRate(userRating + 1)}>Rating</div>
-            <Rating recipe={recipeData.results[0]} onRate={onRate} isOwner={is_owner} />
+            <Rating
+              recipe={recipeData.results[0]}
+              onRate={handleRate}
+              isOwner={is_owner}
+              userRating={userRating}
+            />
           </Container>
           <Container className="text-center">
             Comments
