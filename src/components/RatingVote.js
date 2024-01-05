@@ -2,19 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { axiosReq } from "../api/axiosDefaults";
 import { Card, Button } from 'react-bootstrap';
 import RatingSelect from './RatingSelect';
+import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContext";
 
-
-const RatingVote = ({ recipeId }) => {
+const RatingVote = ({ recipeId, owner }) => {
   const [rating, setRating] = useState(0);
   const [ratingEdit, setRatingEdit] = useState({ id: 0, edit: false });
+
+  const currentUser = useCurrentUser();
+  const is_owner = currentUser?.username === owner; 
 
   const addRating = async (newRating) => {
     try {
       const response = await axiosReq.post('/ratings/', { stars: newRating.rating, recipe: recipeId });
       const data = response.data;
       setRating((prevRating) => [data, ...prevRating]);
+      console.log("Rating Added Successfully:", data);
     } catch (error) {
       console.error('Error adding rating:', error);
+      console.log('Error Response:', error.response);
     }
   };
 
@@ -22,7 +27,7 @@ const RatingVote = ({ recipeId }) => {
     try {
       const response = await axiosReq.get(`/ratings/${id}`);
       const data = response.data;
-      setRating((prevRating) => prevRating.map((item) => (item.id === id ? data : item)));
+      setRating((prevRating) => prevRating.map((item) => (item.id === id ? { ...item, ...data } :item)));
     } catch (error) {
       console.error('Error updating rating:', error);
     }
