@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Card, Button } from 'your-ui-library';
+import { axiosReq } from "../api/axiosDefaults";
+import { Card, Button } from 'react-bootstrap';
 import RatingSelect from './RatingSelect';
 
 
-const RatingVote = () => {
+const RatingVote = ({ recipeId }) => {
   const [rating, setRating] = useState(0);
   const [ratingEdit, setRatingEdit] = useState({ id: 0, edit: false });
 
   const addRating = async (newRating) => {
     try {
-      const response = await axiosReq.post('/ratings/', { rating: newRating.rating });
+      const response = await axiosReq.post('/ratings/', { rating: newRating.rating, recipe: recipeId });
       const data = response.data;
       setRating((prevRating) => [data, ...prevRating]);
     } catch (error) {
