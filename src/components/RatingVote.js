@@ -1,70 +1,66 @@
-import { response } from 'msw'
-import React from 'react'
-import RatingSelect from './RatingSelect'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Card, Button } from 'your-ui-library';
+import RatingSelect from './RatingSelect';
+
 
 const RatingVote = () => {
-    const [rating, setRating] = useState(0);
-    const [ratingEdit, setRatingEdit] = useState({ rating: 0, edit: false });
+  const [rating, setRating] = useState(0);
+  const [ratingEdit, setRatingEdit] = useState({ id: 0, edit: false });
 
-        rating: {}
-        edit: false,
-    
-    const addRating = async (newRating) => {
-        const response = await axios.post("/ratings/");
+  const addRating = async (newRating) => {
+    try {
+      const response = await axiosReq.post('/ratings/', { rating: newRating.rating });
+      const data = response.data;
+      setRating((prevRating) => [data, ...prevRating]);
+    } catch (error) {
+      console.error('Error adding rating:', error);
     }
-    const data = await response.json()
-    setRating([data, ...rating])
+  };
 
-    const updateRating = async (id,upRating) => {
-        const response = await axiosReq.get(`/ratings/?${id}`);
+  const updateRating = async (id, upRating) => {
+    try {
+      const response = await axiosReq.get(`/ratings/${id}`);
+      const data = response.data;
+      setRating((prevRating) => prevRating.map((item) => (item.id === id ? data : item)));
+    } catch (error) {
+      console.error('Error updating rating:', error);
     }
-    const data = await response.json()
-    
-    setRating (rating.map((rating)) => (rating.id === id ? data : rating)))
+  };
 
-    //add a rating after editing
+  const editRating = (selectedRating) => {
     setRatingEdit({
-        item: {},
-        edit: false,
-    })
+      id: selectedRating.id,
+      edit: true,
+    });
+  };
 
-    //Set item to be updated
-    const editRating = (rating) => {
-        setRatingEdit({
-            rating,
-            edit: true,
-        })
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newRating = {
+      rating,
+    };
 
-    useEffect (() => {
-        if (ratingEdit === true) {
-            setRating(ratingEdit.rating)
-        }
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const newRating = {
-            rating
-        }
-    }
-
-    if (ratingEdit.edit === true) {
-        updateRating (ratingEdit.id, newRating)
+    if (ratingEdit.edit) {
+      updateRating(ratingEdit.id, newRating);
     } else {
-        addRating(newRating)
+      addRating(newRating);
     }
+
+    // Reset the form after submission
+    setRating(0);
+    setRatingEdit({ id: 0, edit: false });
+  };
+
   return (
     <Card>
-        <form onSubmit={handleSubmit}>
-            <h2>How did you like this recipe?</h2>
-            <RatingSelect select={setRating} selected{rating} />
-            <Button type = 'submit'>
-                Send
-            </Button>
-        </form>
+      <form onSubmit={handleSubmit}>
+        <h2>How did you like this recipe?</h2>
+        <RatingSelect select={setRating} selected={rating} />
+        <Button type="submit">Send</Button>
+      </form>
     </Card>
-  )
-}
+  );
+};
 
-export default RatingVote
+export default RatingVote;
