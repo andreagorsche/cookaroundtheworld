@@ -1,5 +1,6 @@
 import { response } from 'msw'
 import React from 'react'
+import RatingSelect from './RatingSelect'
 
 const RatingVote = () => {
     const [rating, setRating] = useState([])
@@ -54,8 +55,15 @@ const RatingVote = () => {
         addRating(newRating)
     }
   return (
-    
-    <div>RatingVote</div>
+    <Card>
+        <form onSubmit={handleSubmit}>
+            <h2>How did you like this recipe?</h2>
+            <RatingSelect select={setRating} selected{rating} />
+            <Button type = 'submit'>
+                Send
+            </Button>
+        </form>
+    </Card>
   )
 }
 
