@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
-import Rating from '../../components/RatingVote.js';
+import RatingVote from '../../components/RatingVote';
 
 function RecipePage() {
   const { id } = useParams();
@@ -60,12 +60,7 @@ function RecipePage() {
       <Row className="justify-content-center">
         <Col className="py-2 p-0 p-lg-2" lg={8}>
           <Container className="text-center">
-            <Rating
-              recipe={recipeData.results[0]}
-              onRate={handleRate}
-              isOwner={is_owner}
-              userRating={userRating}
-            />
+            <RatingVote recipeId={id} />
           </Container>
           <Container className="text-center">
             Comments
