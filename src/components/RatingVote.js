@@ -10,7 +10,7 @@ const RatingVote = ({ recipeId }) => {
 
   const addRating = async (newRating) => {
     try {
-      const response = await axiosReq.post('/ratings/', { rating: newRating.rating, recipe: recipeId });
+      const response = await axiosReq.post('/ratings/', { stars: newRating.rating, recipe: recipeId });
       const data = response.data;
       setRating((prevRating) => [data, ...prevRating]);
     } catch (error) {
