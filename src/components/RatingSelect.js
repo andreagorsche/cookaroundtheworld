@@ -6,8 +6,8 @@ const RatingSelect = (select, selected) => {
     }
   return (
     <ul className='rating'>
-        {Array.from({ length: 10 }, (_, i) =>
-            <li key={'rating-${i + 1}'}>
+        {Array.from({ length: 5 }, (_, i) =>
+            <li key={`rating-${i + 1}`}>
                 <input
                 type = 'radio'
                 id={'num${i+1}'}

@@ -3,8 +3,8 @@ import React from 'react'
 import RatingSelect from './RatingSelect'
 
 const RatingVote = () => {
-    const [rating, setRating] = useState([])
-    const [ratingEdit, setRatingEdit] = useState([])
+    const [rating, setRating] = useState(0);
+    const [ratingEdit, setRatingEdit] = useState({ rating: 0, edit: false });
 
         rating: {}
         edit: false,
