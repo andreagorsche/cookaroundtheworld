@@ -7,6 +7,7 @@
 .carousel-item img {
   width: 100%;
   object-fit: cover;
+  height: 20vh;
 }
   
   .carousel-inner .carousel-item .carousel-caption {
@@ -34,4 +35,9 @@
     background-image: url("/src/assets/spoon_left.png");
     width: 70px;
     height: 70px;
+  }
+
+  .carousel-item img.object-fit-cover {
+    object-fit: cover;
+    height: 85vh;
   }

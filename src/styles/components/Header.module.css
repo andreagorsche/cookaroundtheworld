@@ -4,6 +4,7 @@
     align-items: center;
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center top;
     margin: 0;
   }
   
@@ -17,6 +18,7 @@ h1 {
 
   .fullWidthImage {
     width: 100%;
-    min-height: 20vh;
+    position: center top;
+    height: 40vh;
     opacity: 0.45;
   }

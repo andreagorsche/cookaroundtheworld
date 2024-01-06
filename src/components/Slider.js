@@ -15,7 +15,7 @@ function Slider({ slides }) {
       {slides.map((slide, idx) => (
         <Carousel.Item key={idx}>
           {typeof slide.image === 'string' ? (
-            <img className="d-block w-100" src={slide.image} alt={`Slide ${idx + 1}`} style={{ height: '85vh' }} />
+            <img className="d-block w-100 " src={slide.image} alt={`Slide ${idx + 1}`} style={ { objectFit: 'cover', height: '80vh' }} />
           ) : (
             slide.image
           )}
