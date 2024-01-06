@@ -8,8 +8,12 @@ import Avatar from './Avatar';
 
 
 const TopProfiles = () => {
-  const { profile_id, profile_image, owner } = useContext(useProfileData);
-  const { profiles, setProfiles, hasLoaded, setHasLoaded } = useContext(useSetProfileData);
+
+  const { pageProfile } = useProfileData ();
+  const { results: profiles } = pageProfile;
+  const setProfileData = useSetProfileData();
+  const [hasLoaded, setHasLoaded] = useState(false);
+
 
     useEffect(() => {
       const fetchProfiles = async () => {
@@ -20,7 +24,10 @@ const TopProfiles = () => {
               limit: 3,
             },
           });
-          setProfiles(data);
+          setProfileData((prevState) => ({
+            ...prevState,
+            pageProfile: { results: data },
+          }));
           setHasLoaded(true);
         } catch (err) {
           console.log(err);
@@ -35,11 +42,11 @@ const TopProfiles = () => {
     <div>
         <Row className="justify-content-between">
         {hasLoaded ? (
-          profiles.map((profile) => (
+          profiles.results.map((profile) => (
             <Col key={profile.id} xs={12} sm={6} md={4} lg={4} xl={4}>
-                <Link to = {`/profiles/${profile_id}`}>
-                    <Avatar src={profile_image} height={40} />
-                    {owner}
+                <Link to = {`/profiles/${profile.id}`}>
+                    <Avatar src={profile.image} height={40} />
+                    {profile.owner}
                 </Link>            
             </Col>
           ))
