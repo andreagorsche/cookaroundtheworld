@@ -8,6 +8,7 @@ import bulletinBoardImg from '../assets/images/bulletinboard.jpg';
 import Intro from '../components/Intro';
 import IntroPic1 from '../assets/images/IntroPic1.jpg';
 import IntroPic2 from '../assets/images/IntroPic2.jpg';
+import TopProfiles from '../components/TopProfiles';
 
 const WelcomePage = () => {
   return (
@@ -41,6 +42,7 @@ const WelcomePage = () => {
           image2={IntroPic2}
           />
     <BulletinBoard intro = 'Searching for the newest and hottest dishes? Here are our top 3 recipes at the moment:' backgroundImage={bulletinBoardImg} />
+    <TopProfiles />
   </>
   )
 }
