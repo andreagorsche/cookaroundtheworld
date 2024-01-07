@@ -11,6 +11,7 @@ import IntroPic2 from '../assets/images/IntroPic2.jpg';
 import TopProfiles from '../components/TopProfiles';
 
 const WelcomePage = () => {
+  console.log('WelcomePage is rendering...');
   return (
     <>
     <Slider

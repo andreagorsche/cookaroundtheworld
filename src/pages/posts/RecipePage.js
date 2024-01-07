@@ -12,7 +12,6 @@ import RatingVote from '../../components/RatingVote';
 function RecipePage() {
   const { id } = useParams();
   const [recipeData, setRecipeData] = useState({ results: [] });
-  const [userRating, setUserRating] = useState(0);
 
   useEffect(() => {
     const handleMount = async () => {
@@ -28,9 +27,6 @@ function RecipePage() {
     handleMount();
   }, [id]);
 
-  const handleRate = (value) => {
-    setUserRating(value);
-  };
 
   const {
     title,
@@ -38,8 +34,6 @@ function RecipePage() {
     description,
     time_effort,
     ingredients,
-    is_owner,
-    // Add other properties you need...
   } = recipeData.results[0] || {};
   const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
   const headerImageUrl = recipeData.results[0]?.image;

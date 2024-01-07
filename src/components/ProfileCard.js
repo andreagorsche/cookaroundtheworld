@@ -10,7 +10,6 @@ const ProfileCard = () => {
 
   return (
     <div>
-      {profiles.map(profile => (
         <Card key={profile.id} className="mb-3">
           <Card.Body>
             <Media className="align-items-center justify-content-between">
@@ -22,7 +21,7 @@ const ProfileCard = () => {
             </Media>
           </Card.Body>
         </Card>
-      ))}
+      ))
     </div>
   );
 };

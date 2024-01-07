@@ -4,13 +4,14 @@ import { Card, Media } from "react-bootstrap";
 import styles from "../styles/components/RecipeCard.module.css"; 
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
-import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContext";
+import { useCurrentUser } from "../contexts/CurrentUserContext";
 
 
 function RecipeCard({ recipe }) {
   const {
     id,
     owner,
+    profile_id,
     profile_image,
     title,
     cuisine, 
@@ -26,8 +27,8 @@ const is_owner = currentUser?.username === owner;
     <Card className={styles.recipeCard}>
       <Card.Body>
         <Media className="align-items-center justify-content-between">
-          <Link to = {'/profiles/${profile_id}'}>
-            <Avatar src={profile_image} height={40} />
+          <Link to={`/profiles/${profile_id}`}>
+              <Avatar src={profile_image} height={40} />
               {owner}
           </Link>
           <div>

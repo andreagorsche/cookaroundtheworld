@@ -9,15 +9,12 @@ import CreateRecipeForm from "./pages/posts/CreateRecipeForm";
 import RecipePage from "./pages/posts/RecipePage"; 
 import ProfilePage from "./pages/profiles/ProfilePage"; 
 import WelcomePage from "./pages/WelcomePage"; 
-import { useCurrentUser } from "./contexts/CurrentUserContext";
 import Impressum from "./legal/Impressum";
 import DataProtection from "./legal/DataProtection";
 import Footer from "./components/Footer";
 import FoodFeed from "./pages/posts/FoodFeed";
 
 function App() {
-  const currentUser = useCurrentUser();
-  const profile_id = currentUser?.profile_id || "";
 
   return (
     <div className={styles.App}>

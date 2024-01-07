@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "../styles/components/CircleRow.module.css"; 
 
 const CircleRow = ({ data, labels }) => {
   return (

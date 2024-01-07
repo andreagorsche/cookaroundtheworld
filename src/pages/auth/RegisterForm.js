@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import styles from "../../styles/pages/auth/LoginRegister.module.css";
 import btnStyles from "../../styles/components/Button.module.css";
@@ -25,8 +25,6 @@ const RegisterForm = () => {
 	const [errors, setErrors] = useState({});
 
 	const [registrationSuccess, setRegistrationSuccess] = useState(false);
-
-	const history = useHistory();
 
 	const handleChange = (event) => {
 			setRegisterData({

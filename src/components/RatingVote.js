@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { axiosReq } from "../api/axiosDefaults";
 import { Card, Button, Alert } from 'react-bootstrap';
 import RatingSelect from './RatingSelect';
-import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContext";
 
-const RatingVote = ({ recipeId, owner }) => {
+const RatingVote = ({ recipeId }) => {
   const [rating, setRating] = useState(0);
   const [ratingEdit, setRatingEdit] = useState({ id: 0, edit: false });
   const [showThankYouMessage, setShowThankYouMessage] = useState(false);
-
-  const currentUser = useCurrentUser();
-  const is_owner = currentUser?.username === owner; 
 
   const addRating = async (newRating) => {
     try {
@@ -34,13 +30,6 @@ const RatingVote = ({ recipeId, owner }) => {
     } catch (error) {
       console.error('Error updating rating:', error);
     }
-  };
-
-  const editRating = (selectedRating) => {
-    setRatingEdit({
-      id: selectedRating.id,
-      edit: true,
-    });
   };
 
   const handleSubmit = (e) => {

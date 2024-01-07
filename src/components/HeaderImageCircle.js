@@ -2,7 +2,6 @@ import React from 'react';
 import Avatar from './Avatar';
 import { Col } from 'react-bootstrap';
 import {Row} from 'react-bootstrap';
-import styles from "../styles/components/HeaderImageCircle.module.css"; 
 import { useCurrentUser } from "../contexts/CurrentUserContext";
 
 function HeaderImageCircle({ HeaderTitle, imageUrl }) {

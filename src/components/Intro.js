@@ -4,7 +4,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ImageBlock from './ImageBlock';
 import '../styles/components/Intro.module.css';
-import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Intro({
   firstWord,
