@@ -43,7 +43,7 @@ function ProfilePage() {
     };
     fetchData();
     setHasLoaded(true);
-  }, [id, setProfileData]);
+  }, [id, setProfileData, setHasLoaded]);
 
   return (
     <>
