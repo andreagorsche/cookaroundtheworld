@@ -7,13 +7,12 @@ import { axiosReq } from "../api/axiosDefaults";
 import Avatar from './Avatar';
 
 
-const TopProfiles = () => {
 
+const TopProfiles = () => {
   const { pageProfile } = useProfileData ();
   const { results: profiles } = pageProfile;
   const setProfileData = useSetProfileData();
   const [hasLoaded, setHasLoaded] = useState(false);
-
 
     useEffect(() => {
       const fetchProfiles = async () => {
@@ -44,7 +43,7 @@ const TopProfiles = () => {
         {hasLoaded ? (
           profiles.results.map((profile) => (
             <Col key={profile.id} xs={12} sm={6} md={4} lg={4} xl={4}>
-                <Link to = {`/profiles/${profile.id}`}>
+                <Link to = {`/profiles/${profile.id}/`}>
                     <Avatar src={profile.image} height={40} />
                     {profile.owner}
                 </Link>            

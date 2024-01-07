@@ -23,14 +23,19 @@ function ProfilePage() {
   const setProfileData = useSetProfileData();
   const { pageProfile } = useProfileData();
   const [profile] = pageProfile.results;
+  const is_owner = currentUser?.username === profile?.owner;
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axiosReq.get(`/profiles/${id}/`);
+        const [{ data: pageProfile }] = await Promise.all([
+          axiosReq.get(`/profiles/${id}/`),
+        ]);
+        console.log('pageProfile:', pageProfile);
         setProfileData((prevState) => ({
           ...prevState,
-          pageProfile: { results: [data] },
+          pageProfile: { results: [pageProfile] },
         }));
         setHasLoaded(true);
       } catch (err) {
