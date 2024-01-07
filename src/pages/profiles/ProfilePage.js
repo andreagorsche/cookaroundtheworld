@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
-import Asset from "../../components/Asset";
-import styles from "../../styles/pages/profiles/ProfilePage.module.css";
-import appStyles from "../../App.module.css";
-import btnStyles from "../../styles/components/Button.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
-import { Image } from "react-bootstrap";
 import HeaderImageCircle from "../../components/HeaderImageCircle";
 import Intro from "../../components/Intro";
 import CircleRow from "../../components/CircleRow"

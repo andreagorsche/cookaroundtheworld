@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Col, Row, Container, Alert } from "react-bootstrap";
 
-import chef_group from "../../assets/chef_group.png"; 
 import JoinHeader from "../../assets/images/JoinHeader.jpg"
 
 import styles from "../../styles/pages/auth/LoginRegister.module.css";
