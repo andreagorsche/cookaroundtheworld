@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Media } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
+import { useProfileData, useSetProfileData } from "../contexts/ProfileDataContext";
 import Avatar from './Avatar';
 
 const ProfileCard = () => {

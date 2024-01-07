@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useProfileData, useSetProfileData } from '../contexts/ProfileDataContext';
 import { axiosReq } from "../api/axiosDefaults";
 import Avatar from './Avatar';
+import ProfileCard from './ProfileCard';
 
 
 
@@ -12,7 +13,6 @@ const TopProfiles = () => {
   const { pageProfile } = useProfileData ();
   const { results: profiles } = pageProfile;
   const setProfileData = useSetProfileData();
-  const [hasLoaded, setHasLoaded] = useState(false);
 
     useEffect(() => {
       const fetchProfiles = async () => {
@@ -27,37 +27,26 @@ const TopProfiles = () => {
             ...prevState,
             pageProfile: { results: data },
           }));
-          setHasLoaded(true);
         } catch (err) {
           console.log(err);
         }
       };
-  
-      setHasLoaded(false);
-      fetchProfiles();
+        fetchProfiles();
     }, [setProfileData]);
   
-  return (
-    <div>
+    return (
+      <Container>
+        <h1>Our Top Profiles</h1>
         <Row className="justify-content-between">
-        {hasLoaded ? (
-          profiles.results.map((profile) => (
-            <Col key={profile.id} xs={12} sm={6} md={4} lg={4} xl={4}>
-                <Link to = {`/profiles/${profile.id}/`}>
-                    <Avatar src={profile.image} height={40} />
-                    {profile.owner}
-                </Link>            
-            </Col>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
-      </Row>
-       
-    
-        
-    </div>
-  )
-}
+            profiles.results.map((profile) => (
+              <Col key={profile.id} xs={12} sm={6} md={4} lg={4} xl={4}>
+              <ProfileCard key={profile.id} profile={profile} />
+              </Col>
+            ))
+          ) 
+        </Row>
+      </Container>
+    );
+  }
 
 export default TopProfiles

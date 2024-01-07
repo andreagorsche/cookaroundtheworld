@@ -34,11 +34,6 @@ export const ProfileDataProvider = ({ children }) => {
     handleMount();
   }, [currentUser]);
 
-   // Check if pageProfile.results is empty and provide a loading state or fallback if needed
-   if (profileData.pageProfile.results.length === 0) {
-    return <div>Loading...</div>; // or a loading spinner, etc.
-  }
-
   return (
     <ProfileDataContext.Provider value={profileData}>
       <SetProfileDataContext.Provider value={setProfileData}>

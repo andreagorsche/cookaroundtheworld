@@ -13,6 +13,8 @@ const NavMenu = () => {
   const setCurrentUser = useSetCurrentUser();
 
   console.log(currentUser)
+  console.log('NavMenu is rendering...');
+
 
   const {expanded, setExpanded, ref} = useClickOutsideToggle();
 

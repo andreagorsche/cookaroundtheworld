@@ -11,7 +11,6 @@ import IntroPic2 from '../assets/images/IntroPic2.jpg';
 import TopProfiles from '../components/TopProfiles';
 
 const WelcomePage = () => {
-  console.log('WelcomePage is rendering...');
   return (
     <>
     <Slider
@@ -43,7 +42,6 @@ const WelcomePage = () => {
           image2={IntroPic2}
           />
     <BulletinBoard intro = 'Searching for the newest and hottest dishes? Here are our top 3 recipes at the moment:' backgroundImage={bulletinBoardImg} />
-    <TopProfiles />
   </>
   )
 }
