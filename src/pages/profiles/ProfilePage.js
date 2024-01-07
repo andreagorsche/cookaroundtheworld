@@ -22,7 +22,7 @@ function ProfilePage() {
   const { id } = useParams();
   const setProfileData = useSetProfileData();
   const { pageProfile } = useProfileData();
-  const [profile] = pageProfile.results;
+  const [profile] = pageProfile?.results || [];
   const is_owner = currentUser?.username === profile?.owner;
   
 
@@ -37,32 +37,35 @@ function ProfilePage() {
           ...prevState,
           pageProfile: { results: [pageProfile] },
         }));
-        setHasLoaded(true);
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
+    setHasLoaded(true);
   }, [id, setProfileData]);
 
-
-
   return (
-  <>
-    <HeaderImageCircle HeaderTitle={profile?.owner} imageUrl={profile?.image} />
-    <Intro
-          firstWord="Chef"
-          secondWord={profile?.owner}
-          secondPhrase=""
-          firstParagraph={profile?.bio}
+    <>
+      {hasLoaded ? (
+        <>
+          <HeaderImageCircle HeaderTitle={profile?.owner} imageUrl={profile?.image} />
+          <Intro
+            firstWord="Chef"
+            secondWord={profile?.owner}
+            secondPhrase=""
+            firstParagraph={profile?.bio}
           />
-      <CircleRow
-       data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
-       labels={['Recipes', 'Followers', 'Following']}
-        />
-        <RecipeCard />
+          <CircleRow
+            data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
+            labels={['Recipes', 'Followers', 'Following']}
+          />
+          <RecipeCard />
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
     </>
-    
   );
 }
 
