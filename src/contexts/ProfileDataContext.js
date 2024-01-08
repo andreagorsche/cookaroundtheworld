@@ -11,6 +11,7 @@ export const useSetProfileData = () => useContext(SetProfileDataContext);
 export const ProfileDataProvider = ({ children }) => {
   const [profileData, setProfileData] = useState({
     pageProfile: { results: [] },
+    topProfiles: { results: [] },
   });
 
   const currentUser = useCurrentUser();
@@ -24,6 +25,7 @@ export const ProfileDataProvider = ({ children }) => {
             ...prevState,
             pageProfile: { results: [data] },
           }));
+          console.log("Updated profileData:", profileData);
         }
       } catch (err) {
         console.error('Error fetching profile data:', err);
@@ -33,6 +35,8 @@ export const ProfileDataProvider = ({ children }) => {
   
     handleMount();
   }, [currentUser]);
+
+  
 
   return (
     <ProfileDataContext.Provider value={profileData}>

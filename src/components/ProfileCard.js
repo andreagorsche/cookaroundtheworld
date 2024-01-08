@@ -6,24 +6,26 @@ import Avatar from './Avatar';
 
 const ProfileCard = () => {
   const { pageProfile } = useProfileData();
-  const { results: profiles } = pageProfile;
+  const { pageProfile: { results } } = useProfileData();
 
   return (
-    <div>
+    <>
+      {results.map((profile) => (
         <Card key={profile.id} className="mb-3">
           <Card.Body>
             <Media className="align-items-center justify-content-between">
               <Link to={`/profiles/${profile.id}`}>
-                <Avatar src={profile.profile_image} height={40} />
+                <Avatar src={profile.image} height={40} />
                 {profile.owner}
                 {profile.bio}
               </Link>
             </Media>
           </Card.Body>
         </Card>
-      ))
-    </div>
-  );
+      ))}
+      </>
+     )
 };
+
 
 export default ProfileCard;
