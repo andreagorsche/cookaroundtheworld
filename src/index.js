@@ -13,7 +13,9 @@ ReactDOM.render(
     <Router>
         <CurrentUserProvider>
           <ProfileDataProvider>
+            <RecipeDataProvider>
             <App />
+            </RecipeDataProvider>
           </ProfileDataProvider>
         </CurrentUserProvider>
       </Router>
