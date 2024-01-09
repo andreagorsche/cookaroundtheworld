@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import { axiosReq } from "../../api/axiosDefaults";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
 import appStyles from "../../App.module.css";
-
 
 import Header from "../../components/Header";
 import FoodFeedHeader  from "../../assets/images/FoodFeedHeader.jpeg"
@@ -14,11 +14,35 @@ import RecipeCard from "../../components/RecipeCard";
 import Asset from "../../components/Asset";
 import NoCooking from "../../assets/images/no_cooking.png"
 
-import { useRecipeData } from '../../contexts/RecipeDataContext';
-
+import { useRecipeData, useSetRecipeData } from '../../contexts/RecipeDataContext';
+import { useParams } from "react-router";
 
 function FoodFeed({message}) {
-  const recipes = useRecipeData();
+const recipes = useRecipeData();
+const setRecipeData = useSetRecipeData();
+const { id } = useParams();
+const [hasLoaded, setHasLoaded] = useState(false);
+
+useEffect(() => {
+  const fetchRecipes = async () => {
+    try {
+      const { data } = await axiosReq.get(`/recipes/?${id}`);
+      
+      setRecipeData((prevData) => ({
+        ...prevData,
+        results: data.results,
+      }));
+
+      setHasLoaded(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  setHasLoaded(false);
+  fetchRecipes();
+}, [id, pathname, setRecipeData]);
+
 
   return (
     <>

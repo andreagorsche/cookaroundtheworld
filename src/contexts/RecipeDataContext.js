@@ -14,17 +14,15 @@ export const RecipeDataProvider = ({ children }) => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const { data } = await axiosReq.get(`/recipes/?${id}`);
-        setRecipes(data);
-        setHasLoaded(true);
-      } catch (err) {
-        console.log(err);
+        const { data } = await axiosReq.get("/api/recipes");
+        setRecipeData(data);
+      } catch (error) {
+        console.error("Error fetching recipe data:", error);
       }
     };
 
-    setHasLoaded(false);
     fetchRecipes();
-  }, [id, pathname]);
+  }, []);
 
   return (
     <RecipeDataContext.Provider value={recipeData}>
