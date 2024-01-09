@@ -15,13 +15,14 @@ import Asset from "../../components/Asset";
 import NoCooking from "../../assets/images/no_cooking.png"
 
 import { useRecipeData, useSetRecipeData } from '../../contexts/RecipeDataContext';
-import { useParams } from "react-router";
+import { useParams, useLocation } from "react-router";
 
 function FoodFeed({message}) {
 const recipes = useRecipeData();
 const setRecipeData = useSetRecipeData();
 const { id } = useParams();
 const [hasLoaded, setHasLoaded] = useState(false);
+const { pathname } = useLocation();
 
 useEffect(() => {
   const fetchRecipes = async () => {
