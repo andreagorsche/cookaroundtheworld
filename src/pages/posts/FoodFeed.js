@@ -8,10 +8,12 @@ import appStyles from "../../App.module.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { axiosReq } from "../../api/axiosDefaults";
 
+import Header from "../../components/Header";
+import FoodFeedHeader  from "../../assets/images/FoodFeedHeader.jpeg"
+
 import RecipeCard from "../../components/RecipeCard";
 import Asset from "../../components/Asset";
 import NoCooking from "../../assets/images/no_cooking.png"
-
 
 
 function FoodFeed({message, id}) {
@@ -35,7 +37,9 @@ function FoodFeed({message, id}) {
   }, [id, pathname]);
 
   return (
-    <Row className="h-100">
+    <>
+    <Header imageUrl={FoodFeedHeader} />
+    <Row className='d-flex justify-content-center h-100'>
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         {hasLoaded ? (
           <>
@@ -58,7 +62,7 @@ function FoodFeed({message, id}) {
         )}
       </Col>
     </Row>
+    </>
   );
-  
 }
 export default FoodFeed;
