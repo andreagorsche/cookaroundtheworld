@@ -36,10 +36,10 @@ function BulletinBoard({ intro, backgroundImage }) {
   };
 
   return (
-    <Container style={bgStyle} className={styles.bulletinboard}>
+    <Container fluid style={bgStyle} className={styles.bulletinboard}>
       <h1>Bulletin Board</h1>
       {intro && <p>{intro}</p>}
-      <Row className="justify-content-between">
+      <Row className="align-content-center justify-content-center">
         {hasLoaded ? (
           recipes.results.map((recipe) => (
             <Col key={recipe.id} xs={12} sm={6} md={4} lg={4} xl={4}>

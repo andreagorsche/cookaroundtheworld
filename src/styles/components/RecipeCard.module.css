@@ -1,10 +1,3 @@
-/* RecipeCard.css */
-
-.card-container {
-    position: relative;
-    width: 18rem;
-  }
-  
   .pin {
     position: absolute;
     top: -10px; 
@@ -17,7 +10,15 @@
   }
   
   .recipeImage {
-    width: 100%; 
-    height: auto;
-    max-height: 200px;
+    width: 15vw; 
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   } 
+
+  .recipeCard{
+    width: 20rem;
+    height: 30rem;
+    margin: 5%;
+    }

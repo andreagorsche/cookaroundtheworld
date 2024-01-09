@@ -2,7 +2,6 @@
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
-        width: 2000px;
         margin: 0;
         padding: 0;
       }
@@ -11,3 +10,13 @@
 .bulletinboard p {
   margin: 0; /* Reset margins for the heading and paragraph */
 }
+
+.bulletinboard h1 {
+  font-size: 4rem;
+  color: black;
+}
+
+.bulletinboard p {
+  font-size: 2rem;
+  color: black;
+} 
