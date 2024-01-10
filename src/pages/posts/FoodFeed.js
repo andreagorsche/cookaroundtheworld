@@ -9,7 +9,7 @@ import appStyles from "../../App.module.css";
 
 import Header from "../../components/Header";
 import FoodFeedHeader  from "../../assets/images/FoodFeedHeader.jpeg"
-
+import SearchBar from "../../components/SearchBar";
 import RecipeCard from "../../components/RecipeCard";
 import Asset from "../../components/Asset";
 import NoCooking from "../../assets/images/no_cooking.png"
@@ -48,6 +48,7 @@ useEffect(() => {
   return (
     <>
     <Header imageUrl={FoodFeedHeader} />
+    <SearchBar />
     <Row className='d-flex justify-content-center h-100'>
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         {hasLoaded ? (
