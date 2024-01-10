@@ -6,6 +6,7 @@ import { axiosReq } from '../api/axiosDefaults';
 
 const SearchBar = () => {
   const setRecipeData = useSetRecipeData();
+  const cuisineChoices = ['american', 'austrian', 'caribbean', 'chinese', 'french', 'german', 'greek', 'indian', 'italian', 'mediterranean', 'mexican', 'slovak', 'spanish']
 
   const handleCuisineChange = async (cuisine) => {
     try {
@@ -29,45 +30,11 @@ const SearchBar = () => {
           Pick Cuisine
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => handleCuisineChange('american')}>
-            American
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleCuisineChange('austrian')}>
-            Austrian
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleCuisineChange('caribbean')}>
-            Caribbean
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleCuisineChange('chinese')}>
-            Chinese
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleCuisineChange('french')}>
-            French
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleCuisineChange('german')}>
-            German
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleCuisineChange('greek')}>
-            Greek
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleCuisineChange('indian')}>
-            Indian
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleCuisineChange('italian')}>
-            Italian
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleCuisineChange('mediteranean')}>
-            Mediteranean
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleCuisineChange('mexican')}>
-            Mexican
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleCuisineChange('slovak')}>
-            Slovak
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => handleCuisineChange('spanish')}>
-            Spanish          
-          </Dropdown.Item>
+          {cuisineChoices.map((cuisine, index) => (
+            <Dropdown.Item key={index} onClick={() => handleCuisineChange(cuisine)}>
+              {cuisine.charAt(0).toUpperCase() + cuisine.slice(1)}
+            </Dropdown.Item>
+          ))}
         </Dropdown.Menu>
       </Dropdown>
     </>
