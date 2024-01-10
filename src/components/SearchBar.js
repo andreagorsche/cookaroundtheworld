@@ -40,11 +40,9 @@ const SearchBar = () => {
     }
   };
 
-  const handleIngredientChange = async (ingredients) => {
-   
+  const handleIngredientsChange = async (ingredients) => {
     try {
-      
-      // Fetch recipes with the selected ingredient filter
+      // Fetch recipes with the selected ingredients filter
       const { data } = await axiosReq.get(`/recipes/?ingredients=${ingredients}`);
       
       setRecipeData((prevData) => ({
@@ -55,6 +53,7 @@ const SearchBar = () => {
       console.log(err);
     }
   };
+
 
   
   return (
@@ -74,7 +73,7 @@ const SearchBar = () => {
       <Select
         isMulti
         options={popularIngredients}
-        onChange={handleIngredientChange}
+        onChange={handleIngredientsChange}
         placeholder="Select Ingredients"
       />
     </>
