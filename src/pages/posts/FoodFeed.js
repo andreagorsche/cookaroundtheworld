@@ -53,7 +53,7 @@ useEffect(() => {
       <Col className="py-2 p-0 p-lg-2" lg={12}>
         {hasLoaded ? (
           <>
-            {recipes.results.length ? (
+            {recipes.results?.length ? (
               recipes.results.map((recipe) => (
                 <Col key={recipe.id} xs={12} sm={6} md={4} lg={4} xl={4}>
                 <RecipeCard key={recipe.id} recipe={recipe} />

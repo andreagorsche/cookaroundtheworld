@@ -40,10 +40,14 @@ const SearchBar = () => {
     }
   };
 
-  const handleIngredientsChange = async (ingredients) => {
+  const handleIngredientsChange = async (selectedIngredients) => {
     try {
+
+      // Format the selected ingredients as a comma-separated list
+      const ingredientsList = selectedIngredients.map(ingredient => ingredient.value).join(',');
+
       // Fetch recipes with the selected ingredients filter
-      const { data } = await axiosReq.get(`/recipes/?ingredients=${ingredients}`);
+      const { data } = await axiosReq.get(`/recipes/?ingredients=${ingredientsList}`);
       
       setRecipeData((prevData) => ({
         ...prevData,
