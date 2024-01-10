@@ -50,7 +50,7 @@ useEffect(() => {
     <Header imageUrl={FoodFeedHeader} />
     <SearchBar />
     <Row className='d-flex justify-content-center h-100'>
-      <Col className="py-2 p-0 p-lg-2" lg={8}>
+      <Col className="py-2 p-0 p-lg-2" lg={12}>
         {hasLoaded ? (
           <>
             {recipes.results.length ? (
