@@ -7,7 +7,7 @@ import Select from 'react-select';
 
 const SearchBar = () => {
   const setRecipeData = useSetRecipeData();
-  const [filters, setFilters] = useState({ keyword: '' });
+  const [filters, setFilters] = useState({ keyword: '', cuisine: '', ingredients: [] });
 
   const cuisineChoices = ['american', 'austrian', 'caribbean', 'chinese', 'french', 'german', 'greek', 'indian', 'italian', 'mediterranean', 'mexican', 'slovak', 'spanish']
   const popularIngredients = [
@@ -51,7 +51,7 @@ const fetchRecipesWithFilters = async (filterOptions) => {
   };
 
   const handleSearch = () => {
-    fetchRecipesWithFilters(filters);
+    fetchRecipesWithFilters(...filters);
   };
 
 
