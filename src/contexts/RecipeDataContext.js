@@ -19,6 +19,7 @@ export const RecipeDataProvider = ({ children }) => {
     const fetchRecipes = async () => {
       try {
         const { data } = await axiosReq.get(`/recipes`);
+        console.log("Fetched data:", data); 
         setRecipeData({pageRecipe:{results: data}});
       } catch (error) {
         console.error("Error fetching recipe data:", error);

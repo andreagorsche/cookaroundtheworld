@@ -44,11 +44,23 @@ useEffect(() => {
   fetchRecipes();
 }, [id, pathname, setRecipeData]);
 
+const onSearch = async (searchTerm) => {
+  try {
+    const { data } = await axiosReq.get(`/recipes/?search=${searchTerm}`);
+    setRecipeData((prevData) => ({
+      ...prevData,
+      results: data.results,
+    }));
+    setHasLoaded(true);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   return (
     <>
     <Header imageUrl={FoodFeedHeader} />
-    <SearchBar />
+    <SearchBar onSearch={onSearch} />
     <Row className='d-flex justify-content-center h-100'>
       <Col className="py-2 p-0 p-lg-2" lg={12}>
         {hasLoaded ? (
