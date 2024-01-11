@@ -46,18 +46,19 @@ const fetchRecipesWithFilters = async (filterOptions) => {
   }
 };
 
-  const handleChange = (e) => {
+  const handleKeywordChange = (e) => {
     setFilters({ ...filters, keyword: e.target.value });
+    fetchRecipesWithFilters({ ...filters, keyword: e.target.value });
   };
 
-  const handleSearch = () => {
-    fetchRecipesWithFilters(...filters);
+  const searchRecipes = () => {
+    fetchRecipesWithFilters(filters);
   };
 
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      handleSearch();
+      searchRecipes();
     }
   };
 
@@ -99,12 +100,12 @@ const fetchRecipesWithFilters = async (filterOptions) => {
   return (
     <>
      <input
-    type="search"
+    type="text"
     placeholder="Search by keyword"
-    onChange={handleChange}
+    onChange={handleKeywordChange}
     onKeyPress={handleKeyPress}
     />
-    <button onClick={handleSearch}>Search</button>
+    <button onClick={searchRecipes}>Search</button>
 
       <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
