@@ -1,12 +1,14 @@
 // SearchBar.js
 import React, { useState, useEffect } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { useSetRecipeData } from '../contexts/RecipeDataContext';
+import { RecipeDataProvider, useSetRecipeData } from '../contexts/RecipeDataContext';
 import { axiosReq } from '../api/axiosDefaults';
 import Select from 'react-select';
 
 const SearchBar = () => {
   const setRecipeData = useSetRecipeData();
+  const [filters, setFilters] = useState({ keyword: '' });
+
   const cuisineChoices = ['american', 'austrian', 'caribbean', 'chinese', 'french', 'german', 'greek', 'indian', 'italian', 'mediterranean', 'mexican', 'slovak', 'spanish']
   const popularIngredients = [
     { value: 'pasta', label: 'Pasta' },
@@ -26,6 +28,40 @@ const SearchBar = () => {
     { value: 'cheese', label: 'Cheese' },
   ]
 
+const fetchRecipesWithFilters = async (filterOptions) => {
+  try {
+    const { cuisine, ingredients, keyword } = filterOptions;
+
+    // Construct the endpoint with all the filters
+    const endpoint = `/recipes/?cuisine=${cuisine || ''}&ingredients=${ingredients || ''}&keyword=${keyword || ''}`;
+    
+    const { data } = await axiosReq.get(endpoint);
+
+    setRecipeData((prevData) => ({
+      ...prevData,
+      results: data.results,
+    }));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+  const handleChange = (e) => {
+    setFilters({ ...filters, keyword: e.target.value });
+  };
+
+  const handleSearch = () => {
+    fetchRecipesWithFilters(filters);
+  };
+
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  
     const handleCuisineChange = async (cuisine) => {
     try {
       // Fetch recipes with the selected cuisine filter
@@ -62,6 +98,14 @@ const SearchBar = () => {
   
   return (
     <>
+     <input
+    type="search"
+    placeholder="Search by keyword"
+    onChange={handleChange}
+    onKeyPress={handleKeyPress}
+    />
+    <button onClick={handleSearch}>Search</button>
+
       <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
           Pick Cuisine
