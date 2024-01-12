@@ -1,6 +1,6 @@
 // RecipePage.js
 import React, { useEffect, useState } from 'react';
-import { useParams, useHIstory } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import { axiosReq } from '../../api/axiosDefaults';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -10,10 +10,10 @@ import Intro from '../../components/Intro';
 import RatingVote from '../../components/RatingVote';
 import { useCurrentUser } from '../../contexts/CurrentUserContext'; 
 import { createStore, useReducer, useSelector, useDispatch } from 'react-redux';
-import { axiosReq } from '../../api/axiosDefaults';
 
 const initialState = {
   recipeData: { results: [] },
+  editing: false,
   editingTitle: false,
   newTitle: '',
   editingDescription: false,
@@ -26,6 +26,7 @@ const initialState = {
 
 const actionTypes = {
   SET_RECIPE_DATA: 'SET_RECIPE_DATA',
+  SET_EDITING: 'SET_EDITING',
   SET_EDITING_TITLE: 'SET_EDITING_TITLE',
   SET_NEW_TITLE: 'SET_NEW_TITLE',
   SET_EDITING_DESCRIPTION: 'SET_EDITING_DESCRIPTION',
@@ -40,6 +41,8 @@ const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_RECIPE_DATA:
       return { ...state, recipeData: action.payload };
+    case actionTypes.SET_EDITING:
+      return { ...state, editing: action.payload };
     case actionTypes.SET_EDITING_TITLE:
       return { ...state, editingTitle: action.payload };
     case actionTypes.SET_NEW_TITLE:
@@ -117,7 +120,6 @@ function RecipePage() {
     handleMount();
   }, [id]);
 
-  
   const isEditingTitle = useSelector(state => state.editingTitle);
   const newTitle = useSelector(state => state.newTitle);
   const isEditingDescription = useSelector(state => state.editingDescription);
@@ -128,6 +130,7 @@ function RecipePage() {
   const newImage = useSelector(state => state.newImage);
 
   const handleEditClick = () => {
+    dispatch({ type: actionTypes.SET_EDITING, payload: true });
     dispatch({ type: actionTypes.SET_EDITING_TITLE, payload: true });
     dispatch({ type: actionTypes.SET_EDITING_DESCRIPTION, payload: true });
     dispatch({ type: actionTypes.SET_EDITING_INGREDIENTS, payload: true });
@@ -172,17 +175,23 @@ function RecipePage() {
         secondParagraph={isEditingDescription ? newDescription : description}
         heading="Ingredients"
         timeEffort={time_effort}
-        listItems={isEditingIngredients ? newIngredients.split(',').map(item => item.trim()) : ingredientsArray}
+        listItems={newIngredients.split(',').map(item => item.trim())}
         />
       <Row className="justify-content-center">
         <Col className="py-2 p-0 p-lg-2" lg={8}>
         <Container className="text-center">
           {is_owner ? (
-            <button onClick={handleEditClick}>Edit</button>
+            <>
+              {state.editing ? (
+                <button onClick={handleSubmit}>Save</button>
+              ) : (
+                <button onClick={handleEditClick}>Edit</button>
+              )}
+            </>
           ) : (
             <RatingVote recipeId={id} />
           )}
-          </Container>
+        </Container>
           <Container className="text-center">
             Comments
           </Container>
