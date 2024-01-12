@@ -1,14 +1,11 @@
 import React from 'react';
 import RecipeDisplay from './RecipeDisplay';
 import RecipeEdit from './RecipeEdit';
-import { useRecipeData } from '../contexts/RecipeDataContext';
-import { useSelector } from 'react-redux';
+import { useRecipeData, useEditRecipe } from '../../contexts/RecipeDataContext';
 
 const RecipePage = () => {
   const { pageRecipe } = useRecipeData();
-
-  // Conditionally render RecipeDisplay or RecipeEdit based on Redux state
-  const isEditing = useSelector((state) => state.editing);
+  const { isEditing } = useEditRecipe();
 
   return (
     <div>
@@ -18,4 +15,4 @@ const RecipePage = () => {
   );
 };
 
-export default Recipe
+export default RecipePage

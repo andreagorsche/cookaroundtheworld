@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { axiosReq } from '../../api/axiosDefaults';
 import Col from 'react-bootstrap/Col';
@@ -7,10 +7,17 @@ import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
 import RatingVote from '../../components/RatingVote';
+import { useRecipeData, useSetRecipeData, useEditRecipe } from '../../contexts/RecipeDataContext'; 
+import { useCurrentUser } from '../../contexts/CurrentUserContext'; 
 
 function RecipeDisplay() {
-  const { id } = useParams();
-  const [recipeData, setRecipeData] = useState({ results: [] });
+    const { id } = useParams();
+    const { pageRecipe } = useRecipeData();
+    const setRecipeData = useSetRecipeData(); 
+    const { handleEditClick } = useEditRecipe(); 
+    const currentUser = useCurrentUser();
+    const owner = pageRecipe.results[0]?.owner;
+    const is_owner = currentUser?.username === owner;
 
   useEffect(() => {
     const handleMount = async () => {
@@ -26,9 +33,6 @@ function RecipeDisplay() {
     handleMount();
   }, [id]);
 
-  const handleEditClick = () => {
-    // Redirect to the recipe edit page
-    history.push(`/recipes/${id}/edit`);
 
   const {
     title,
@@ -36,9 +40,9 @@ function RecipeDisplay() {
     description,
     time_effort,
     ingredients,
-  } = recipeData.results[0] || {};
+  } = pageRecipe.results[0] || {};
   const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
-  const headerImageUrl = recipeData.results[0]?.image;
+  const headerImageUrl = pageRecipe.results[0]?.image;
 
   return (
     <>

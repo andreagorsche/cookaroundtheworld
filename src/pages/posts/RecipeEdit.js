@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { useRecipeData, useSetRecipeData } from '../contexts/RecipeDataContext';
-import { axiosReq } from '../api/axiosDefaults';
+import { useRecipeData, useSetRecipeData, useEditRecipe } from '../../contexts/RecipeDataContext';
+import { axiosReq } from '../../api/axiosDefaults';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
@@ -11,11 +11,15 @@ import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import Alert from 'react-bootstrap/Alert';
 import upload from "../../assets/upload.png";
+import Asset from "../../components/Asset.js";
+import { useParams } from 'react-router';
 
 const RecipeEdit = () => {
   const { pageRecipe } = useRecipeData();
   const setRecipeData = useSetRecipeData();
+  const { isEditing, handleCancelEdit } = useEditRecipe();
   const imageInput = useRef(null);
+  const { id } = useParams();
 
   const [newTitle, setNewTitle] = useState(pageRecipe.results[0]?.title || '');
   const [newDescription, setNewDescription] = useState(pageRecipe.results[0]?.description || '');
@@ -52,6 +56,7 @@ const RecipeEdit = () => {
       // Update the recipe data context after successful submission
       const { data } = await axiosReq.get(`/recipes/${id}`);
       setRecipeData({ pageRecipe: { results: [data] } });
+       handleCancelEdit();
     } catch (error) {
       console.error('Error submitting edited data:', error);
       // Handle error and set appropriate error messages
@@ -69,7 +74,6 @@ const RecipeEdit = () => {
           </figure>
           <div>
             <Form.Label
-              className={`${btnStyles.Button} ${btnStyles.Blue} btn`}
               htmlFor="image-upload"
             >
               Change the image
