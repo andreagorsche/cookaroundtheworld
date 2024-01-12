@@ -6,7 +6,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 
-import { useRecipeData, useSetRecipeData } from "../../contexts/RecipeDataContext"; 
 import { useHistory } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 
@@ -31,68 +30,49 @@ function CreateRecipeForm() {
 
   const [errors, setErrors] = useState({});
   
-  const recipeData = useRecipeData();
-  const setRecipeData = useSetRecipeData(); 
-  
+  const [postRecipe, setRecipeData] = useState({
+    title: "",
+    cuisine: "",
+    timeeffort: "",
+    ingredients: "",
+    description: "",
+    image: "",
+    });
+  const { title, cuisine, timeeffort, ingredients, description, image } = postRecipe;
+
   const imageInput = useRef(null);
   const history = useHistory();
   
   const handleChange = (event) => {
     setRecipeData({
-      ...recipeData,
-      pageRecipe: {
-        results: [
-          ...recipeData.pageRecipe.results,
-          {
-            ...recipeData.pageRecipe.results[recipeData.pageRecipe.results.length - 1],
-            [event.target.name]: event.target.value,
-          },
-        ],
-      },
+      ...postRecipe,
+      [event.target.name]: event.target.value,
     });
   };
 
   const handleChangeImage = (event) => {
     if (event.target.files.length) {
-      URL.revokeObjectURL(recipeData.pageRecipe.results[recipeData.pageRecipe.results.length - 1].image);
+      URL.revokeObjectURL(image);
       setRecipeData({
-        ...recipeData,
-        pageRecipe: {
-          results: [
-            ...recipeData.pageRecipe.results,
-            {
-              ...recipeData.pageRecipe.results[recipeData.pageRecipe.results.length - 1],
-              image: URL.createObjectURL(event.target.files[0]),
-            },
-          ],
-        },
+        ...postRecipe,
+        image: URL.createObjectURL(event.target.files[0]),
       });
     }
   };
-
-  // Access the latest recipe data
-  const latestRecipe =
-  recipeData.pageRecipe.results.length > 0
-    ? recipeData.pageRecipe.results[recipeData.pageRecipe.results.length - 1]
-    : null;
-    const image = latestRecipe ? latestRecipe.image : null;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
 
-    formData.append("title", latestRecipe.title);
-    formData.append("cuisine", latestRecipe.cuisine);
-    formData.append("timeeffort", latestRecipe.timeeffort);
-    formData.append("ingredients", latestRecipe.ingredients);
-    formData.append("description", latestRecipe.description);
-    formData.append("image", recipeData.pageRecipe.results[recipeData.pageRecipe.results.length - 1].image);
+    formData.append("title", title);
+    formData.append("cuisine", cuisine);
+    formData.append("timeeffort", timeeffort);
+    formData.append("ingredients", ingredients);
+    formData.append("description", description);
+    formData.append("image", imageInput.current.files[0]);
 
     try {
       const { data } = await axiosReq.post("/recipes/", formData);
-      setRecipeData({
-        pageRecipe: { results: [...recipeData.pageRecipe.results, data] },
-      }); 
       history.push(`/recipes/${data.id}`);
     } catch (err) {
       console.log(err);
@@ -109,7 +89,7 @@ function CreateRecipeForm() {
         <Form.Control
           type="text"
           name="title"
-          value={recipeData.pageRecipe.results[recipeData.pageRecipe.results.length - 1].title}          
+          value={title}
           onChange={handleChange}
         />
       </Form.Group>
@@ -147,7 +127,7 @@ function CreateRecipeForm() {
         <Form.Control
           type="text"
           name="timeeffort"
-          value={recipeData.pageRecipe.results[recipeData.pageRecipe.results.length - 1].timeeffort}
+          value={timeeffort}
           onChange={handleChange}
         />
       </Form.Group>
@@ -161,7 +141,7 @@ function CreateRecipeForm() {
         <Form.Control
           type="text"
           name="ingredients"
-          value={recipeData.pageRecipe.results[recipeData.pageRecipe.results.length - 1].ingredients}
+          value={ingredients}
           onChange={handleChange}
         />
       </Form.Group>
@@ -176,7 +156,7 @@ function CreateRecipeForm() {
           as="textarea"
           rows={6}
           name="description"
-          value={recipeData.pageRecipe.results[recipeData.pageRecipe.results.length - 1].description}
+          value={description}
           onChange={handleChange}
         />
       </Form.Group>
