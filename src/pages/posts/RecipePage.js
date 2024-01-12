@@ -1,6 +1,6 @@
 // RecipePage.js
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useHIstory } from 'react-router';
 import { axiosReq } from '../../api/axiosDefaults';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
