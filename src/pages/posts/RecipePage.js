@@ -166,14 +166,14 @@ function RecipePage() {
       <Header imageUrl={headerImageUrl} />
       <Intro
         firstWord="Cooking"
-        secondWord={title}
+        secondWord={isEditingTitle ? newTitle : title}
         secondPhrase="with us"
         firstParagraph={cuisine}
-        secondParagraph={description}
+        secondParagraph={isEditingDescription ? newDescription : description}
         heading="Ingredients"
         timeEffort={time_effort}
-        listItems={ingredientsArray}
-      />
+        listItems={isEditingIngredients ? newIngredients.split(',').map(item => item.trim()) : ingredientsArray}
+        />
       <Row className="justify-content-center">
         <Col className="py-2 p-0 p-lg-2" lg={8}>
         <Container className="text-center">
