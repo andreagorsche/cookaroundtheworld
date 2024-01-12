@@ -109,10 +109,10 @@ function RecipePage() {
   const newImage = useSelector(state => state.newImage);
 
   const handleEditClick = () => {
-    handleTitleChange
-    handleDescriptionChange
-    handleIngredientsChange
-    handleImageChange
+    dispatch({ type: actionTypes.SET_EDITING_TITLE, payload: true });
+    dispatch({ type: actionTypes.SET_EDITING_DESCRIPTION, payload: true });
+    dispatch({ type: actionTypes.SET_EDITING_INGREDIENTS, payload: true });
+    dispatch({ type: actionTypes.SET_EDITING_IMAGE, payload: true });
   };
 
  
@@ -127,9 +127,16 @@ function RecipePage() {
   function handleIngredientsChange(event) {
     dispatch({ type: 'actionTypes.SET_EDITING_INGREDIENTS', payload: event.target.value });
 
-  function handleImageChange(event) {
-    dispatch({ type: 'actionTypes.SET_EDITING_IMAGE', });
-
+    function handleChangeImage = (event) => {
+      if (event.target.files.length) {
+        URL.revokeObjectURL(image);
+        setPostData({
+          ...postData,
+          image: URL.createObjectURL(event.target.files[0]),
+        });
+      }
+    };
+    
   return (
     <>
       <Header imageUrl={headerImageUrl} />
