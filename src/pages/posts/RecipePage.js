@@ -10,6 +10,7 @@ import Intro from '../../components/Intro';
 import RatingVote from '../../components/RatingVote';
 import { useCurrentUser } from '../../contexts/CurrentUserContext'; 
 import { createStore, useReducer, useSelector, useDispatch } from 'react-redux';
+import { axiosReq } from '../../api/axiosDefaults';
 
 const initialState = {
   recipeData: { results: [] },
@@ -55,7 +56,25 @@ const reducer = (state, action) => {
       return { ...state, editingIngredients: action.payload };
     case actionTypes.SET_NEW_INGREDIENTS:
       return { ...state, newIngredients: action.payload };
-    default:
+      case actionTypes.SUBMIT_EDITED_DATA:
+      try {
+        const id = state.recipeId;
+        // Create a FormData object with the edited data
+        const formData = new FormData();
+        formData.append('title', state.newTitle);
+        formData.append('description', state.newDescription);
+        formData.append('ingredients', state.newIngredients);
+        // ... add other fields ...
+
+        // Make the axios request to update the data
+        await axiosReq.put(`/recipes/${id}/`, formData);
+
+        // Reset the form state after successful submission
+        return initialState;
+      } catch (error) {
+        // Handle error if the submission fails
+        console.error('Error submitting edited data:', error);
+     default:
       return state;
   }
 };
@@ -117,15 +136,15 @@ function RecipePage() {
 
  
    function handleTitleChange(event) {
-    dispatch({ type: 'actionTypes.SET_EDITING_TITLE', payload: event.target.value });
+    dispatch({ type: 'actionTypes.SET_NEW_TITLE', payload: event.target.value });
   }
  
   function handleDescriptionChange(event) {
-    dispatch({ type: 'actionTypes.SET_EDITING_DESCRIPTION', payload: event.target.value });
+    dispatch({ type: 'actionTypes.SET_NEW_DESCRIPTION', payload: event.target.value });
   }
  
   function handleIngredientsChange(event) {
-    dispatch({ type: 'actionTypes.SET_EDITING_INGREDIENTS', payload: event.target.value });
+    dispatch({ type: 'actionTypes.SET_NEW_INGREDIENTS', payload: event.target.value });
 
     function handleChangeImage = (event) => {
       if (event.target.files.length) {
@@ -136,7 +155,12 @@ function RecipePage() {
         });
       }
     };
-    
+
+    const handleSubmit = () => {
+      dispatch({ type: actionTypes.SUBMIT_EDITED_DATA });
+    };
+  
+
   return (
     <>
       <Header imageUrl={headerImageUrl} />
