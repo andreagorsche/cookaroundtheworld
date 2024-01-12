@@ -9,6 +9,7 @@ import Header from '../../components/Header';
 import Intro from '../../components/Intro';
 import RatingVote from '../../components/RatingVote';
 import { useCurrentUser } from '../../contexts/CurrentUserContext'; 
+import { createStore, useReducer, useSelector, useDispatch } from 'react-redux';
 
 const initialState = {
   recipeData: { results: [] },
@@ -59,11 +60,28 @@ const reducer = (state, action) => {
   }
 };
 
+const store = createStore(reducer);
+
 function RecipePage() {
   
   const { id } = useParams();
   const [recipeData, setRecipeData] = useState({ results: [] });
   const currentUser = useCurrentUser();
+  const owner = recipeData.results[0]?.owner;
+  const is_owner = currentUser?.username === owner;
+
+  const {
+    title,
+    cuisine,
+    description,
+    time_effort,
+    ingredients,
+    } = recipeData.results[0] || {};
+  
+    const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
+  
+    const headerImageUrl = recipeData.results[0]?.image;
+  
 
 
   useEffect(() => {
@@ -80,26 +98,26 @@ function RecipePage() {
     handleMount();
   }, [id]);
 
-
-  const {
-    title,
-    cuisine,
-    description,
-    time_effort,
-    ingredients,
-    } = recipeData.results[0] || {};
-  
-    const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
-  
-    const headerImageUrl = recipeData.results[0]?.image;
-  
-    // Declare owner here to avoid the Uncaught ReferenceError
-  const owner = recipeData.results[0]?.owner;
-
-  // Use a different variable name to avoid redeclaration
-  const is_owner = currentUser?.username === owner;
+  const handleEditClick = () => {
+    // Redirect to the recipe edit page
+    history.push(`/recipes/${id}/edit`);
+  };
 
  
+   function handleTitleChange(event) {
+    dispatch({ type: 'actionTypes.SET_EDITING_TITLE', payload: event.target.value });
+  }
+ 
+  function handleDescriptionChange(event) {
+    dispatch({ type: 'actionTypes.SET_EDITING_DESCRIPTION', payload: event.target.value });
+  }
+ 
+  function handleIngredientsChange(event) {
+    dispatch({ type: 'actionTypes.SET_EDITING_INGREDIENTS', payload: event.target.value });
+
+  function handleImageChange(event) {
+    dispatch({ type: 'actionTypes.SET_EDITING_IMAGE', });
+
   return (
     <>
       <Header imageUrl={headerImageUrl} />
