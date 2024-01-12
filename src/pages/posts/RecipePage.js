@@ -9,7 +9,8 @@ import Header from '../../components/Header';
 import Intro from '../../components/Intro';
 import RatingVote from '../../components/RatingVote';
 import { useCurrentUser } from '../../contexts/CurrentUserContext'; 
-import { createStore, useReducer, useSelector, useDispatch } from 'react-redux';
+import { applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 const initialState = {
   recipeData: { results: [] },
@@ -35,7 +36,10 @@ const actionTypes = {
   SET_NEW_IMAGE: 'SET_NEW_IMAGE',
   SET_EDITING_INGREDIENTS: 'SET_EDITING_INGREDIENTS',
   SET_NEW_INGREDIENTS: 'SET_NEW_INGREDIENTS',
-};
+  SUBMIT_EDITED_DATA_START: 'SUBMIT_EDITED_DATA_START',
+  SUBMIT_EDITED_DATA_SUCCESS: 'SUBMIT_EDITED_DATA_SUCCESS',
+  SUBMIT_EDITED_DATA_FAILURE: 'SUBMIT_EDITED_DATA_FAILURE',
+}
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -59,7 +63,14 @@ const reducer = (state, action) => {
       return { ...state, editingIngredients: action.payload };
     case actionTypes.SET_NEW_INGREDIENTS:
       return { ...state, newIngredients: action.payload };
-      case actionTypes.SUBMIT_EDITED_DATA:
+    case actionTypes.SUBMIT_EDITED_DATA_START:
+      return { ...state, loading: true };
+    case actionTypes.SUBMIT_EDITED_DATA_SUCCESS:
+      return initialState;
+    case actionTypes.SUBMIT_EDITED_DATA_FAILURE:
+      console.error('Error submitting edited data:', action.payload);
+      return { ...state, loading: false };
+    case actionTypes.SUBMIT_EDITED_DATA:
       try {
         const id = state.recipeId;
         // Create a FormData object with the edited data
@@ -67,22 +78,28 @@ const reducer = (state, action) => {
         formData.append('title', state.newTitle);
         formData.append('description', state.newDescription);
         formData.append('ingredients', state.newIngredients);
-        // ... add other fields ...
+        formData.append('image', state.Image);
 
-        // Make the axios request to update the data
-        await axiosReq.put(`/recipes/${id}/`, formData);
-
-        // Reset the form state after successful submission
-        return initialState;
-      } catch (error) {
-        // Handle error if the submission fails
-        console.error('Error submitting edited data:', error);
-     default:
-      return state;
+// Make the axios request to update the data
+axiosReq.put(`/recipes/${id}/`, formData)
+.then(() => {
+  dispatch({ type: actionTypes.SUBMIT_EDITED_DATA_SUCCESS });
+  // Reset the form state after successful submission
+  dispatch({ type: actionTypes.SET_EDITING, payload: false });
+})
+.catch(error => dispatch({ type: actionTypes.SUBMIT_EDITED_DATA_FAILURE, payload: error }));
+} catch (error) {
+// Handle error if the submission fails
+console.error('Error submitting edited data:', error);
+dispatch({ type: actionTypes.SUBMIT_EDITED_DATA_FAILURE, payload: error });
+}
+break;
+default:
+return state;
   }
 };
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 
 function RecipePage() {
   
@@ -149,7 +166,7 @@ function RecipePage() {
   function handleIngredientsChange(event) {
     dispatch({ type: 'actionTypes.SET_NEW_INGREDIENTS', payload: event.target.value });
 
-    function handleChangeImage = (event) => {
+    const handleChangeImage = (event) => {
       if (event.target.files.length) {
         URL.revokeObjectURL(image);
         setPostData({
@@ -200,5 +217,4 @@ function RecipePage() {
     </>
   );
 }
-
 export default RecipePage;
