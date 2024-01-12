@@ -98,9 +98,21 @@ function RecipePage() {
     handleMount();
   }, [id]);
 
+  
+  const isEditingTitle = useSelector(state => state.editingTitle);
+  const newTitle = useSelector(state => state.newTitle);
+  const isEditingDescription = useSelector(state => state.editingDescription);
+  const newDescription = useSelector(state => state.newDescription);
+  const isEditingIngredients = useSelector(state => state.editingIngredients);
+  const newIngredients = useSelector(state => state.newIngredients);
+  const isEditingImage = useSelector(state => state.editingImage);
+  const newImage = useSelector(state => state.newImage);
+
   const handleEditClick = () => {
-    // Redirect to the recipe edit page
-    history.push(`/recipes/${id}/edit`);
+    handleTitleChange
+    handleDescriptionChange
+    handleIngredientsChange
+    handleImageChange
   };
 
  
@@ -135,7 +147,7 @@ function RecipePage() {
         <Col className="py-2 p-0 p-lg-2" lg={8}>
         <Container className="text-center">
           {is_owner ? (
-            <button>Edit</button>
+            <button onClick={handleEditClick}>Edit</button>
           ) : (
             <RatingVote recipeId={id} />
           )}
