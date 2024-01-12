@@ -26,6 +26,9 @@ function RecipeDisplay() {
     handleMount();
   }, [id]);
 
+  const handleEditClick = () => {
+    // Redirect to the recipe edit page
+    history.push(`/recipes/${id}/edit`);
 
   const {
     title,
@@ -53,7 +56,11 @@ function RecipeDisplay() {
       <Row className="justify-content-center">
         <Col className="py-2 p-0 p-lg-2" lg={8}>
           <Container className="text-center">
+          {is_owner ? (
+            <button onClick={handleEditClick}>Edit</button>
+          ) : (
             <RatingVote recipeId={id} />
+          )}          
           </Container>
           <Container className="text-center">
             Comments
