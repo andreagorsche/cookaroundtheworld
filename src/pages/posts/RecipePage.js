@@ -179,7 +179,7 @@ function RecipePage() {
     const handleSubmit = () => {
       dispatch({ type: actionTypes.SUBMIT_EDITED_DATA });
     };
-  
+  }
 
   return (
     <>
