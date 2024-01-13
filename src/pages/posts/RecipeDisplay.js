@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
@@ -11,14 +11,14 @@ import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import { fetchRecipeById } from '../../utilityFunctions'; 
 
 
-function RecipeDisplay() {
+function RecipeDisplay({ isEditing, setIsEditing }) {
     const { id } = useParams();
     const { pageRecipe } = useRecipeData();
     const setRecipeData = useSetRecipeData();
     const currentUser = useCurrentUser();
+    const history = useHistory();
 
     const handleEditClick = async () => {
-      await fetchRecipes(); // Wait for the data to be fetched
       history.push(`/recipes/${id}`);
       setIsEditing(true);
     };
@@ -62,11 +62,11 @@ function RecipeDisplay() {
           {is_owner ? (
             <button onClick={handleEditClick}>Edit</button>
           ) : (
+            <>
             <RatingVote recipeId={id} />
+            <div>Comments</div>
+            </>
           )}          
-          </Container>
-          <Container className="text-center">
-            Comments
           </Container>
         </Col>
       </Row>

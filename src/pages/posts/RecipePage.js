@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RecipeDisplay from './RecipeDisplay';
 import RecipeEdit from './RecipeEdit';
-import { useRecipeData, useEditRecipe } from '../../contexts/RecipeDataContext';
+import { useRecipeData } from '../../contexts/RecipeDataContext';
 import { useParams } from 'react-router-dom';
 
 const RecipePage = () => {
   const { pageRecipe } = useRecipeData();
-  const { isEditing } = useEditRecipe();
   const { id } = useParams();
+  const [isEditing, setIsEditing] = useState(false);
+
 
 
   if (!pageRecipe.results) {
@@ -18,7 +19,7 @@ const RecipePage = () => {
   return (
     <div>
       <h2>Recipe Page</h2>
-      {isEditing ? <RecipeEdit /> : <RecipeDisplay />}
+      {isEditing ? <RecipeEdit setIsEditing={setIsEditing} /> : <RecipeDisplay setIsEditing={setIsEditing} />}
     </div>
   );
 };
