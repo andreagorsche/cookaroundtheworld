@@ -9,7 +9,6 @@ const Filters = () => {
   const setRecipeData = useSetRecipeData();
   const [filters, setFilters] = useState({ cuisine: '', ingredients: [] });
   const [selectedCuisine, setSelectedCuisine] = useState('');
-  const [keyword, setKeyword] = useState ('');
 
   const cuisineChoices = ['american', 'austrian', 'caribbean', 'chinese', 'french', 'german', 'greek', 'indian', 'italian', 'mediterranean', 'mexican', 'slovak', 'spanish']
   const popularIngredients = [
@@ -32,10 +31,10 @@ const Filters = () => {
 
 const fetchRecipesWithFilters = async (filterOptions) => {
   try {
-    const { cuisine, ingredients, keyword } = filterOptions;
+    const { cuisine, ingredients } = filterOptions;
 
     // Construct the endpoint with all the filters
-    const endpoint = `/recipes/?cuisine=${cuisine || ''}&ingredients=${ingredients || ''}&keyword=${keyword || ''}`;
+    const endpoint = `/recipes/?cuisine=${cuisine || ''}&ingredients=${ingredients || ''}`;
     
     const { data } = await axiosReq.get(endpoint);
 
@@ -48,11 +47,6 @@ const fetchRecipesWithFilters = async (filterOptions) => {
   }
 };
 
-  const handleKeywordChange = (e) => {
-    setKeyword ({keyword, keyword: e.target.value})
-    setFilters({ ...filters });
-    fetchRecipesWithFilters({ ...filters, keyword: e.target.value });
-  };
 
   const searchRecipes = () => {
     fetchRecipesWithFilters(filters);
@@ -102,16 +96,7 @@ const fetchRecipesWithFilters = async (filterOptions) => {
 
   
   return (
-    <>
-     <input
-    type="text"
-    placeholder="Search by keyword"
-    value = {keyword}
-    onChange={handleKeywordChange}
-    onKeyPress={handleKeyPress}
-    />
-    <button onClick={searchRecipes}>Search</button>
-
+    <div className='d-flex justify-content-center'>
       <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
         {selectedCuisine || 'Pick Cuisine'} 
@@ -130,7 +115,7 @@ const fetchRecipesWithFilters = async (filterOptions) => {
         onChange={handleIngredientsChange}
         placeholder="Select Ingredients"
       />
-    </>
+    </div>
   );
 };
 

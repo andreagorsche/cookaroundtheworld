@@ -1,10 +1,10 @@
 .image-block-container {
     background-color: black;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content:flex-end;
     height: auto;
-    width: 100%;
+    width: 50vw;
     padding-left: 2%;
     padding-top: 2%;
     padding-bottom: 2%;

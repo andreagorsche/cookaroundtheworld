@@ -63,10 +63,12 @@ const onSearch = async (searchTerm) => {
   return (
     <>
     <Header imageUrl={FoodFeedHeader} />
-    <SearchBar onSearch={onSearch} />
-    <Filters />
     <Row className='d-flex justify-content-center h-100'>
-      <Col className="py-2 p-0 p-lg-2" lg={12}>
+    <Col className="p-0 position-fixed" lg={4}>
+        <SearchBar onSearch={onSearch} />
+        <Filters style={{ width: "300px" }} />
+    </Col>
+    <Col className="py-2 p-0 p-lg-2" lg={8}>
         {hasLoaded ? (
           <>
             {recipes.results?.length ? (
@@ -86,7 +88,7 @@ const onSearch = async (searchTerm) => {
             <Asset spinner />
           </Container>
         )}
-      </Col>
+    </Col> 
     </Row>
     </>
   );

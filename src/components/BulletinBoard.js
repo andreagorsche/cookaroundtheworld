@@ -31,6 +31,7 @@ function BulletinBoard({ intro, backgroundImage }) {
     fetchRecipes();
   }, []);
 
+  
   const bgStyle = {
     backgroundImage: `url(${backgroundImage})`,
   };

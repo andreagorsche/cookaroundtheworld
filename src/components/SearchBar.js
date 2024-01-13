@@ -25,7 +25,6 @@ function SearchBar({ onSearch }) {
   return (
     <div className="App">
       <h1>Search</h1>
-
       <div className="search-container">
         <div className="search-inner">
           <input type="text" value={value} onChange={onChange} />
@@ -35,8 +34,8 @@ function SearchBar({ onSearch }) {
           {recipeData.pageRecipe.results
             .filter((recipe) => {
               const searchTerm = value.toLowerCase();
-              const recipeTitle = recipe.title ? recipe.title.toLowerCase() : '';
-              const recipeDescription = recipe.description ? recipe.description.toLowerCase() : '';
+              const recipeTitle = recipe && recipe.title ? recipe.title.toLowerCase() : '';
+              const recipeDescription = recipe && recipe.description ? recipe.description.toLowerCase() : '';
 
               return (
                 searchTerm &&

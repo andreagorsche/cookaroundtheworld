@@ -9,6 +9,8 @@ import Intro from '../components/Intro';
 import IntroPic1 from '../assets/images/IntroPic1.jpg';
 import IntroPic2 from '../assets/images/IntroPic2.jpg';
 import TopProfiles from '../components/TopProfiles';
+import ImageBlock from '../components/ImageBlock'
+import { Row, Col } from 'react-bootstrap';
 
 const WelcomePage = () => {
   return (
@@ -32,15 +34,22 @@ const WelcomePage = () => {
       },
     ]}
   />
+  <Row>
+    <Col lg={6}>
      <Intro
           firstWord="Cook"
           secondWord="Around"
           secondPhrase="the World"
           firstParagraph="Our cooks from all around the world inspire you to try new local recipes from all over the world."
-          secondParagraph="Stop always cooking the same 5 dishes on repeat. Get creative, get involved, become an international cook." 
-          image1={IntroPic1}
-          image2={IntroPic2}
+          secondParagraph="Stop always cooking the same 5 dishes on repeat. Get creative, get involved, become an international cook."
           />
+    </Col>
+    <Col lg={6}>
+      <ImageBlock  
+          image1={IntroPic1}
+          image2={IntroPic2} />
+     </Col>
+  </Row>
     <BulletinBoard intro = 'Searching for the newest and hottest dishes? Here are our top 3 recipes at the moment:' backgroundImage={bulletinBoardImg} />
     <TopProfiles />
   </>
