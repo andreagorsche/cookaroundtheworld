@@ -182,12 +182,12 @@ function CreateRecipeForm() {
     <>
     <Header imageUrl={CreateRecipes} title = "Create your new Recipes" />
     <Form onSubmit={handleSubmit}>
-      <Row>
+      <Row className = "d-flex justify-content-center" >
         <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
           <Container
             className={`${appStyles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
           >
-            <Form.Group className="text-center">
+            <Form.Group className="text-center d-flex justify-content-center">
               {image ? (
                 <>
                   <figure>
@@ -204,7 +204,7 @@ function CreateRecipeForm() {
                 </>
               ) : (
                 <Form.Label
-                  className="d-flex justify-content-center"
+                  className="d-flex justify-content-center mr-2"
                   htmlFor="image-upload"
                 >
                   <Asset
@@ -229,10 +229,9 @@ function CreateRecipeForm() {
                 {message}
               </Alert>
             ))}
-            <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>
-        <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
+        <Col md={5} lg={4} >
           <Container className={appStyles.Content}>{textFields}</Container>
         </Col>
       </Row>
