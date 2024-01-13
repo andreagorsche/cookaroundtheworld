@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
-import { axiosReq } from '../../api/axiosDefaults';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
@@ -9,13 +8,20 @@ import Intro from '../../components/Intro';
 import RatingVote from '../../components/RatingVote';
 import { useRecipeData, useSetRecipeData, useEditRecipe } from '../../contexts/RecipeDataContext'; 
 import { useCurrentUser } from '../../contexts/CurrentUserContext'; 
+import { fetchRecipeById } from '../../utilityFunctions'; 
+
 
 function RecipeDisplay() {
     const { id } = useParams();
     const { pageRecipe } = useRecipeData();
-    const { handleEditClick } = useEditRecipe(); 
+    const setRecipeData = useSetRecipeData();
     const currentUser = useCurrentUser();
+    const { handleEditClick } = useEditRecipe(); 
 
+  
+    useEffect(() => {
+      fetchRecipeById(id, setRecipeData);
+    }, [id, setRecipeData]);
 
   const {
     title,
@@ -29,6 +35,7 @@ function RecipeDisplay() {
   
   const owner = pageRecipe.results[0]?.owner;
   const is_owner = currentUser?.username === owner;
+
 
 
   return (

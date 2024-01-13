@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { axiosReq } from "../api/axiosDefaults";
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 const RecipeDataContext = createContext();
 const SetRecipeDataContext = createContext();
@@ -10,18 +10,38 @@ export const useRecipeData = () => useContext(RecipeDataContext);
 export const useSetRecipeData = () => useContext(SetRecipeDataContext);
 export const useEditRecipe = () => useContext(EditRecipeContext);
 
-
+export const useHasLoaded = () => {
+  const { hasLoaded } = useContext(RecipeDataContext);
+  return hasLoaded;
+};
 
 export const RecipeDataProvider = ({ children }) => {
   const [recipeData, setRecipeData] = useState({
     pageRecipe: { results: [null] },
   });
 
+  const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const history = useHistory();
-  const { id } = useParams();
-  const [hasLoaded, setHasLoaded] = useState(false);
 
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      
+      try {
+        const [{ data: pageRecipe }] = await Promise.all([
+          axiosReq.get(`/recipes`),
+        ]);
+        console.log('pageRecipe:', pageRecipe);
+        setRecipeData((prevState) => ({
+          ...prevState,
+          pageRecipe: { results: [pageRecipe] },
+        }));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchRecipes();
+  }, [id, setRecipeData])
 
   const handleEditClick = () => {
     history.push(`/recipes/${id}/edit`);
@@ -30,40 +50,19 @@ export const RecipeDataProvider = ({ children }) => {
   };
 
   const handleCancelEdit = () => {
+    history.push(`/recipes/${id}`);
     setIsEditing(false);
   };
 
-  
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const [{ data: pageRecipe }] = await Promise.all([
-          axiosReq.get(`/recipes/${id}/`),
-        ]);
-        console.log('pageRecipe:', pageRecipe);
-        setRecipeData((prevState) => ({
-          ...prevState,
-          pageRecipe: { results: [pageRecipe] },
-        }));
-        setHasLoaded(true);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchRecipes();
-  }, [id, setRecipeData, setHasLoaded])
-
-  if (!hasLoaded) {
-    return <p>Loading...</p>;
-  }
-
  
+
   return (
     <RecipeDataContext.Provider value={recipeData}>
       <SetRecipeDataContext.Provider value={setRecipeData}>
         <EditRecipeContext.Provider value={{ isEditing, handleEditClick, handleCancelEdit }}>
+
         {children}
-        </EditRecipeContext.Provider>
+        </EditRecipeContext.Provider >
       </SetRecipeDataContext.Provider>
     </RecipeDataContext.Provider>
   );
