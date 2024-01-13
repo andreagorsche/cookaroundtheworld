@@ -16,8 +16,13 @@ function RecipeDisplay() {
     const { pageRecipe } = useRecipeData();
     const setRecipeData = useSetRecipeData();
     const currentUser = useCurrentUser();
-    const { handleEditClick } = useEditRecipe(); 
 
+    const handleEditClick = async () => {
+      await fetchRecipes(); // Wait for the data to be fetched
+      history.push(`/recipes/${id}`);
+      setIsEditing(true);
+    };
+  
   
     useEffect(() => {
       fetchRecipeById(id, setRecipeData);

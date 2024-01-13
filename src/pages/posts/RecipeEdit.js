@@ -21,7 +21,7 @@ const RecipeEdit = () => {
   const setRecipeData = useSetRecipeData();
   const imageInput = useRef(null);
   const { id } = useParams();
-  const { handleEditClick, handleCancelEdit } = useEditRecipe(); 
+  const { handleEditClick } = useEditRecipe(); 
   const history = useHistory();
 
   const [newTitle, setNewTitle] = useState(pageRecipe.results[0]?.title || '');
@@ -35,7 +35,22 @@ const RecipeEdit = () => {
   useEffect(() => {
     fetchRecipeById(id, setRecipeData);
   }, [id, setRecipeData, pageRecipe.results]);
+  
+  useEffect(() => {
+    if (pageRecipe.results[0]) {
+      const { title, description, ingredients, image, time_effort } = pageRecipe.results[0];
+      setNewTitle(title || '');
+      setNewDescription(description || '');
+      setNewIngredients(ingredients || '');
+      setNewImage(image || '');
+      setNewTimeEffort(time_effort || '');
+    }
+  }, [pageRecipe.results]);
 
+  const handleCancelEdit = () => {
+    history.push(`/recipes/${id}`);
+    setIsEditing(false);
+  };
 
   const handleChangeImage = (event) => {
     if (event.target.files.length) {

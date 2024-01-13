@@ -29,7 +29,7 @@ export const RecipeDataProvider = ({ children }) => {
       
       try {
         const [{ data: pageRecipe }] = await Promise.all([
-          axiosReq.get(`/recipes`),
+          axiosReq.get(`/recipes/`),
         ]);
         console.log('pageRecipe:', pageRecipe);
         setRecipeData((prevState) => ({
@@ -43,24 +43,12 @@ export const RecipeDataProvider = ({ children }) => {
     fetchRecipes();
   }, [id, setRecipeData])
 
-  const handleEditClick = () => {
-    history.push(`/recipes/${id}/edit`);
-    setIsEditing(true);
-    
-  };
-
-  const handleCancelEdit = () => {
-    history.push(`/recipes/${id}`);
-    setIsEditing(false);
-  };
-
  
 
   return (
     <RecipeDataContext.Provider value={recipeData}>
       <SetRecipeDataContext.Provider value={setRecipeData}>
         <EditRecipeContext.Provider value={{ isEditing, handleEditClick, handleCancelEdit }}>
-
         {children}
         </EditRecipeContext.Provider >
       </SetRecipeDataContext.Provider>
