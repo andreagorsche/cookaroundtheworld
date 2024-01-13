@@ -11,13 +11,18 @@ const RatingVote = ({ recipeId }) => {
   const addRating = async (newRating) => {
     try {
       const response = await axiosReq.post('/ratings/', { stars: newRating.rating, recipe: recipeId });
-      const data = response.data;
-      setRating((prevRating) => [data, ...prevRating]);
-      setShowThankYouMessage(true);
-      console.log("Rating Added Successfully:", data);
+  
+      if (response && response.data) {
+        const data = response.data;
+        setRating((prevRating) => [data, ...prevRating]);
+        setShowThankYouMessage(true);
+        console.log("Rating Added Successfully:", data);
+      } else {
+        console.error('Error adding rating: Response or data is undefined');
+      }
     } catch (error) {
       console.error('Error adding rating:', error);
-      console.log('Error Response:', error.response.data);
+      console.log('Error Response:', error.response ? error.response.data : 'No response data');
     }
   };
 

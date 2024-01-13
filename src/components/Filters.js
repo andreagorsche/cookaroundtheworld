@@ -7,7 +7,7 @@ import Select from 'react-select';
 
 const Filters = () => {
   const setRecipeData = useSetRecipeData();
-  const [filters, setFilters] = useState({ keyword: '', cuisine: '', ingredients: [] });
+  const [filters, setFilters] = useState({ cuisine: '', ingredients: [] });
   const [selectedCuisine, setSelectedCuisine] = useState('');
   const [keyword, setKeyword] = useState ('');
 

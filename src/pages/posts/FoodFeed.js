@@ -10,12 +10,15 @@ import appStyles from "../../App.module.css";
 import Header from "../../components/Header";
 import FoodFeedHeader  from "../../assets/images/FoodFeedHeader.jpeg"
 import SearchBar from "../../components/SearchBar";
+import Filters from "../../components/Filters";
+
 import RecipeCard from "../../components/RecipeCard";
 import Asset from "../../components/Asset";
 import NoCooking from "../../assets/images/no_cooking.png"
 
 import { useRecipeData, useSetRecipeData } from '../../contexts/RecipeDataContext';
 import { useParams, useLocation } from "react-router";
+
 
 function FoodFeed({message}) {
 const recipes = useRecipeData();
@@ -61,6 +64,7 @@ const onSearch = async (searchTerm) => {
     <>
     <Header imageUrl={FoodFeedHeader} />
     <SearchBar onSearch={onSearch} />
+    <Filters />
     <Row className='d-flex justify-content-center h-100'>
       <Col className="py-2 p-0 p-lg-2" lg={12}>
         {hasLoaded ? (

@@ -38,7 +38,7 @@ function ProfilePage() {
     <>
       {hasLoaded ? (
         <>
-          <HeaderImageCircle HeaderTitle={profile?.owner} imageUrl={profile?.image} />
+          <HeaderImageCircle HeaderTitle={profile?.owner} imageUrl={profile?.image} style={{ height: '100vh' }} />
           <Intro
             firstWord="Chef"
             secondWord={profile?.owner}
