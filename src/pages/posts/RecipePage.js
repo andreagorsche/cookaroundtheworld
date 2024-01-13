@@ -7,6 +7,11 @@ const RecipePage = () => {
   const { pageRecipe } = useRecipeData();
   const { isEditing } = useEditRecipe();
 
+  if (!pageRecipe.results) {
+    // Data is still being fetched or is not available
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <h2>Recipe Page</h2>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { axiosReq } from '../../api/axiosDefaults';
 import Col from 'react-bootstrap/Col';
@@ -13,25 +13,8 @@ import { useCurrentUser } from '../../contexts/CurrentUserContext';
 function RecipeDisplay() {
     const { id } = useParams();
     const { pageRecipe } = useRecipeData();
-    const setRecipeData = useSetRecipeData(); 
     const { handleEditClick } = useEditRecipe(); 
     const currentUser = useCurrentUser();
-    const owner = pageRecipe.results[0]?.owner;
-    const is_owner = currentUser?.username === owner;
-
-  useEffect(() => {
-    const handleMount = async () => {
-      try {
-        const { data } = await axiosReq.get(`/recipes/${id}`);
-        setRecipeData({ results: [data] });
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    handleMount();
-  }, [id]);
 
 
   const {
@@ -43,6 +26,10 @@ function RecipeDisplay() {
   } = pageRecipe.results[0] || {};
   const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
   const headerImageUrl = pageRecipe.results[0]?.image;
+  
+  const owner = pageRecipe.results[0]?.owner;
+  const is_owner = currentUser?.username === owner;
+
 
   return (
     <>

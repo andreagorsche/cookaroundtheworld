@@ -14,12 +14,14 @@ export const useEditRecipe = () => useContext(EditRecipeContext);
 
 export const RecipeDataProvider = ({ children }) => {
   const [recipeData, setRecipeData] = useState({
-    pageRecipe: { results: [] },
+    pageRecipe: { results: [null] },
   });
 
   const [isEditing, setIsEditing] = useState(false);
   const history = useHistory();
   const { id } = useParams();
+  const [hasLoaded, setHasLoaded] = useState(false);
+
 
   const handleEditClick = () => {
     history.push(`/recipes/${id}/edit`);
@@ -35,16 +37,25 @@ export const RecipeDataProvider = ({ children }) => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const { data } = await axiosReq.get(`/recipes`);
-        console.log("Fetched data:", data); 
-        setRecipeData({pageRecipe:{results: data}});
-      } catch (error) {
-        console.error("Error fetching recipe data:", error);
+        const [{ data: pageRecipe }] = await Promise.all([
+          axiosReq.get(`/recipes/${id}/`),
+        ]);
+        console.log('pageRecipe:', pageRecipe);
+        setRecipeData((prevState) => ({
+          ...prevState,
+          pageRecipe: { results: [pageRecipe] },
+        }));
+        setHasLoaded(true);
+      } catch (err) {
+        console.log(err);
       }
     };
-
     fetchRecipes();
-  }, [setRecipeData]);
+  }, [id, setRecipeData, setHasLoaded])
+
+  if (!hasLoaded) {
+    return <p>Loading...</p>;
+  }
 
  
   return (
