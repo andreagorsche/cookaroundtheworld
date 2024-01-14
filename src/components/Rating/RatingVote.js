@@ -6,7 +6,7 @@ import { useRating, useSetRating } from '../../contexts/RatingDataContext';
 import { useParams } from 'react-router';
 
 const RatingVote = () => {
-  const rating = useRating();
+  const ratingData = useRating();
   const setRating = useSetRating();
   const { id } = useParams();
   const [showThankYouMessage, setShowThankYouMessage] = useState(false);
@@ -19,11 +19,11 @@ const RatingVote = () => {
     e.preventDefault();
 
     try {
-      const response = await axiosReq.post(`/ratings/`, { stars: rating, recipe: id });
+      const response = await axiosReq.post(`/ratings/`, { stars: ratingData, recipe: id });
 
       if (response && response.data) {
         const data = response.data;
-        setRating(data.rating);
+        setRating([...ratingData, data]);
         setShowThankYouMessage(true);
         console.log("Rating Added/Updated Successfully:", data);
       } else {
@@ -44,7 +44,7 @@ const RatingVote = () => {
         <h2>How did you like this recipe?</h2>
         <Rating
           name="recipe-rating"
-          value={rating}
+          value={ratingData}
           precision={0.5}
           onChange={handleRatingChange}
         />

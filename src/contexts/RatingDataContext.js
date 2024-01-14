@@ -9,15 +9,15 @@ export const useRating = () => useContext(RatingContext);
 export const useSetRating = () => useContext(SetRatingContext);
 
 export const RatingProvider = ({ children }) => {
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState([]);
   const { id } = useParams();
 
 
   const fetchRating = async () => {
     try {
-      const response = await axiosReq.get(`/ratings/${id}`);
-      console.log(response.data);
-      setRating(response.data); 
+      const response = await axiosReq.get(`/ratings/`);
+      console.log('Ratings data fetched successfully:', response.data.results);
+      setRating(response.data.results); 
     } catch (err) {
       console.log(err);
     }

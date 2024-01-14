@@ -11,7 +11,7 @@ function RatingDisplay({ isEditing, setIsEditing }) {
   const currentUser = useCurrentUser();
   const history = useHistory();
 
-  const [averageRating, setAverageRating] = useState(null);
+  const [averageRating, setAverageRating] = useState(0);
 
   const handleEditClick = async () => {
     history.push(`/ratings/${id}`);
@@ -19,9 +19,13 @@ function RatingDisplay({ isEditing, setIsEditing }) {
   };
 
   const calculateAverageRating = () => {
+    if (!ratingData || !ratingData.length === 0) {
+      return 0;
+    }
+  
     const totalRatings = ratingData.length;
     const sumOfRatings = ratingData.reduce((sum, rating) => sum + rating.stars, 0);
-
+  
     return totalRatings > 0 ? sumOfRatings / totalRatings : 0;
   };
 
@@ -38,7 +42,7 @@ function RatingDisplay({ isEditing, setIsEditing }) {
             <Rating name="recipe-rating" value={averageRating} precision={0.5} readOnly />
           </div>
           <div>
-            <p>Your Rating: {ratingData.length > 0 ? ratingData[0].stars : 'Not rated yet'}</p>
+          <p>Your Rating: {ratingData && ratingData.length > 0 ? ratingData[0].stars : 'Not rated yet'}</p>
           </div>
           <button onClick={handleEditClick}>Edit</button>
       ) : (
@@ -51,6 +55,6 @@ function RatingDisplay({ isEditing, setIsEditing }) {
       )}
     </>
   );
-
+}
 
 export default RatingDisplay;
