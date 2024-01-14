@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { axiosReq } from "../api/axiosDefaults";
+import { axiosReq } from "../../api/axiosDefaults";
 import { Card, Button, Alert } from 'react-bootstrap';
-import RatingSelect from './RatingSelect';
+import RatingDisplay from './RatingDisplay';
 
 const RatingVote = ({ recipeId }) => {
   const [rating, setRating] = useState(0);
