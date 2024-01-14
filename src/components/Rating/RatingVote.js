@@ -1,41 +1,15 @@
 import React, { useState } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
 import { Card, Button, Alert } from 'react-bootstrap';
-import RatingDisplay from './RatingDisplay';
+import RatingSelect from './RatingSelect';
+import { useRating, useSetRating } from '../../contexts/RatingDataContext';
+import { useParams } from 'react-router';
 
-const RatingVote = ({ recipeId }) => {
-  const [rating, setRating] = useState(0);
-  const [ratingEdit, setRatingEdit] = useState({ id: 0, edit: false });
-  const [showThankYouMessage, setShowThankYouMessage] = useState(false);
-
-  const addRating = async (newRating) => {
-    try {
-      const response = await axiosReq.post('/ratings/', { stars: newRating.rating, recipe: recipeId });
-  
-      if (response && response.data) {
-        const data = response.data;
-        setRating((prevRating) => [data, ...prevRating]);
-        setShowThankYouMessage(true);
-        console.log("Rating Added Successfully:", data);
-      } else {
-        console.error('Error adding rating: Response or data is undefined');
-      }
-    } catch (error) {
-      console.error('Error adding rating:', error);
-      console.log('Error Response:', error.response ? error.response.data : 'No response data');
-    }
-  };
-
-  const updateRating = async (id, upRating) => {
-    try {
-      const response = await axiosReq.get(`/ratings/${id}`);
-      const data = response.data;
-      setRating((prevRating) => prevRating.map((item) => (item.id === id ? { ...item, ...data } :item)));
-      setShowThankYouMessage(true);
-    } catch (error) {
-      console.error('Error updating rating:', error);
-    }
-  };
+const RatingVote = () => {
+  const rating = useRating();
+  const setRating = useSetRating();
+  const { id } = useParams();
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,15 +17,16 @@ const RatingVote = ({ recipeId }) => {
       rating,
     };
 
-    if (ratingEdit.edit) {
-      updateRating(ratingEdit.id, newRating);
+    
+
+    if (rating) {
+      updateRating(newRating);
     } else {
-      addRating(newRating);
+      addRating(upRating);
     }
 
     // Reset the form after submission
     setRating(0);
-    setRatingEdit({ id: 0, edit: false });
   };
 
   return (
