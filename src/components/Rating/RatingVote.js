@@ -9,24 +9,58 @@ const RatingVote = () => {
   const rating = useRating();
   const setRating = useSetRating();
   const { id } = useParams();
+  const [showThankYouMessage, setShowThankYouMessage] = useState(false); 
  
 
-  const handleSubmit = (e) => {
+  const addRating = async (newRating) => {
+    try {
+      const response = await axiosReq.post('/ratings/', { stars: newRating.rating, recipe: id });
+
+      if (response && response.data) {
+        const data = response.data;
+        setRating(data.rating);
+        setShowThankYouMessage(true);
+        console.log("Rating Added Successfully:", data);
+      } else {
+        console.error('Error adding rating: Response or data is undefined');
+      }
+    } catch (error) {
+      console.error('Error adding rating:', error);
+      console.log('Error Response:', error.response ? error.response.data : 'No response data');
+    }
+  };
+
+  const updateRating = async (upRating) => {
+    try {
+      const response = await axiosReq.put(`/ratings/${id}`, { stars: upRating.stars });
+  
+      const data = response.data;
+      setRating(data);
+      setShowThankYouMessage(true);
+    } catch (error) {
+      console.error('Error updating rating:', error);
+    }
+  };  
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newRating = {
       rating,
     };
-
-    
-
-    if (rating) {
-      updateRating(newRating);
-    } else {
-      addRating(upRating);
+  
+    try {
+      if (rating) {
+        await updateRating(newRating);
+      } else {
+        await addRating(newRating);
+      }
+  
+      // Reset the form after submission
+      setRating(0);
+      setShowThankYouMessage(true);
+    } catch (error) {
+      console.error('Error handling rating:', error);
     }
-
-    // Reset the form after submission
-    setRating(0);
   };
 
   return (

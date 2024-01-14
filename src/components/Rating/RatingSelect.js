@@ -1,26 +1,18 @@
 import React from 'react';
+import { Rating } from '@mui/material';
 
 const RatingSelect = ({ select, selected }) => {
-  const handleChange = (e) => {
-    select(+e.currentTarget.value);
+  const handleRatingChange = (event, newValue) => {
+    select(newValue);
   };
 
   return (
-    <ul className="rating">
-      {Array.from({ length: 5 }, (_, i) => (
-        <li key={`rating-${i + 1}`}>
-          <input
-            type="radio"
-            id={`num${i + 1}`}
-            name="rating"
-            value={i + 1}
-            onChange={handleChange}
-            checked={selected === i + 1}
-          />
-          <label htmlFor={`num${i + 1}`}>{i + 1}</label>
-        </li>
-      ))}
-    </ul>
+    <Rating
+      name="recipe-rating"
+      value={selected}
+      precision={0.5}
+      onChange={handleRatingChange}
+    />
   );
 };
 

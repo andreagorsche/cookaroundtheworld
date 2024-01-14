@@ -3,6 +3,7 @@ import RecipeDisplay from './RecipeDisplay';
 import RecipeEdit from './RecipeEdit';
 import { useRecipeData } from '../../contexts/RecipeDataContext';
 import { useParams } from 'react-router-dom';
+import Rating from '../../components/Rating/RecipeRating';
 
 const RecipePage = () => {
   const { pageRecipe } = useRecipeData();

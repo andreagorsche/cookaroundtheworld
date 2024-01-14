@@ -5,11 +5,10 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
-import RatingVote from '../../components/Rating/RatingVote';
 import { useRecipeData, useSetRecipeData, useEditRecipe } from '../../contexts/RecipeDataContext'; 
 import { useCurrentUser } from '../../contexts/CurrentUserContext'; 
 import { fetchRecipeById } from '../../utilityFunctions'; 
-
+import RecipeRating from '../../components/Rating/RecipeRating';
 
 function RecipeDisplay({ isEditing, setIsEditing }) {
     const { id } = useParams();
@@ -63,7 +62,7 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
             <button onClick={handleEditClick}>Edit</button>
           ) : (
             <>
-            <RatingVote recipeId={id} />
+            <RecipeRating />
             <div>Comments</div>
             </>
           )}          
