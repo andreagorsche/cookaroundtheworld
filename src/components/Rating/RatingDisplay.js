@@ -51,6 +51,6 @@ function RatingDisplay({ isEditing, setIsEditing }) {
       )}
     </>
   );
-}
+
 
 export default RatingDisplay;
