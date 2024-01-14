@@ -10,10 +10,7 @@ const RecipeRating = () => {
   const [isEditing, setIsEditing] = useState(false);
 
 
-  if (!rating) {
-    // Data is still being fetched or is not available
-    return <div>Loading...</div>;
-  }
+
 
   return (
     <div>

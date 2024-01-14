@@ -30,13 +30,9 @@ function RatingDisplay({ isEditing, setIsEditing }) {
     setAverageRating(avgRating);
   }, [ratingData]);
 
-  const owner = ratingData[0]?.owner;
-  const is_owner = currentUser?.username === owner;
 
   return (
     <>
-      {is_owner ? (
-        <>
           <div>
             <p>Average Rating: {averageRating}</p>
             <Rating name="recipe-rating" value={averageRating} precision={0.5} readOnly />
@@ -45,7 +41,6 @@ function RatingDisplay({ isEditing, setIsEditing }) {
             <p>Your Rating: {ratingData.length > 0 ? ratingData[0].stars : 'Not rated yet'}</p>
           </div>
           <button onClick={handleEditClick}>Edit</button>
-        </>
       ) : (
         <>
           <div>
