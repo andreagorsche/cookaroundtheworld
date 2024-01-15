@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useRecipeData, useSetRecipeData, useEditRecipe } from '../../contexts/RecipeDataContext';
+import { useRecipeData, useSetRecipeData } from '../../contexts/RecipeDataContext.js';
 import { axiosReq } from '../../api/axiosDefaults';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
@@ -10,40 +10,31 @@ import Alert from 'react-bootstrap/Alert';
 import upload from "../../assets/upload.png";
 import Asset from "../../components/Asset.js";
 import { useParams } from 'react-router';
-import { fetchRecipeById } from '../../utilityFunctions'; 
 
 const RecipeEdit = ({ isEditing, setIsEditing }) => {
-  const { pageRecipe } = useRecipeData();
+  const { recipeData } = useRecipeData();
   const setRecipeData = useSetRecipeData();
   const imageInput = useRef(null);
   const { id } = useParams();
   const history = useHistory();
 
-
-  const [newTitle, setNewTitle] = useState(pageRecipe.results[0]?.title || '');
-  const [newDescription, setNewDescription] = useState(pageRecipe.results[0]?.description || '');
-  const [newIngredients, setNewIngredients] = useState(pageRecipe.results[0]?.ingredients || '');
-  const [newImage, setNewImage] = useState(pageRecipe.results[0]?.image || '');
-  const [newTimeEffort, setNewTimeEffort] = useState(pageRecipe.results[0]?.time_effort || '');
+  const [newTitle, setNewTitle] = useState(recipeData?.title || '');
+  const [newDescription, setNewDescription] = useState(recipeData?.description || '');
+  const [newIngredients, setNewIngredients] = useState(recipeData?.ingredients || '');
+  const [newImage, setNewImage] = useState(recipeData?.image || '');
+  const [newTimeEffort, setNewTimeEffort] = useState(recipeData?.time_effort || '');
   const [errors, setErrors] = useState({ image: [] });
 
-
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchRecipeById(id, setRecipeData);
-  
-      if (isEditing && pageRecipe.results && pageRecipe.results[0]) {
-        const { title, description, ingredients, image, time_effort } = pageRecipe.results[0];
-        setNewTitle(title || '');
-        setNewDescription(description || '');
-        setNewIngredients(ingredients || '');
-        setNewImage(image || '');
-        setNewTimeEffort(time_effort || '');
-      }
-    };
-  
-    fetchData();
-  }, [id, isEditing, setRecipeData, pageRecipe.results]);
+    if (isEditing && recipeData) {
+      const { title, description, ingredients, image, time_effort } = recipeData;
+      setNewTitle(title || '');
+      setNewDescription(description || '');
+      setNewIngredients(ingredients || '');
+      setNewImage(image || '');
+      setNewTimeEffort(time_effort || '');
+    }
+  }, [id, isEditing, recipeData]);
 
   const handleCancelEdit = () => {
     history.push(`/recipes/${id}`);
@@ -63,7 +54,7 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
 
   const handleSave = async () => {
     try {
-      const id = pageRecipe.results[0]?.id;
+      const id = recipeData?.id;
 
       const formData = new FormData();
       formData.append('title', newTitle);
@@ -80,7 +71,7 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
 
       // Update the recipe data context after successful submission
       const { data } = await axiosReq.get(`/recipes/${id}`);
-      setRecipeData({ pageRecipe: { results: [data] } });
+      setRecipeData({ recipeData: data });
       setIsEditing();
       } catch (error) {
       console.error('Error submitting edited data:', error);

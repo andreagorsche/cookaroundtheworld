@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { axiosReq } from 'path-to-your-axios-defaults'; // Make sure to replace with the correct path
+import { axiosReq } from "../../api/axiosDefaults";
 
 const CommentForm = () => {
   const [comment, setComment] = useState('');
@@ -12,7 +12,6 @@ const CommentForm = () => {
     try {
       const response = await axiosReq.post('/comments/', { comment });
       console.log('Comment submitted successfully:', response.data);
-      // You can perform additional actions after a successful submission
     } catch (error) {
       console.error('Error submitting comment:', error);
     }

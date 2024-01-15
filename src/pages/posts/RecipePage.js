@@ -3,26 +3,27 @@ import RecipeDisplay from './RecipeDisplay';
 import RecipeEdit from './RecipeEdit';
 import { useRecipeData } from '../../contexts/RecipeDataContext';
 import { useParams } from 'react-router-dom';
-import Rating from '../../components/Rating/RecipeRating';
 
 const RecipePage = () => {
-  const { pageRecipe } = useRecipeData();
+  const { recipeData } = useRecipeData();
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
 
-
-
-  if (!pageRecipe.results) {
+  if (!recipeData) {
     // Data is still being fetched or is not available
     return <div>Loading...</div>;
   }
 
+
   return (
     <div>
-      <h2>Recipe Page</h2>
-      {isEditing ? <RecipeEdit setIsEditing={setIsEditing} /> : <RecipeDisplay setIsEditing={setIsEditing} />}
+      {isEditing ? (
+        <RecipeEdit setIsEditing={setIsEditing} recipeData={recipeData} />
+      ) : (
+        <RecipeDisplay setIsEditing={setIsEditing} recipeData={recipeData} />
+      )}
     </div>
   );
 };
 
-export default RecipePage
+export default RecipePage;

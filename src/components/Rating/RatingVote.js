@@ -1,53 +1,51 @@
 import React, { useState } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
 import { Card, Button, Alert } from 'react-bootstrap';
-import { Rating } from '@mui/material';
+import RatingSelect from './RatingSelect';
 import { useRating, useSetRating } from '../../contexts/RatingDataContext';
 import { useParams } from 'react-router';
 
 const RatingVote = () => {
-  const ratingData = useRating();
+  const rating = useRating();
   const setRating = useSetRating();
-  const { id } = useParams();
+  const { id: recipeId } = useParams();
   const [showThankYouMessage, setShowThankYouMessage] = useState(false);
 
-  const handleRatingChange = (event, newValue) => {
-    setRating(newValue);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const addRating = async (newRating) => {
     try {
-      const response = await axiosReq.post(`/ratings/`, { stars: ratingData, recipe: id });
+      const response = await axiosReq.post('/ratings/', { stars: newRating, recipe: recipeId });
 
       if (response && response.data) {
         const data = response.data;
-        setRating([...ratingData, data]);
+        setRating((prevRating) => [data, ...prevRating]);
         setShowThankYouMessage(true);
-        console.log("Rating Added/Updated Successfully:", data);
+        console.log("Rating Added Successfully:", data);
       } else {
-        console.error('Error adding/updating rating: Response or data is undefined');
+        console.error('Error adding rating: Response or data is undefined');
       }
-
-      // Reset the form after submission
-      setRating(0);
     } catch (error) {
-      console.error('Error handling rating:', error);
+      console.error('Error adding rating:', error);
       console.log('Error Response:', error.response ? error.response.data : 'No response data');
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newRating = {
+      rating,
+    };
+
+    addRating(newRating);
+
+    // Reset the form after submission
+    setRating(0);
   };
 
   return (
     <Card>
       <form onSubmit={handleSubmit}>
         <h2>How did you like this recipe?</h2>
-        <Rating
-          name="recipe-rating"
-          value={ratingData}
-          precision={0.5}
-          onChange={handleRatingChange}
-        />
+        <RatingSelect select={setRating} selected={rating} />
         <Button type="submit">Send</Button>
         {showThankYouMessage && (
           <Alert variant="success" className="mt-3">

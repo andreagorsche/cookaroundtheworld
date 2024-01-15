@@ -5,27 +5,19 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
-import { useRecipeData, useSetRecipeData, useEditRecipe } from '../../contexts/RecipeDataContext'; 
+import { useRecipeData, useSetRecipeData } from '../../contexts/RecipeDataContext'; 
 import { useCurrentUser } from '../../contexts/CurrentUserContext'; 
-import { fetchRecipeById } from '../../utilityFunctions'; 
-import RecipeRating from '../../components/Rating/RecipeRating';
+import RecipeVote from '../../components/Rating/RatingVote';
+import CommentForm from '../../components/Rating/CommentForm';
+
 
 function RecipeDisplay({ isEditing, setIsEditing }) {
     const { id } = useParams();
-    const { pageRecipe } = useRecipeData();
-    const setRecipeData = useSetRecipeData();
+    const { recipeData } = useRecipeData();
     const currentUser = useCurrentUser();
     const history = useHistory();
 
-    const handleEditClick = async () => {
-      history.push(`/recipes/${id}`);
-      setIsEditing(true);
-    };
   
-  
-    useEffect(() => {
-      fetchRecipeById(id, setRecipeData);
-    }, [id, setRecipeData]);
 
   const {
     title,
@@ -33,14 +25,17 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
     description,
     time_effort,
     ingredients,
-  } = pageRecipe.results[0] || {};
+  } = recipeData;
   const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
-  const headerImageUrl = pageRecipe.results[0]?.image;
+  const headerImageUrl = recipeData?.image;
   
-  const owner = pageRecipe.results[0]?.owner;
+  const owner = recipeData?.owner;
   const is_owner = currentUser?.username === owner;
 
-
+  const handleEditClick = async () => {
+    history.push(`/recipes/${id}`);
+    setIsEditing(true);
+  };
 
   return (
     <>
@@ -62,8 +57,8 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
             <button onClick={handleEditClick}>Edit</button>
           ) : (
             <>
-            <RecipeRating />
-            <div>Comments</div>
+            <RecipeVote />
+            <CommentForm />
             </>
           )}          
           </Container>
