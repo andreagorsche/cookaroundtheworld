@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useRecipeData, useHasLoaded, useFetchRecipes } from '../../contexts/RecipeDataContext';
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
@@ -8,28 +8,19 @@ import styles from "../styles/components/BulletinBoard.module.css";
  
 
 function BulletinBoard({ intro, backgroundImage }) {
-  const [recipes, setRecipes] = useState({ results: [] });
-  const [hasLoaded, setHasLoaded] = useState(false);
+  const recipes = useRecipeData();
+  const hasLoaded = useHasLoaded();
+  const fetchRecipes = useFetchRecipes();
 
   useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const { data } = await axiosReq.get("/recipes/", {
-          params: {
-            ordering: "-created_at",
-            limit: 3,
-          },
-        });
-        setRecipes(data);
-        setHasLoaded(true);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     setHasLoaded(false);
-    fetchRecipes();
-  }, []);
+    fetchRecipes("/recipes/", {
+      params: {
+        ordering: "-created_at",
+        limit: 3,
+      },
+    });
+  }, [fetchRecipes]);
 
   
   const bgStyle = {

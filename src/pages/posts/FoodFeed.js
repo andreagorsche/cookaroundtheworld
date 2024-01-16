@@ -16,36 +16,21 @@ import RecipeCard from "../../components/RecipeCard";
 import Asset from "../../components/Asset";
 import NoCooking from "../../assets/images/no_cooking.png"
 
-import { useRecipeData, useSetRecipeData } from '../../contexts/RecipeDataContext';
+import { useRecipeData, useFetchRecipes } from '../../contexts/RecipeDataContext';
 import { useParams, useLocation } from "react-router";
 
 
 function FoodFeed({message}) {
 const recipes = useRecipeData();
-const setRecipeData = useSetRecipeData();
+const fetchRecipes = useFetchRecipes();
 const { id } = useParams();
 const [hasLoaded, setHasLoaded] = useState(false);
 const { pathname } = useLocation();
 
 useEffect(() => {
-  const fetchRecipes = async () => {
-    try {
-      const { data } = await axiosReq.get(`/recipes/?${id}`);
-      
-      setRecipeData((prevData) => ({
-        ...prevData,
-        results: data.results,
-      }));
-
-      setHasLoaded(true);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   setHasLoaded(false);
-  fetchRecipes();
-}, [id, pathname, setRecipeData]);
+  fetchRecipes(`/recipes/?${id}`);
+}, [id, pathname, fetchRecipes]);
 
 const onSearch = async (searchTerm) => {
   try {
