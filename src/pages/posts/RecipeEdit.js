@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useRecipeData, useSetRecipeData } from '../../contexts/RecipeDataContext.js';
+import { useFetchRecipes, useRecipeData, useSetRecipeData } from '../../contexts/RecipeDataContext';
 import { axiosReq } from '../../api/axiosDefaults';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
@@ -12,22 +12,23 @@ import Asset from "../../components/Asset.js";
 import { useParams } from 'react-router';
 
 const RecipeEdit = ({ isEditing, setIsEditing }) => {
+  const fetchRecipes = useFetchRecipes();
   const { recipeData } = useRecipeData();
   const setRecipeData = useSetRecipeData();
   const imageInput = useRef(null);
   const { id } = useParams();
   const history = useHistory();
 
-  const [newTitle, setNewTitle] = useState(recipeData?.title || '');
-  const [newDescription, setNewDescription] = useState(recipeData?.description || '');
-  const [newIngredients, setNewIngredients] = useState(recipeData?.ingredients || '');
-  const [newImage, setNewImage] = useState(recipeData?.image || '');
-  const [newTimeEffort, setNewTimeEffort] = useState(recipeData?.time_effort || '');
+  const [newTitle, setNewTitle] = useState(recipeData.results[0]?.title || '');
+  const [newDescription, setNewDescription] = useState(recipeData.results[0]?.description || '');
+  const [newIngredients, setNewIngredients] = useState(recipeData.results[0]?.ingredients || '');
+  const [newImage, setNewImage] = useState(recipeData.results[0]?.image || '');
+  const [newTimeEffort, setNewTimeEffort] = useState(recipeData.results[0]?.time_effort || '');
   const [errors, setErrors] = useState({ image: [] });
 
   useEffect(() => {
     if (isEditing && recipeData) {
-      const { title, description, ingredients, image, time_effort } = recipeData;
+      const { title, description, ingredients, image, time_effort } = recipeData.results[0];
       setNewTitle(title || '');
       setNewDescription(description || '');
       setNewIngredients(ingredients || '');
