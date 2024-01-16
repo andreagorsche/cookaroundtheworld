@@ -54,7 +54,7 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
 
   const handleSave = async () => {
     try {
-      const id = recipeData?.id;
+      const id = recipeData.data[0]?.id;
 
       const formData = new FormData();
       formData.append('title', newTitle);

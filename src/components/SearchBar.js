@@ -15,11 +15,11 @@ function SearchBar({ onSearch }) {
     onSearch(value);
   };
 
-  console.log("recipeData.pageRecipe.results:", recipeData.pageRecipe.results);
+  console.log("recipeData.data:", recipeData.data);
 
-  if (!Array.isArray(recipeData.pageRecipe.results)) {
-    console.error("Recipe results is not an array:", recipeData.pageRecipe.results);
-    return null; // or handle the error accordingly
+  if (!Array.isArray(recipeData.data)) {
+    console.error("Recipe results is not an array:", recipeData.data);
+    return null; 
   }
 
   return (

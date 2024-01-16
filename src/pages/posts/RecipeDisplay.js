@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
-import { useRecipeData, useSetRecipeData } from '../../contexts/RecipeDataContext'; 
+import { useRecipeData, useFetchRecipes } from '../../contexts/RecipeDataContext';
 import { useCurrentUser } from '../../contexts/CurrentUserContext'; 
 import RecipeVote from '../../components/Rating/RatingVote';
 import CommentForm from '../../components/Rating/CommentForm';
@@ -13,11 +13,14 @@ import CommentForm from '../../components/Rating/CommentForm';
 
 function RecipeDisplay({ isEditing, setIsEditing }) {
     const { id } = useParams();
-    const { recipeData } = useRecipeData();
+    const  recipeData  = useRecipeData();
+    const fetchRecipes = useFetchRecipes();
     const currentUser = useCurrentUser();
     const history = useHistory();
 
-  
+    useEffect(() => {
+      fetchRecipes(`/recipes/${id}`);
+    }, [id, fetchRecipes]);
 
   const {
     title,
@@ -25,9 +28,9 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
     description,
     time_effort,
     ingredients,
-  } = recipeData;
+  } = recipeData?.data[0];
   const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
-  const headerImageUrl = recipeData?.image;
+  const headerImageUrl = recipeData?.data[0].image;
   
   const owner = recipeData?.owner;
   const is_owner = currentUser?.username === owner;
