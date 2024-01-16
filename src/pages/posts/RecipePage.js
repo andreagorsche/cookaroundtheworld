@@ -12,23 +12,20 @@ const RecipePage = () => {
   const [hasLoaded, setHasLoaded] = useState(false);
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    setHasLoaded(true);
-    fetchRecipes(`/recipes/?${id}`);
-  }, [id, pathname, fetchRecipes]);
+   // Find the specific recipe in the recipeData array based on the id
+   const currentRecipe = recipeData.results.find(recipe => recipe.id === parseInt(id, 10));
 
-  if (!recipeData) {
-    // Data is still being fetched or is not available
-    return <div>Loading...</div>;
-  }
-
+   if (!currentRecipe) {
+     // Recipe not found, handle accordingly
+     return <div>Recipe not found</div>;
+   }
 
   return (
     <div>
       {isEditing ? (
-        <RecipeEdit setIsEditing={setIsEditing} recipeData={recipeData} />
+        <RecipeEdit setIsEditing={setIsEditing} recipeData={currentRecipe} />
       ) : (
-        <RecipeDisplay setIsEditing={setIsEditing} recipeData={recipeData} />
+        <RecipeDisplay setIsEditing={setIsEditing} recipeData={currentRecipe} />
       )}
     </div>
   );

@@ -11,16 +11,11 @@ import RecipeVote from '../../components/Rating/RatingVote';
 import CommentForm from '../../components/Rating/CommentForm';
 
 
-function RecipeDisplay({ isEditing, setIsEditing }) {
+function RecipeDisplay({ isEditing, setIsEditing, currentRecipe }) {
     const { id } = useParams();
-    const  recipeData  = useRecipeData();
-    const fetchRecipes = useFetchRecipes();
     const currentUser = useCurrentUser();
     const history = useHistory();
 
-    useEffect(() => {
-      fetchRecipes(`/recipes/${id}`);
-    }, [id, fetchRecipes]);
 
   const {
     title,
@@ -28,12 +23,12 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
     description,
     time_effort,
     ingredients,
-  } = recipeData?.data[0];
+  } = currentRecipe || {};
   const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
-  const headerImageUrl = recipeData?.data[0].image;
+  const headerImageUrl = currentRecipe?.results[0].image;
   
-  const owner = recipeData?.owner;
-  const is_owner = currentUser?.username === owner;
+  const owner = currentRecipe?.owner || '';
+  const is_owner = currentUser?.username === owner
 
   const handleEditClick = async () => {
     history.push(`/recipes/${id}`);
