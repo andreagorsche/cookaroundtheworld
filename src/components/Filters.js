@@ -1,7 +1,7 @@
 // SearchBar.js
 import React, { useState, useEffect } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { RecipeDataProvider, useSetRecipeData } from '../contexts/RecipeDataContext';
+import { useSetRecipeData } from '../contexts/RecipeDataContext';
 import { axiosReq } from '../api/axiosDefaults';
 import Select from 'react-select';
 

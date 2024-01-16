@@ -1,6 +1,6 @@
 // RecipeDataContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { axiosReq } from '../../api/axiosDefaults';
+import { axiosReq } from '../api/axiosDefaults';
 
 const RecipeDataContext = createContext();
 
@@ -24,7 +24,7 @@ export const RecipeDataProvider = ({ children }) => {
   }, []);
 
   return (
-    <RecipeDataContext.Provider value={{ recipeData, hasLoaded, fetchRecipes }}>
+    <RecipeDataContext.Provider value={{ recipeData, hasLoaded, setHasLoaded, fetchRecipes, setRecipeData }}>
       {children}
     </RecipeDataContext.Provider>
   );
@@ -38,12 +38,28 @@ export const useRecipeData = () => {
   return context.recipeData;
 };
 
+export const useSetRecipeData = () => {
+  const context = useContext(RecipeDataContext);
+  if (!context) {
+    throw new Error('useSetRecipeData must be used within a RecipeDataProvider');
+  }
+  return context.setRecipeData;
+};
+
 export const useHasLoaded = () => {
   const context = useContext(RecipeDataContext);
   if (!context) {
     throw new Error('useHasLoaded must be used within a RecipeDataProvider');
   }
   return context.hasLoaded;
+};
+
+export const useSetHasLoaded = () => {
+  const context = useContext(RecipeDataContext);
+  if (!context) {
+    throw new Error('useHasLoaded must be used within a RecipeDataProvider');
+  }
+  return context.setHasLoaded;
 };
 
 export const useFetchRecipes = () => {

@@ -1,4 +1,5 @@
-import { useRecipeData, useHasLoaded, useFetchRecipes } from '../../contexts/RecipeDataContext';
+import React, { useEffect } from 'react';
+import { useRecipeData, useHasLoaded, useSetHasLoaded, useFetchRecipes } from '../contexts/RecipeDataContext';
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
@@ -10,18 +11,27 @@ import styles from "../styles/components/BulletinBoard.module.css";
 function BulletinBoard({ intro, backgroundImage }) {
   const recipes = useRecipeData();
   const hasLoaded = useHasLoaded();
+  const setHasLoaded = useSetHasLoaded();
   const fetchRecipes = useFetchRecipes();
 
   useEffect(() => {
-    setHasLoaded(false);
-    fetchRecipes("/recipes/", {
-      params: {
-        ordering: "-created_at",
-        limit: 3,
-      },
-    });
-  }, [fetchRecipes]);
+    const fetchData = async () => {
+      try {
+        await fetchRecipes("/recipes/", {
+          params: {
+            ordering: "-created_at",
+            limit: 3,
+          },
+        });
+        setHasLoaded(true);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
+    // Call the fetchData function
+    fetchData();
+  }, [fetchRecipes, setHasLoaded]);
   
   const bgStyle = {
     backgroundImage: `url(${backgroundImage})`,

@@ -1,10 +1,9 @@
 // SearchBar.js
 import React, { useState } from "react";
-import { useRecipeData, useSetRecipeData } from "../contexts/RecipeDataContext";
+import { useRecipeData } from "../contexts/RecipeDataContext";
 
 function SearchBar({ onSearch }) {
   const [value, setValue] = useState("");
-  const setRecipeData = useSetRecipeData();
   const recipeData = useRecipeData();
 
   const onChange = (event) => {
@@ -15,10 +14,10 @@ function SearchBar({ onSearch }) {
     onSearch(value);
   };
 
-  console.log("recipeData.data:", recipeData.data);
+  console.log("recipeData:", recipeData);
 
-  if (!Array.isArray(recipeData.data)) {
-    console.error("Recipe results is not an array:", recipeData.data);
+  if (!Array.isArray(recipeData.results)) {
+    console.error("Recipe results is not an array:", recipeData.results);
     return null; 
   }
 
@@ -31,7 +30,7 @@ function SearchBar({ onSearch }) {
           <button onClick={() => handleSearch()}> Search </button>
         </div>
         <div className="dropdown">
-          {recipeData.pageRecipe.results
+          {recipeData.results
             .filter((recipe) => {
               const searchTerm = value.toLowerCase();
               const recipeTitle = recipe && recipe.title ? recipe.title.toLowerCase() : '';

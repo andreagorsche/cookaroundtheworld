@@ -12,7 +12,6 @@ import Asset from "../../components/Asset.js";
 import { useParams } from 'react-router';
 
 const RecipeEdit = ({ isEditing, setIsEditing }) => {
-  const fetchRecipes = useFetchRecipes();
   const { recipeData } = useRecipeData();
   const setRecipeData = useSetRecipeData();
   const imageInput = useRef(null);
