@@ -1,9 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useCurrentRecipe, useSetCurrentRecipe } from '../../contexts/RecipeDataContext';
+import { useCurrentRecipe, useSetCurrentRecipe, useFetchRecipeById } from '../../contexts/RecipeDataContext';
 import { axiosReq } from '../../api/axiosDefaults';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
+import RatingVote from '../../components/Rating/RatingVote';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import Alert from 'react-bootstrap/Alert';
@@ -11,31 +15,39 @@ import upload from "../../assets/upload.png";
 import Asset from "../../components/Asset.js";
 import { useParams } from 'react-router';
 
-const RecipeEdit = ({ isEditing, setIsEditing, currentRecipe, setCurrentRecipe, fetchRecipeById }) => {
+const RecipeEdit = ({ isEditing, setIsEditing }) => {
+  const { currentRecipe } = useCurrentRecipe();
+  const setCurrentRecipe = useSetCurrentRecipe();
   const imageInput = useRef(null);
-  const history = useHistory();
   const { id } = useParams();
+  const history = useHistory();
+  const fetchRecipeById = useFetchRecipeById();
 
-  const { results } = currentRecipe;
-  const currentRecipeData = results[0] || {};
-  const [newTitle, setNewTitle] = useState(currentRecipeData.title.title || '');
-  const [newDescription, setNewDescription] = useState(currentRecipeData.description || '');
-  const [newIngredients, setNewIngredients] = useState(currentRecipeData.ingredients || '');
-  const [newImage, setNewImage] = useState(currentRecipeData.image || '');
-  const [newTimeEffort, setNewTimeEffort] = useState(currentRecipeData.time_effort || '');
+
+  const [newTitle, setNewTitle] = useState(currentRecipe.results[0]?.title || '');
+  const [newDescription, setNewDescription] = useState(currentRecipe.results[0]?.description || '');
+  const [newIngredients, setNewIngredients] = useState(currentRecipe.results[0]?.ingredients || '');
+  const [newImage, setNewImage] = useState(currentRecipe.results[0]?.image || '');
+  const [newTimeEffort, setNewTimeEffort] = useState(currentRecipe.results[0]?.time_effort || '');
   const [errors, setErrors] = useState({ image: [] });
 
+
   useEffect(() => {
-    if (isEditing && results && results[0]) {
-      const { title, description, ingredients, image, time_effort } = results[0];
-      setNewTitle(title || '');
-      setNewDescription(description || '');
-      setNewIngredients(ingredients || '');
-      setNewImage(image || '');
-      setNewTimeEffort(time_effort || '');
-    }
-  }, [isEditing, results]);
+    const fetchData = async () => {
+      await fetchRecipeById(id, setCurrentRecipe);
   
+      if (isEditing && currentRecipe.results && currentRecipe.results[0]) {
+        const { title, description, ingredients, image, time_effort } = currentRecipe.results[0];
+        setNewTitle(title || '');
+        setNewDescription(description || '');
+        setNewIngredients(ingredients || '');
+        setNewImage(image || '');
+        setNewTimeEffort(time_effort || '');
+      }
+    };
+  
+    fetchData();
+  }, [id, isEditing, setCurrentRecipe, currentRecipe.results]);
 
   const handleCancelEdit = () => {
     history.push(`/recipes/${id}`);
@@ -55,8 +67,8 @@ const RecipeEdit = ({ isEditing, setIsEditing, currentRecipe, setCurrentRecipe, 
 
   const handleSave = async () => {
     try {
-      const id = currentRecipeData.id;
-      
+      const id = currentRecipe.results[0]?.id;
+
       const formData = new FormData();
       formData.append('title', newTitle);
       formData.append('description', newDescription);

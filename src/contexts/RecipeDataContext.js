@@ -28,12 +28,16 @@ export const RecipeDataProvider = ({ children }) => {
 
   const fetchRecipeById = async (id, setCurrentRecipe) => {
     try {
-      const { data } = await Promise.all(`/recipes/${id}/`);
-      console.log('API response:', data);
-      setCurrentRecipe(data);
-      setHasLoaded(true);
+      const [{ data: currentRecipe }] = await Promise.all([
+        axiosReq.get(`/recipes/${id}/`),
+      ]);
+      console.log('currentRecipe:', currentRecipe);
+      setCurrentRecipe((prevState) => ({
+        ...prevState,
+        currentRecipe: { results: [currentRecipe] },
+      }));
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
 

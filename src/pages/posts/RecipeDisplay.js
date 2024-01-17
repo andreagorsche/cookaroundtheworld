@@ -5,15 +5,29 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
+import RatingVote from '../../components/Rating/RatingVote';
+import { useFetchRecipeById, useCurrentRecipe, useSetCurrentRecipe } from '../../contexts/RecipeDataContext'; 
 import { useCurrentUser } from '../../contexts/CurrentUserContext'; 
-import RecipeRating from '../../components/Rating/RecipeRating';
 
-function RecipeDisplay({ currentRecipe, isEditing, setIsEditing }) {
+
+function RecipeDisplay({ isEditing, setIsEditing }) {
+    const { id } = useParams();
+    const { currentRecipe } = useCurrentRecipe();
+    const setCurrentRecipe = useSetCurrentRecipe();
     const currentUser = useCurrentUser();
     const history = useHistory();
-    const { id } = useParams();
+    const fetchRecipeById = useFetchRecipeById();
 
-   
+    const handleEditClick = async () => {
+      history.push(`/recipes/${id}`);
+      setIsEditing(true);
+    };
+  
+  
+    useEffect(() => {
+      fetchRecipeById(id, setCurrentRecipe);
+    }, [id, setCurrentRecipe]);
+
   const {
     title,
     cuisine,
@@ -22,15 +36,11 @@ function RecipeDisplay({ currentRecipe, isEditing, setIsEditing }) {
     ingredients,
   } = currentRecipe?.results[0] || {};
   const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
-  const headerImageUrl = currentRecipe.results[0]?.image;
+  const headerImageUrl = currentRecipe?.results[0]?.image;
   
-  const owner = currentRecipe.results[0]?.owner;
+  const owner = currentRecipe?.results[0]?.owner;
   const is_owner = currentUser?.username === owner;
 
-  const handleEditClick = async () => {
-    history.push(`/recipes/${id}`);
-    setIsEditing(true);
-  };
 
 
   return (
@@ -53,7 +63,7 @@ function RecipeDisplay({ currentRecipe, isEditing, setIsEditing }) {
             <button onClick={handleEditClick}>Edit</button>
           ) : (
             <>
-            <RecipeRating />
+            <RatingVote recipeId={id} />
             <div>Comments</div>
             </>
           )}          
