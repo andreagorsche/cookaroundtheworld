@@ -1,34 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import RecipeDisplay from './RecipeDisplay';
 import RecipeEdit from './RecipeEdit';
-import { useRecipeData, useFetchRecipes } from '../../contexts/RecipeDataContext';
-import { useParams, useLocation } from 'react-router-dom';
+import { useCurrentRecipe, useSetCurrentRecipe, useFetchRecipeById } from '../../contexts/RecipeDataContext';
+import { useParams } from 'react-router-dom';
 
 const RecipePage = () => {
-  const { recipeData } = useRecipeData();
   const { id } = useParams();
-  const fetchRecipes = useFetchRecipes();
+  const { currentRecipe } = useCurrentRecipe();
+  const setCurrentRecipe = useSetCurrentRecipe();
+  const fetchRecipeById = useFetchRecipeById();
   const [isEditing, setIsEditing] = useState(false);
-  const [hasLoaded, setHasLoaded] = useState(false);
-  const { pathname } = useLocation();
 
-   // Find the specific recipe in the recipeData array based on the id
-   const currentRecipe = recipeData.results.find(recipe => recipe.id === parseInt(id, 10));
+  useEffect(() => {
+    fetchRecipeById(id, setCurrentRecipe);
+  }, [id, setCurrentRecipe]);
 
-   if (!currentRecipe) {
-     // Recipe not found, handle accordingly
-     return <div>Recipe not found</div>;
-   }
+  console.log('Current Recipe:', currentRecipe); 
 
   return (
     <div>
-      {isEditing ? (
-        <RecipeEdit setIsEditing={setIsEditing} recipeData={currentRecipe} />
-      ) : (
-        <RecipeDisplay setIsEditing={setIsEditing} recipeData={currentRecipe} />
-      )}
+      <h2>Recipe Page</h2>
+      {isEditing ? <RecipeEdit currentRecipe={currentRecipe} setCurrentRecipe={setCurrentRecipe} fetchRecipeById={fetchRecipeById} isEditing={isEditing} setIsEditing={setIsEditing} /> : <RecipeDisplay currentRecipe={currentRecipe} isEditing={isEditing} setIsEditing={setIsEditing} />}
     </div>
   );
 };
 
-export default RecipePage;
+export default RecipePage

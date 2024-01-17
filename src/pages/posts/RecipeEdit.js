@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useFetchRecipes, useRecipeData, useSetRecipeData } from '../../contexts/RecipeDataContext';
+import { useCurrentRecipe, useSetCurrentRecipe } from '../../contexts/RecipeDataContext';
 import { axiosReq } from '../../api/axiosDefaults';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
@@ -11,30 +11,31 @@ import upload from "../../assets/upload.png";
 import Asset from "../../components/Asset.js";
 import { useParams } from 'react-router';
 
-const RecipeEdit = ({ isEditing, setIsEditing, currentRecipe }) => {
+const RecipeEdit = ({ isEditing, setIsEditing, currentRecipe, setCurrentRecipe, fetchRecipeById }) => {
   const imageInput = useRef(null);
-  const { id } = useParams();
   const history = useHistory();
-  const setRecipeData = useSetRecipeData();
+  const { id } = useParams();
 
-
-  const [newTitle, setNewTitle] = useState(currentRecipe?.title || '');
-  const [newDescription, setNewDescription] = useState(currentRecipe?.results[0]?.description || '');
-  const [newIngredients, setNewIngredients] = useState(currentRecipe?.results[0]?.ingredients || '');
-  const [newImage, setNewImage] = useState(currentRecipe?.results[0]?.image || '');
-  const [newTimeEffort, setNewTimeEffort] = useState(currentRecipe?.results[0]?.time_effort || '');
+  const { results } = currentRecipe;
+  const currentRecipeData = results[0] || {};
+  const [newTitle, setNewTitle] = useState(currentRecipeData.title.title || '');
+  const [newDescription, setNewDescription] = useState(currentRecipeData.description || '');
+  const [newIngredients, setNewIngredients] = useState(currentRecipeData.ingredients || '');
+  const [newImage, setNewImage] = useState(currentRecipeData.image || '');
+  const [newTimeEffort, setNewTimeEffort] = useState(currentRecipeData.time_effort || '');
   const [errors, setErrors] = useState({ image: [] });
 
   useEffect(() => {
-    if (isEditing && currentRecipe) {
-      const { title, description, ingredients, image, time_effort } = currentRecipe || {};
+    if (isEditing && results && results[0]) {
+      const { title, description, ingredients, image, time_effort } = results[0];
       setNewTitle(title || '');
       setNewDescription(description || '');
       setNewIngredients(ingredients || '');
       setNewImage(image || '');
       setNewTimeEffort(time_effort || '');
     }
-  }, [id, isEditing, currentRecipe]);
+  }, [isEditing, results]);
+  
 
   const handleCancelEdit = () => {
     history.push(`/recipes/${id}`);
@@ -54,42 +55,32 @@ const RecipeEdit = ({ isEditing, setIsEditing, currentRecipe }) => {
 
   const handleSave = async () => {
     try {
-      const id = currentRecipe?.id;
-  
+      const id = currentRecipeData.id;
+      
       const formData = new FormData();
       formData.append('title', newTitle);
       formData.append('description', newDescription);
       formData.append('ingredients', newIngredients);
       formData.append('time_effort', newTimeEffort);
-  
+
       // Append the image only if it's changed
-      if (newImage instanceof File) {
-        formData.append('image', newImage);
-      }
-  
+    if (newImage instanceof File) {
+      formData.append('image', newImage);
+    }
       // Make the axios request to update the data
       await axiosReq.put(`/recipes/${id}/`, formData);
-  
+
       // Update the recipe data context after successful submission
-      setRecipeData(prevData => {
-        const updatedResults = prevData.results.map(recipe => {
-          if (recipe.id === currentRecipe.id) {
-            return currentRecipe; // Use the updated recipe data
-          }
-          return recipe;
-        });
-  
-        return { ...prevData, results: updatedResults };
-      });
-  
+      const { data } = await axiosReq.get(`/recipes/${id}`);
+      setCurrentRecipe({ currentRecipe: { results: [data] } });
       setIsEditing();
-    } catch (error) {
+      } catch (error) {
       console.error('Error submitting edited data:', error);
       // Handle error and set appropriate error messages
       setErrors({ image: ['Error uploading the image.'] });
     }
   };
-  
+
   return (
     <>
       <Header imageUrl={newImage} />

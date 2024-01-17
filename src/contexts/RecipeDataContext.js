@@ -1,12 +1,15 @@
 // RecipeDataContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { axiosReq } from '../api/axiosDefaults';
+import { useParams } from 'react-router';
 
 const RecipeDataContext = createContext();
 
 export const RecipeDataProvider = ({ children }) => {
   const [recipeData, setRecipeData] = useState({ results: [] });
+  const [currentRecipe, setCurrentRecipe] = useState({ results: [] });
   const [hasLoaded, setHasLoaded] = useState(false);
+  const { id } = useParams();
 
   const fetchRecipes = async (endpoint, params = {}) => {
     try {
@@ -23,8 +26,25 @@ export const RecipeDataProvider = ({ children }) => {
     fetchRecipes('/recipes/');
   }, []);
 
+  const fetchRecipeById = async (id, setCurrentRecipe) => {
+    try {
+      const { data } = await Promise.all(`/recipes/${id}/`);
+      console.log('API response:', data);
+      setCurrentRecipe(data);
+      setHasLoaded(true);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    setHasLoaded(false);
+    fetchRecipeById(id);
+  }, [id]);
+
+
   return (
-    <RecipeDataContext.Provider value={{ recipeData, hasLoaded, setHasLoaded, fetchRecipes, setRecipeData }}>
+    <RecipeDataContext.Provider value={{ recipeData, currentRecipe, hasLoaded, setHasLoaded, fetchRecipes, fetchRecipeById, setRecipeData, setCurrentRecipe }}>
       {children}
     </RecipeDataContext.Provider>
   );
@@ -68,4 +88,29 @@ export const useFetchRecipes = () => {
     throw new Error('useFetchRecipes must be used within a RecipeDataProvider');
   }
   return context.fetchRecipes;
+};
+
+
+export const useFetchRecipeById = () => {
+  const context = useContext(RecipeDataContext);
+  if (!context) {
+    throw new Error('useFetchRecipeById must be used within a RecipeDataProvider');
+  }
+  return context.fetchRecipeById;
+};
+
+export const useCurrentRecipe = () => {
+  const context = useContext(RecipeDataContext);
+  if (!context) {
+    throw new Error('useCurrentRecipeData must be used within a RecipeDataProvider');
+  }
+  return context.currentRecipe;
+};
+
+export const useSetCurrentRecipe = () => {
+  const context = useContext(RecipeDataContext);
+  if (!context) {
+    throw new Error('useSetCurrentRecipeData must be used within a RecipeDataProvider');
+  }
+  return context.setCurrentRecipe;
 };

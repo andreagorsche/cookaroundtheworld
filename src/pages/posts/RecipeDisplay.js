@@ -5,35 +5,33 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
-import { useRecipeData, useFetchRecipes } from '../../contexts/RecipeDataContext';
 import { useCurrentUser } from '../../contexts/CurrentUserContext'; 
-import RecipeVote from '../../components/Rating/RatingVote';
-import CommentForm from '../../components/Rating/CommentForm';
+import RecipeRating from '../../components/Rating/RecipeRating';
 
-
-function RecipeDisplay({ isEditing, setIsEditing, currentRecipe }) {
-    const { id } = useParams();
+function RecipeDisplay({ currentRecipe, isEditing, setIsEditing }) {
     const currentUser = useCurrentUser();
     const history = useHistory();
+    const { id } = useParams();
 
-
+   
   const {
     title,
     cuisine,
     description,
     time_effort,
     ingredients,
-  } = currentRecipe || {};
+  } = currentRecipe?.results[0] || {};
   const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
-  const headerImageUrl = currentRecipe?.results[0].image;
+  const headerImageUrl = currentRecipe.results[0]?.image;
   
-  const owner = currentRecipe?.owner || '';
-  const is_owner = currentUser?.username === owner
+  const owner = currentRecipe.results[0]?.owner;
+  const is_owner = currentUser?.username === owner;
 
   const handleEditClick = async () => {
     history.push(`/recipes/${id}`);
     setIsEditing(true);
   };
+
 
   return (
     <>
@@ -55,8 +53,8 @@ function RecipeDisplay({ isEditing, setIsEditing, currentRecipe }) {
             <button onClick={handleEditClick}>Edit</button>
           ) : (
             <>
-            <RecipeVote />
-            <CommentForm />
+            <RecipeRating />
+            <div>Comments</div>
             </>
           )}          
           </Container>
