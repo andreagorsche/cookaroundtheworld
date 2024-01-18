@@ -3,6 +3,7 @@
     margin:0;
     padding-top:3%;
     padding-bottom:3%;
+    min-height: 400px;
 }
 #header-title{
     font-size: 2rem;

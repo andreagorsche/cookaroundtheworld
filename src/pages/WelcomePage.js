@@ -11,8 +11,11 @@ import IntroPic2 from '../assets/images/IntroPic2.jpg';
 import TopProfiles from '../components/TopProfiles';
 import ImageBlock from '../components/ImageBlock'
 import { Row, Col } from 'react-bootstrap';
+import { useCurrentUser } from "../contexts/CurrentUserContext";
+
 
 const WelcomePage = () => {
+  const currentUser = useCurrentUser();
   return (
     <>
     <Slider
@@ -34,6 +37,7 @@ const WelcomePage = () => {
       },
     ]}
   />
+  {!currentUser && (
   <Row>
     <Col lg={6}>
      <Intro
@@ -49,11 +53,20 @@ const WelcomePage = () => {
           image1={IntroPic1}
           image2={IntroPic2} />
      </Col>
-  </Row>
-    <BulletinBoard intro = 'Searching for the newest and hottest dishes? Here are our top 3 recipes at the moment:' backgroundImage={bulletinBoardImg} />
-    <TopProfiles />
+  </Row>)
+  }
+    {currentUser && (
+      <>
+        <BulletinBoard
+          intro="Searching for the newest and hottest dishes? Here are our top 3 recipes at the moment:"
+          backgroundImage={bulletinBoardImg}
+        />
+        <TopProfiles />
+      </>
+    )}
   </>
-  )
-}
+);
+};
+
 
 export default WelcomePage

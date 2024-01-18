@@ -8,7 +8,7 @@ function HeaderImageCircle({ HeaderTitle, imageUrl }) {
   const currentUser = useCurrentUser();
   return (
     <>
-    <Row id='background-header-img' className='d-flex align-items-center justify-content-center'>
+    <Row style={{ minHeight: '400px' }}  id='background-header-img' className='d-flex align-items-center justify-content-center'>
         <Col md={6} className='d-flex align-items-center justify-content-center'>
         <div id='header-title'>{HeaderTitle}</div>
         </Col>
