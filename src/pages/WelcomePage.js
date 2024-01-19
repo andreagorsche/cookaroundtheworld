@@ -58,7 +58,6 @@ const WelcomePage = () => {
   }
     {currentUser && (
       <>
-        <MultiStepForm />
         <BulletinBoard
           intro="Searching for the newest and hottest dishes? Here are our top 3 recipes at the moment:"
           backgroundImage={bulletinBoardImg}

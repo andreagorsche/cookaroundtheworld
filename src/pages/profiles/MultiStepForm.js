@@ -66,10 +66,7 @@ const MultiStepForm = () => {
         console.log(err);
       }
     };
-    const calculateProgress = () => {
-        return (currentStep / 3) * 100;
-      };
-    
+      
   const renderStep = () => {
     switch (currentStep) {
       case 1:
@@ -131,6 +128,8 @@ const MultiStepForm = () => {
         <p>Step {currentStep} of 3</p>
         </div>
       <div>
+        <h1>Welcome to the Chef's World!</h1>
+        <p>We don't know much about you yet. Please take the time to give us some more information about you. It only takes 5 minutes!</p>
         <form onSubmit={handleSubmit}>
           {renderStep()}
         </form>

@@ -6,6 +6,7 @@ import HeaderImageCircle from "../../components/HeaderImageCircle";
 import Intro from "../../components/Intro";
 import CircleRow from "../../components/CircleRow"
 import RecipeCard from "../../components/RecipeCard";
+import MultiStepForm from "./MultiStepForm";
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -13,47 +14,65 @@ function ProfilePage() {
   const setProfileData = useSetProfileData();
   const { pageProfile } = useProfileData();
   const [profile] = pageProfile?.results || [];
-  
+  const [showMultiStepForm, setShowMultiStepForm] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [{ data: pageProfile }] = await Promise.all([
-          axiosReq.get(`/profiles/${id}/`),
-        ]);
+        const response = await axiosReq.get(`/profiles/${id}/`);
+        const pageProfile = response.data;
+
         console.log('pageProfile:', pageProfile);
+
         setProfileData((prevState) => ({
           ...prevState,
           pageProfile: { results: [pageProfile] },
         }));
+
+        // Set showMultiStepForm to true if the user's bio is empty
+        setShowMultiStepForm(!pageProfile.bio);
       } catch (err) {
         console.log(err);
       }
     };
+
     fetchData();
     setHasLoaded(true);
   }, [id, setProfileData, setHasLoaded]);
 
   return (
     <>
-      {hasLoaded ? (
-        <>
-          <HeaderImageCircle HeaderTitle={profile?.owner} imageUrl={profile?.image} style={{ height: '100vh' }} />
-          <Intro
-            firstWord="Chef"
-            secondWord={profile?.owner}
-            secondPhrase=""
-            firstParagraph={profile?.bio}
-          />
-          <CircleRow
-            data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
-            labels={['Recipes', 'Followers', 'Following']}
-          />
-          <RecipeCard />
-        </>
+      <div>
+        <HeaderImageCircle HeaderTitle={profile?.owner} imageUrl={profile?.image} style={{ height: '100vh' }} />
+      </div>
+      {showMultiStepForm ? (
+        <MultiStepForm
+          needsEditing={!profile?.bio}
+          setNeedsEditing={(value) => setShowMultiStepForm(value)}
+          profile={profile}
+        />
       ) : (
-        <p>Loading...</p>
+        <>
+          {hasLoaded ? (
+            <>
+              <Intro
+                firstWord="Chef"
+                secondWord={profile?.owner}
+                secondPhrase=""
+                firstParagraph={profile?.bio}
+              />
+             
+            </>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </>
       )}
+      <CircleRow
+        data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
+        labels={['Recipes', 'Followers', 'Following']}
+        />
+      <RecipeCard />
     </>
   );
 }
