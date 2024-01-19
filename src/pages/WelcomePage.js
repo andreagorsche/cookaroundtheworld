@@ -12,6 +12,7 @@ import TopProfiles from '../components/TopProfiles';
 import ImageBlock from '../components/ImageBlock'
 import { Row, Col } from 'react-bootstrap';
 import { useCurrentUser } from "../contexts/CurrentUserContext";
+import MultiStepForm from './profiles/MultiStepForm';
 
 
 const WelcomePage = () => {
@@ -57,6 +58,7 @@ const WelcomePage = () => {
   }
     {currentUser && (
       <>
+        <MultiStepForm />
         <BulletinBoard
           intro="Searching for the newest and hottest dishes? Here are our top 3 recipes at the moment:"
           backgroundImage={bulletinBoardImg}
