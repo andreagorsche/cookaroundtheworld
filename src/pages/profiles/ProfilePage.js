@@ -70,9 +70,9 @@ function ProfilePage() {
       )}
       <CircleRow
         data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
-        labels={['Recipes', 'Followers', 'Following']}
-        />
-      <RecipeCard />
+                labels={['Recipes', 'Followers', 'Following']}
+              />
+              <RecipeCard />
     </>
   );
 }

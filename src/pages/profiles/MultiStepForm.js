@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { axiosReq } from '../../api/axiosDefaults';
 import { useParams } from 'react-router';
 
@@ -27,7 +27,10 @@ const MultiStepForm = () => {
         favoriteCuisine: '',
     });
 
-    const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(1);
+  const imageInput = useRef(null);
+  const [errors, setErrors] = useState({});
+
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
@@ -54,18 +57,23 @@ const MultiStepForm = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formDataToSend = new FormData();
 
-    // sending the form data to the backend
+    formDataToSend.append("bio", formDataToSend.bio);
+    formDataToSend.append("image", imageInput.current.files[0]);
+    formDataToSend.append("favoriteCuisine", formDataToSend.favoriteCuisine);
+
     try {
-        const response = await axiosReq.get(`/profiles/${id}`);
-        console.log('Profile form submission successfully:', response.data);
-        setFormData(response.data);
-      } catch (err) {
-        console.log(err);
+      const { data } = await axiosReq.post("/profiles/${id}", formDataToSend);
+    } catch (err) {
+      console.log(err);
+      if (err.response?.status !== 401) {
+        setErrors(err.response?.data);
       }
-    };
+    }
+  };
       
   const renderStep = () => {
     switch (currentStep) {
@@ -90,6 +98,7 @@ const MultiStepForm = () => {
               accept="image/*"
               name="image"
               onChange={handleInputChange}
+              ref={imageInput}
             />
             <button onClick={handlePrev}>Previous</button>
             <button onClick={handleNext}>Next</button>
@@ -124,14 +133,14 @@ const MultiStepForm = () => {
 
   return (
     <div>
-      <div style={{ marginBottom: '20px' }}>
-        <p>Step {currentStep} of 3</p>
-        </div>
       <div>
         <h1>Welcome to the Chef's World!</h1>
         <p>We don't know much about you yet. Please take the time to give us some more information about you. It only takes 5 minutes!</p>
-        <form onSubmit={handleSubmit}>
-          {renderStep()}
+        <div style={{ marginBottom: '20px' }}>
+        <p>Step {currentStep} of 3</p>
+        </div>
+        <form className="col-lg-12 d-flex flex-column align-items-center" onSubmit={handleSubmit}>
+        {renderStep()}
         </form>
       </div>
     </div>
