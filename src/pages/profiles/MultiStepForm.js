@@ -1,53 +1,62 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { axiosReq } from '../../api/axiosDefaults';
 import { useParams } from 'react-router';
-
+import { useHistory } from 'react-router';
+import { useProfileData, useSetProfileData } from '../../contexts/ProfileDataContext';
 
 const MultiStepForm = () => {
-    const { id } = useParams();
-    const CUISINE_CHOICES = [
-        'AMERICAN',
-        'AUSTRIAN',
-        'CARIBBEAN',
-        'CHINESE',
-        'FRENCH',
-        'GERMAN',
-        'GREEK',
-        'INDIAN',
-        'ITALIAN',
-        'MEDITERRANEAN',
-        'MEXICAN',
-        'SLOVAK',
-        'SPANISH',
-    ];
+  const { id } = useParams();
+  const CUISINE_CHOICES = [
+    'AMERICAN',
+    'AUSTRIAN',
+    'CARIBBEAN',
+    'CHINESE',
+    'FRENCH',
+    'GERMAN',
+    'GREEK',
+    'INDIAN',
+    'ITALIAN',
+    'MEDITERRANEAN',
+    'MEXICAN',
+    'SLOVAK',
+    'SPANISH',
+  ];
 
-    const [formData, setFormData] = useState({
-        bio: '',
-        image: null,
-        favoriteCuisine: '',
-    });
+  const [formData, setFormData] = useState({
+    bio: profileData.pageProfile.bio || '',
+    image: profileData.pageProfile.image || '',
+    favorite_cuisine: profileData.pageProfile.favorite_cuisine || '',
+  });
+
+  
+  const [imageFile, setImageFile] = useState(null);
+  const profileData = useProfileData();
+  const setProfileData = useSetProfileData();
 
   const [currentStep, setCurrentStep] = useState(1);
   const imageInput = useRef(null);
   const [errors, setErrors] = useState({});
+  const history = useHistory();
 
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
-  const handleInputChange = (e) => {
-    const { name, value, type } = e.target;
-
-    // If the input type is file (for image upload), update formData differently
-    if (type === 'file') {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: e.target.files[0],
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
+  const handleChangeImage = (event) => {
+    if (event.target.files.length) {
+      const file = event.target.files[0];
+      URL.revokeObjectURL(formData.image);
+      setFormData({
+        ...formData,
+        image: URL.createObjectURL(file),
+      });
+      setImageFile(file);
     }
   };
+
 
   const handleNext = () => {
     setCurrentStep((prevStep) => prevStep + 1);
@@ -60,21 +69,44 @@ const MultiStepForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formDataToSend = new FormData();
-
-    formDataToSend.append("bio", formDataToSend.bio);
-    formDataToSend.append("image", imageInput.current.files[0]);
-    formDataToSend.append("favoriteCuisine", formDataToSend.favoriteCuisine);
-
+  
+    formDataToSend.append('bio', formData.bio);
+    // Check if an image is selected before appending to FormData
+    if (imageFile) {
+      formDataToSend.append('image', imageFile);
+    }
+    formDataToSend.append('favorite_cuisine', formData.favorite_cuisine);
+  
+  
     try {
-      const { data } = await axiosReq.post("/profiles/${id}", formDataToSend);
-    } catch (err) {
-      console.log(err);
-      if (err.response?.status !== 401) {
-        setErrors(err.response?.data);
+      // Make the axios request to update the data
+      await axiosReq.put(`/profiles/${id}/`, formDataToSend);
+  
+      // Update the profile data after successful submission
+      const { data } = await axiosReq.get(`/profiles/${id}`);
+      // Update the profile data context after successful submission
+      setProfileData((prevState) => ({
+        ...prevState,
+        pageProfile: { results: [data] },
+      }));
+    } catch (error) {
+      console.error('Error submitting profile data:', error);
+  
+      if (error.response) {
+        console.error('Server response data:', error.response.data);
+        console.error('Server response status:', error.response.status);
+        console.error('Server response headers:', error.response.headers);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error setting up the request:', error.message);
       }
+  
+      // Handle error and set appropriate error messages
+      setErrors({ image: ['Error uploading the image.'] });
     }
   };
-      
+
   const renderStep = () => {
     switch (currentStep) {
       case 1:
@@ -84,7 +116,7 @@ const MultiStepForm = () => {
             <textarea
               name="bio"
               value={formData.bio}
-              onChange={handleInputChange}
+              onChange={handleChange}
             />
             <button onClick={handleNext}>Next</button>
           </div>
@@ -92,26 +124,11 @@ const MultiStepForm = () => {
       case 2:
         return (
           <div>
-            <label>Upload Image:</label>
-            <input
-              type="file"
-              accept="image/*"
-              name="image"
-              onChange={handleInputChange}
-              ref={imageInput}
-            />
-            <button onClick={handlePrev}>Previous</button>
-            <button onClick={handleNext}>Next</button>
-          </div>
-        );
-      case 3:
-        return (
-          <div>
             <label>Favorite Cuisine:</label>
             <select
               name="favoriteCuisine"
-              value={formData.favoriteCuisine}
-              onChange={handleInputChange}
+              value={formData.favorite_cuisine}
+              onChange={handleChange}
             >
               <option value="" disabled>
                 Select a Cuisine
@@ -123,7 +140,24 @@ const MultiStepForm = () => {
               ))}
             </select>
             <button onClick={handlePrev}>Previous</button>
-            <button type="submit">Submit</button>
+            <button onClick={handleNext}>Next</button>
+          </div>
+        );
+      case 3:
+        return (
+          <div>
+            <label>Upload Image:</label>
+            <input
+              type="file"
+              accept="image/*"
+              name="image"
+              onChange={handleChangeImage}
+              ref={imageInput}
+            />
+            <button onClick={handlePrev}>Previous</button>
+            <button type="submit" onClick={handleSubmit}>
+              Submit
+            </button>
           </div>
         );
       default:
@@ -135,12 +169,18 @@ const MultiStepForm = () => {
     <div>
       <div>
         <h1>Welcome to the Chef's World!</h1>
-        <p>We don't know much about you yet. Please take the time to give us some more information about you. It only takes 5 minutes!</p>
+        <p>
+          We don't know much about you yet. Please take the time to give us
+          some more information about you. It only takes 5 minutes!
+        </p>
         <div style={{ marginBottom: '20px' }}>
-        <p>Step {currentStep} of 3</p>
+          <p>Step {currentStep} of 3</p>
         </div>
-        <form className="col-lg-12 d-flex flex-column align-items-center" onSubmit={handleSubmit}>
-        {renderStep()}
+        <form
+          className="col-lg-12 d-flex flex-column align-items-center"
+          onSubmit={handleSubmit}
+        >
+          {renderStep()}
         </form>
       </div>
     </div>
