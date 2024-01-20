@@ -61,13 +61,13 @@ function ProfilePage() {
                 secondPhrase=""
                 firstParagraph={profile?.bio}
               />
-             
             </>
           ) : (
             <p>Loading...</p>
           )}
         </>
       )}
+       <p>{`Favorite Cuisine: ${profile?.favorite_cuisine}`}</p>
       <CircleRow
         data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
                 labels={['Recipes', 'Followers', 'Following']}
