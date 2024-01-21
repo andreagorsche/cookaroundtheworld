@@ -1,32 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router';
+import { useParams, useHistory } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
-import RatingVote from '../../components/Rating/RatingVote';
-import { useFetchRecipeById, useCurrentRecipe, useSetCurrentRecipe } from '../../contexts/RecipeDataContext'; 
-import { useCurrentUser } from '../../contexts/CurrentUserContext'; 
+import { useFetchRecipeById, useCurrentRecipe, useSetCurrentRecipe } from '../../contexts/RecipeDataContext';
+import { useRating, useSetRating } from '../../contexts/RatingDataContext';
+import RatingSelect from '../../components/Rating/RatingSelect';
+import { axiosReq } from "../../api/axiosDefaults";
 
+
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
 function RecipeDisplay({ isEditing, setIsEditing }) {
-    const { id } = useParams();
-    const { currentRecipe } = useCurrentRecipe();
-    const setCurrentRecipe = useSetCurrentRecipe();
-    const currentUser = useCurrentUser();
-    const history = useHistory();
-    const fetchRecipeById = useFetchRecipeById();
+  const { id } = useParams();
+  const currentRecipe = useCurrentRecipe();
+  const setCurrentRecipe = useSetCurrentRecipe();
+  const currentUser = useCurrentUser();
+  const history = useHistory();
+  const fetchRecipeById = useFetchRecipeById();
+  const stars = useRating();
+  const setStars = useSetRating();
+  const [showThankYouMessage, setShowThankYouMessage] = useState(false); // Add this line
 
-    const handleEditClick = async () => {
-      history.push(`/recipes/${id}`);
-      setIsEditing(true);
-    };
-  
-  
-    useEffect(() => {
-      fetchRecipeById(id, setCurrentRecipe);
-    }, [id, setCurrentRecipe]);
+
+  useEffect(() => {
+    fetchRecipeById(id, setCurrentRecipe);
+  }, [id, setCurrentRecipe]);
+
+  console.log("Current Recipe:", currentRecipe);
+
+  const handleEditClick = () => {
+    history.push(`/recipes/${id}`);
+    setIsEditing(true);
+  };
 
   const {
     title,
@@ -34,14 +42,28 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
     description,
     time_effort,
     ingredients,
-  } = currentRecipe?.results[0] || {};
+  } = currentRecipe || {};
   const ingredientsArray = ingredients ? ingredients.split(',').map(item => item.trim()) : [];
-  const headerImageUrl = currentRecipe?.results[0]?.image;
-  
-  const owner = currentRecipe?.results[0]?.owner;
+  const headerImageUrl = currentRecipe?.image;
+
+  const owner = currentRecipe?.owner;
   const is_owner = currentUser?.username === owner;
 
-
+  const handleRatingChange = async (newRating) => {
+    try {
+      const response = await axiosReq.post('/ratings/', {
+        stars: newRating,
+        recipe: id,
+        owner: owner,
+      });
+  
+      const data = response.data;
+      setStars(newRating);
+      setShowThankYouMessage(true);
+    } catch (error) {
+      console.error('Error submitting rating:', error);
+    }
+  };
 
   return (
     <>
@@ -59,14 +81,15 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
       <Row className="justify-content-center">
         <Col className="py-2 p-0 p-lg-2" lg={8}>
           <Container className="text-center">
-          {is_owner ? (
-            <button onClick={handleEditClick}>Edit</button>
-          ) : (
-            <>
-            <RatingVote recipeId={id} />
-            <div>Comments</div>
+            {is_owner ? (
+              <button onClick={handleEditClick}>Edit</button>
+            ) : (
+              <>
+              <RatingSelect value={stars} onRatingChange={handleRatingChange} />
+              {showThankYouMessage && <div>Thank you for rating!</div>}
+              <div>Comments</div>
             </>
-          )}          
+            )}
           </Container>
         </Col>
       </Row>

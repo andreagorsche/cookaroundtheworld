@@ -2,48 +2,50 @@ import React, { useState } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
 import { Card, Button, Alert } from 'react-bootstrap';
 import RatingSelect from './RatingSelect';
-import { useRating, useSetRating } from '../../contexts/RatingDataContext';
-import { useParams } from 'react-router';
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import { useRating, useSetRating } from "../../contexts/RatingDataContext";
 
-const RatingVote = () => {
+const RatingVote = ({ recipeId, owner }) => {
   const rating = useRating();
   const setRating = useSetRating();
-  const { id: recipeId } = useParams();
+  const currentUser = useCurrentUser();
+  const is_owner = currentUser?.username === owner;
+
   const [showThankYouMessage, setShowThankYouMessage] = useState(false);
 
   const addRating = async (newRating) => {
     try {
       const response = await axiosReq.post('/ratings/', { stars: newRating, recipe: recipeId });
-
-      if (response && response.data) {
-        const data = response.data;
-        setRating((prevRating) => [data, ...prevRating]);
-        setShowThankYouMessage(true);
-        console.log("Rating Added Successfully:", data);
-      } else {
-        console.error('Error adding rating: Response or data is undefined');
-      }
+      const data = response.data;
+      setRating((prevRating) => [data, ...prevRating]);
+      setShowThankYouMessage(true);
+      console.log("Rating Added Successfully:", data);
     } catch (error) {
       console.error('Error adding rating:', error);
-      console.log('Error Response:', error.response ? error.response.data : 'No response data');
+      console.log('Error Response:', error.response.data);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newRating = {
-      rating,
-    };
-
-    addRating(newRating);
-
-    // Reset the form after submission
-    setRating(0);
+  const handleSubmit = async (newRating) => {
+    // Ensure that a valid rating is submitted
+    if (newRating >= 1 && newRating <= 5) {
+      await addRating(newRating);
+    } else {
+      // Handle invalid rating (optional)
+      console.error('Invalid rating:', newRating);
+    }
   };
 
   return (
     <Card>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(rating);
+          // Reset the form after submission (optional)
+          setRating(0);
+        }}
+      >
         <h2>How did you like this recipe?</h2>
         <RatingSelect select={setRating} selected={rating} />
         <Button type="submit">Send</Button>

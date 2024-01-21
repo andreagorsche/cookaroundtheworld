@@ -7,7 +7,7 @@ const RecipeDataContext = createContext();
 
 export const RecipeDataProvider = ({ children }) => {
   const [recipeData, setRecipeData] = useState({ results: [] });
-  const [currentRecipe, setCurrentRecipe] = useState({ results: [] });
+  const [currentRecipe, setCurrentRecipe] = useState({});
   const [hasLoaded, setHasLoaded] = useState(false);
   const { id } = useParams();
 
@@ -26,29 +26,40 @@ export const RecipeDataProvider = ({ children }) => {
     fetchRecipes('/recipes/');
   }, []);
 
-  const fetchRecipeById = async (id, setCurrentRecipe) => {
+  const fetchRecipeById = async (id) => {
     try {
-      const [{ data: currentRecipe }] = await Promise.all([
-        axiosReq.get(`/recipes/${id}/`),
-      ]);
-      console.log('currentRecipe:', currentRecipe);
-      setCurrentRecipe((prevState) => ({
-        ...prevState,
-        currentRecipe: { results: [currentRecipe] },
-      }));
+      if (id) {
+        const response = await axiosReq.get(`/recipes/${id}/`);
+        console.log('Response:', response.data); // Log the data property of the response
+        setCurrentRecipe(response.data);
+        setHasLoaded(true);
+      }
     } catch (err) {
       console.log(err);
     }
   };
+  
 
   useEffect(() => {
-    setHasLoaded(false);
-    fetchRecipeById(id);
+    if (id) {
+      setHasLoaded(false);
+      fetchRecipeById(id);
+    }
   }, [id]);
 
-
   return (
-    <RecipeDataContext.Provider value={{ recipeData, currentRecipe, hasLoaded, setHasLoaded, fetchRecipes, fetchRecipeById, setRecipeData, setCurrentRecipe }}>
+    <RecipeDataContext.Provider
+      value={{
+        recipeData,
+        currentRecipe,
+        hasLoaded,
+        setHasLoaded,
+        fetchRecipes,
+        fetchRecipeById,
+        setRecipeData,
+        setCurrentRecipe,
+      }}
+    >
       {children}
     </RecipeDataContext.Provider>
   );
@@ -81,7 +92,7 @@ export const useHasLoaded = () => {
 export const useSetHasLoaded = () => {
   const context = useContext(RecipeDataContext);
   if (!context) {
-    throw new Error('useHasLoaded must be used within a RecipeDataProvider');
+    throw new Error('useSetHasLoaded must be used within a RecipeDataProvider');
   }
   return context.setHasLoaded;
 };
@@ -93,7 +104,6 @@ export const useFetchRecipes = () => {
   }
   return context.fetchRecipes;
 };
-
 
 export const useFetchRecipeById = () => {
   const context = useContext(RecipeDataContext);
