@@ -55,15 +55,21 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
         stars: newRating,
         recipe: id,
         owner: owner,
+        recipe_title: currentRecipe.title,
+        recipe_description: currentRecipe.description,
+        recipe_ingredients: currentRecipe.ingredients,
       });
   
       const data = response.data;
       setStars(newRating);
       setShowThankYouMessage(true);
+      console.log("Rating submitted successfully:", data);
     } catch (error) {
       console.error('Error submitting rating:', error);
     }
   };
+  
+  
 
   return (
     <>

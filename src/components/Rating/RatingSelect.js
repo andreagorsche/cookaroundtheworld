@@ -8,7 +8,10 @@ const Rating = ({ value, onRatingChange }) => {
       {stars.map((star) => (
         <span
           key={star}
-          onClick={() => onRatingChange(star)}
+          onClick={() => {
+            console.log('Selected Star:', star);
+            onRatingChange(star);
+          }}
           style={{ cursor: 'pointer', color: star <= value ? 'gold' : 'gray' }}
         >
           &#9733; {/* Unicode star character */}
