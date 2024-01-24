@@ -11,28 +11,7 @@ import styles from "../styles/components/BulletinBoard.module.css";
 function BulletinBoard({ intro, backgroundImage }) {
   const recipes = useRecipeData();
   const hasLoaded = useHasLoaded();
-  const setHasLoaded = useSetHasLoaded();
-  const fetchRecipes = useFetchRecipes();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetchRecipes("/recipes/", {
-          params: {
-            ordering: "-created_at",
-            limit: 3,
-          },
-        });
-        setHasLoaded(true);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    // Call the fetchData function
-    fetchData();
-  }, [fetchRecipes, setHasLoaded]);
-  
   const bgStyle = {
     backgroundImage: `url(${backgroundImage})`,
   };
@@ -43,7 +22,7 @@ function BulletinBoard({ intro, backgroundImage }) {
       {intro && <p>{intro}</p>}
       <Row className="align-content-center justify-content-center">
         {hasLoaded ? (
-          recipes.results.map((recipe) => (
+          recipes.results.slice(0,3).map((recipe) => (
             <Col key={recipe.id} xs={12} sm={6} md={4} lg={4} xl={4}>
             <RecipeCard key={recipe.id} recipe={recipe} />
             </Col>

@@ -18,13 +18,19 @@ function Intro({
     fontSize: '1.2rem',
   };
 
+  const spanStyle = {
+    color: '#F6BE00',
+    marginRight: '1rem', 
+    marginLeft: '1rem',
+  };
+
 
   return (
     <Container fluid id="Intro2">
       <Row style={{ display: 'flex', alignItems: 'stretch' }}>
         <Col className='intro-text'>
           <h1>
-            {firstWord} <span style={{ color: '#F6BE00' }}>{secondWord}</span>{' '}
+            {firstWord} <span style={spanStyle}>{secondWord}</span>{' '}
             {secondPhrase}
           </h1>
           <p style={paragraphStyle}>{firstParagraph}</p>

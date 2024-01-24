@@ -61,7 +61,7 @@ function LoginForm() {
     };
 
   return (
-    <>
+    <div>
     <Header imageUrl={JoinHeader} />
     <Row className="justify-content-md-center align-items-center">
       <Col className="my-auto p-0 p-md-2" md={6}>
@@ -121,7 +121,7 @@ function LoginForm() {
         </Container>
       </Col>
     </Row>
-    </>
+    </div>
   );
 }
 

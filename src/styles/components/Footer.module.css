@@ -2,7 +2,7 @@
 .footer {
     display: flex;
     background-color: indigo;
-    padding: 5px;
+    padding: 0px;
     align-items: center;
     justify-content: center;
     position: fixed;

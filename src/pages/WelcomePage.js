@@ -40,7 +40,7 @@ const WelcomePage = () => {
   />
   {!currentUser && (
   <Row>
-    <Col lg={6}>
+    <Col lg={6} className="d-flex align-items-center justify-content-center">
      <Intro
           firstWord="Cook"
           secondWord="Around"

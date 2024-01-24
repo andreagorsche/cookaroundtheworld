@@ -7,6 +7,7 @@
     margin-left: 2px;
     margin-right: 2px;
     min-width: 75px;
+    color: indigo;
   }
   
   .Button:hover {
@@ -32,16 +33,16 @@
     width: 100%;
   }
   
-  .Blue,
-  .BlueOutline:hover,
+  .Indigo,
+  .IndigoOutline:hover,
   .Bright:hover {
     background-color: rgb(68, 25, 68);;
     color: #ffffff;
   }
   
-  .BlueOutline,
-  .Blue:hover {
-    border: 1px solid #2142b2; 
+  .IndigoOutline,
+  .Indigo:hover {
+    border: 1px solid indigo; 
     background-color: #ffffff;
     color: rgb(68, 25, 68);;
   }
