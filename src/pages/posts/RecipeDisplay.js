@@ -12,6 +12,7 @@ import { axiosReq } from "../../api/axiosDefaults";
 
 
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
+import RatingForm from '../../components/Rating/RatingForm';
 
 function RecipeDisplay({ isEditing, setIsEditing }) {
   const { id } = useParams();
@@ -20,9 +21,9 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
   const currentUser = useCurrentUser();
   const history = useHistory();
   const fetchRecipeById = useFetchRecipeById();
-  const stars = useRating();
-  const setStars = useSetRating();
-  const [showThankYouMessage, setShowThankYouMessage] = useState(false); // Add this line
+  const rating = useRating();
+  const setRating = useSetRating();
+  const [showThankYouMessage, setShowThankYouMessage] = useState(false); 
 
 
   useEffect(() => {
@@ -49,26 +50,6 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
   const owner = currentRecipe?.owner;
   const is_owner = currentUser?.username === owner;
 
-  const handleRatingChange = async (newRating) => {
-    try {
-      const response = await axiosReq.post('/ratings/', {
-        stars: newRating,
-        recipe: id,
-        owner: owner,
-        recipe_title: currentRecipe.title,
-        recipe_description: currentRecipe.description,
-        recipe_ingredients: currentRecipe.ingredients,
-      });
-  
-      const data = response.data;
-      setStars(newRating);
-      setShowThankYouMessage(true);
-      console.log("Rating submitted successfully:", data);
-    } catch (error) {
-      console.error('Error submitting rating:', error);
-    }
-  };
-  
   
 
   return (
@@ -91,7 +72,7 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
               <button onClick={handleEditClick}>Edit</button>
             ) : (
               <>
-              <RatingSelect value={stars} onRatingChange={handleRatingChange} />
+                <RatingForm owner={currentRecipe?.owner} recipe_id={parseInt(id, 10)} />
               {showThankYouMessage && <div>Thank you for rating!</div>}
               <div>Comments</div>
             </>
