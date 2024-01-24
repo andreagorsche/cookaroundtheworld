@@ -44,7 +44,9 @@ const is_owner = currentUser?.username === owner;
           <Card.Text>{cuisine}</Card.Text>
           <button className={styles.recipeButton}>View Recipe</button>
         </Link>
-        <AverageRatingDisplay recipeId={id} />
+      </Card.Body>
+      <Card.Body>
+      <AverageRatingDisplay recipeId={id} />
       </Card.Body>
     </Card>
   );

@@ -1,28 +1,77 @@
-import React, { useState } from 'react';
-import { axiosReq } from "../../api/axiosDefaults";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Avatar from "../../components/Avatar";
+import { axiosRes } from "../../api/axiosDefaults";
 
-const CommentForm = () => {
-  const [content, setContent] = useState('');
+function CommentForm(props) {
+  const { recipe_id, setRecipe, setComments, profileImage, profile_id } = props;
+  const [content, setContent] = useState("");
 
-  const onChange = (event) => {
+  const handleChange = (event) => {
     setContent(event.target.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      const response = await axiosReq.post('/comments/', content);
-      console.log('Comment submitted successfully:', response.data);
-    } catch (error) {
-      console.error('Error submitting comment:', error);
+      const { data } = await axiosRes.post("/comments/", {
+        content,
+        recipe: recipe_id,
+      });
+      setComments((prevComments) => ({
+        ...prevComments,
+        results: [data, ...prevComments.results],
+      }));
+      setRecipe((prevRecipe) => ({
+        results: [
+          {
+            ...prevRecipe.results[0],
+            comments_count: prevRecipe.results[0].comments_count + 1,
+          },
+        ],
+      }));
+      setContent("");
+      console.log('Sending data:', {
+        content,
+        recipe_id,
+      });
+  
+  
+    } catch (err) {
+      console.log("Error in handleSubmit:", err);
+      console.log("Error response data:", err.response.data);
+      console.log("Error response status:", err.response.status);
+      console.log("Error response headers:", err.response.headers);
     }
   };
 
   return (
-    <>
-      <input type="textarea" value={content} onChange={onChange} />
-      <button onClick={handleSubmit}>Submit</button>
-    </>
+    <Form className="mt-2" onSubmit={handleSubmit}>
+      <Form.Group>
+        <InputGroup>
+          <Link to={`/profiles/${profile_id}`}>
+            <Avatar src={profileImage} />
+          </Link>
+          <Form.Control
+            placeholder="my comment..."
+            as="textarea"
+            value={content}
+            onChange={handleChange}
+            rows={2}
+          />
+        </InputGroup>
+      </Form.Group>
+      <button
+        className={`btn d-block ml-auto`}
+        disabled={!content.trim()}
+        type="submit"
+      >
+        post
+      </button>
+    </Form>
   );
-};
+}
 
 export default CommentForm;

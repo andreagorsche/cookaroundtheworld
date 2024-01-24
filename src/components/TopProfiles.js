@@ -12,7 +12,7 @@ const TopProfiles = () => {
     <Container>
       <h1>Our Top Profiles</h1>
       <Row className="justify-content-between">
-        {topProfiles?.results?.slice(0,6).map((profile) => (
+        {topProfiles?.results?.slice(0,3).map((profile) => (
           <Col key={profile.id} xs={12} sm={6} md={4} lg={4} xl={4}>
             <Card className="mb-3">
               <Card.Body>

@@ -7,6 +7,7 @@ import Intro from "../../components/Intro";
 import CircleRow from "../../components/CircleRow"
 import RecipeCard from "../../components/RecipeCard";
 import MultiStepForm from "./MultiStepForm";
+import FollowButton from "../../components/FollowButton";
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -45,6 +46,7 @@ function ProfilePage() {
       <div>
         <HeaderImageCircle HeaderTitle={profile?.owner} imageUrl={profile?.image} style={{ height: '100vh' }} />
       </div>
+      <FollowButton />
       {showMultiStepForm ? (
         <MultiStepForm
           needsEditing={!profile?.bio}
@@ -72,7 +74,7 @@ function ProfilePage() {
         data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
                 labels={['Recipes', 'Followers', 'Following']}
               />
-              <RecipeCard />
+      <RecipeCard />
     </>
   );
 }

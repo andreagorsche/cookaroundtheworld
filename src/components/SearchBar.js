@@ -22,9 +22,9 @@ function SearchBar({ onSearch }) {
   }
 
   return (
-    <div className="App">
+    <div>
       <h1>Search</h1>
-      <div className="search-container">
+      <div className="d-flex justify-content-center h-100 mb-3">
         <div className="search-inner">
           <input type="text" value={value} onChange={onChange} />
           <button onClick={() => handleSearch()}> Search </button>

@@ -50,7 +50,7 @@ const onSearch = async (searchTerm) => {
     <>
     <Header imageUrl={FoodFeedHeader} />
     <Row className='d-flex justify-content-center h-100'>
-    <Col className="p-0 position-fixed" lg={4}>
+    <Col className="p-0" lg={4}>
         <SearchBar onSearch={onSearch} />
         <Filters style={{ width: "300px" }} />
     </Col>
