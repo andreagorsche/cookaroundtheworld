@@ -1,59 +1,23 @@
-import React, { useEffect, useState } from 'react';
+// RatingDisplay.jsx
+import React from 'react';
+import { useRating } from '../../contexts/RatingDataContext';
 import { useParams, useHistory } from 'react-router';
-import { Rating } from '@mui/material';
-import { useRating, useSetRating } from '../../contexts/RatingDataContext';
-import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
 function RatingDisplay({ isEditing, setIsEditing }) {
   const id = useParams().id;
   const ratingData = useRating();
-  const setRating = useSetRating();
-  const currentUser = useCurrentUser();
   const history = useHistory();
-
-  const [averageRating, setAverageRating] = useState(0);
 
   const handleEditClick = async () => {
     history.push(`/ratings/${id}`);
     setIsEditing(true);
   };
 
-  const calculateAverageRating = () => {
-    if (!ratingData || !ratingData.length === 0) {
-      return 0;
-    }
-  
-    const totalRatings = ratingData.length;
-    const sumOfRatings = ratingData.reduce((sum, rating) => sum + rating.stars, 0);
-  
-    return totalRatings > 0 ? sumOfRatings / totalRatings : 0;
-  };
-
-  useEffect(() => {
-    const avgRating = calculateAverageRating();
-    setAverageRating(avgRating);
-  }, [ratingData]);
-
-
   return (
-    <>
-          <div>
-            <p>Average Rating: {averageRating}</p>
-            <Rating name="recipe-rating" value={averageRating} precision={0.5} readOnly />
-          </div>
-          <div>
-          <p>Your Rating: {ratingData && ratingData.length > 0 ? ratingData[0].stars : 'Not rated yet'}</p>
-          </div>
-          <button onClick={handleEditClick}>Edit</button>
-      ) : (
-        <>
-          <div>
-            <p>Average Rating: {averageRating}</p>
-            <Rating name="recipe-rating" value={averageRating} precision={0.5} readOnly />
-          </div>
-        </>
-      )}
-    </>
+    <div>
+      <p>Your Rating: {ratingData && ratingData.length > 0 ? ratingData[0].stars : 'Not rated yet'}</p>
+      <button onClick={handleEditClick}>Edit</button>
+    </div>
   );
 }
 

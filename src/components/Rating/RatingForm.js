@@ -4,6 +4,8 @@ import { axiosReq } from "../../api/axiosDefaults";
 const RatingForm = ({ owner, recipe_id }) => {
   const [stars, setStars] = useState(1);
   const [existingRating, setExistingRating] = useState(null);
+  const [showThankYouMessage, setShowThankYouMessage] = useState(false); 
+
 
   useEffect(() => {
     // Fetch existing rating when the component mounts
@@ -55,6 +57,7 @@ const RatingForm = ({ owner, recipe_id }) => {
             stars: stars,
         },
         );
+        setShowThankYouMessage(true);
 
         console.log('Rating submitted successfully:', response.data);
       }
@@ -77,6 +80,11 @@ const RatingForm = ({ owner, recipe_id }) => {
         />
       </label>
       <button onClick={handleRatingSubmit}>Submit Rating</button>
+      {showThankYouMessage && (
+        <div>
+          <p>Thank you for rating!</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import styles from "../styles/components/RecipeCard.module.css";
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import { useCurrentUser } from "../contexts/CurrentUserContext";
-
+import AverageRatingDisplay from '../components/Rating/AverageRatingDisplay';
 
 function RecipeCard({ recipe }) {
   const {
@@ -44,6 +44,7 @@ const is_owner = currentUser?.username === owner;
           <Card.Text>{cuisine}</Card.Text>
           <button className={styles.recipeButton}>View Recipe</button>
         </Link>
+        <AverageRatingDisplay recipeId={id} />
       </Card.Body>
     </Card>
   );

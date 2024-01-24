@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
 
 const CommentForm = () => {
-  const [comment, setComment] = useState('');
+  const [content, setContent] = useState('');
 
   const onChange = (event) => {
-    setComment(event.target.value);
+    setContent(event.target.value);
   };
 
   const handleSubmit = async () => {
     try {
-      const response = await axiosReq.post('/comments/', { comment });
+      const response = await axiosReq.post('/comments/', content);
       console.log('Comment submitted successfully:', response.data);
     } catch (error) {
       console.error('Error submitting comment:', error);
@@ -19,7 +19,7 @@ const CommentForm = () => {
 
   return (
     <>
-      <input type="textarea" value={comment} onChange={onChange} />
+      <input type="textarea" value={content} onChange={onChange} />
       <button onClick={handleSubmit}>Submit</button>
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -7,10 +7,9 @@ import Header from '../../components/Header';
 import Intro from '../../components/Intro';
 import { useFetchRecipeById, useCurrentRecipe, useSetCurrentRecipe } from '../../contexts/RecipeDataContext';
 import { useRating, useSetRating } from '../../contexts/RatingDataContext';
-import RatingSelect from '../../components/Rating/RatingSelect';
-import { axiosReq } from "../../api/axiosDefaults";
-
-
+import CommentForm from '../../components/Rating/CommentForm';
+import RatingDisplay from '../../components/Rating/RatingDisplay';
+import CommentDisplay from '../../components/Rating/CommentDisplay';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import RatingForm from '../../components/Rating/RatingForm';
 
@@ -21,9 +20,6 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
   const currentUser = useCurrentUser();
   const history = useHistory();
   const fetchRecipeById = useFetchRecipeById();
-  const rating = useRating();
-  const setRating = useSetRating();
-  const [showThankYouMessage, setShowThankYouMessage] = useState(false); 
 
 
   useEffect(() => {
@@ -69,12 +65,15 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
         <Col className="py-2 p-0 p-lg-2" lg={8}>
           <Container className="text-center">
             {is_owner ? (
+              <>
               <button onClick={handleEditClick}>Edit</button>
+              <RatingDisplay />
+              <CommentDisplay />
+              </>
             ) : (
               <>
-                <RatingForm owner={currentRecipe?.owner} recipe_id={parseInt(id, 10)} />
-              {showThankYouMessage && <div>Thank you for rating!</div>}
-              <div>Comments</div>
+              <RatingForm owner={currentRecipe?.owner} recipe_id={parseInt(id, 10)} />
+              <CommentForm />
             </>
             )}
           </Container>
