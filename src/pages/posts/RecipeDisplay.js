@@ -20,6 +20,8 @@ function RecipeDisplay({handleEditClick}) {
   const setCurrentRecipe = useSetCurrentRecipe();
   const currentUser = useCurrentUser();
   const fetchRecipeById = useFetchRecipeById();
+  const profile_image = currentUser?.profile_image;
+  const [comments, setComments] = useState({ results: [] });
 
 
   useEffect(() => {
@@ -41,7 +43,6 @@ function RecipeDisplay({handleEditClick}) {
   const owner = currentRecipe?.owner;
   const is_owner = currentUser?.username === owner;
 
-  
 
   return (
     <>
@@ -68,7 +69,13 @@ function RecipeDisplay({handleEditClick}) {
             ) : (
               <>
               <RatingForm owner={currentRecipe?.owner} recipe_id={parseInt(id, 10)} />
-              <CommentForm />
+              <CommentForm
+               profile_id={currentUser.profile_id}
+               profileImage={profile_image}
+               recipe={id}
+               setRecipe={setRecipe}
+               setComments={setComments}
+               />
             </>
             )}
           </Container>
