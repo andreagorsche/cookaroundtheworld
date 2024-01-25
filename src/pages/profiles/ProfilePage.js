@@ -7,15 +7,22 @@ import Intro from "../../components/Intro";
 import CircleRow from "../../components/CircleRow"
 import TopProfiles from "../../components/TopProfiles";
 import MultiStepForm from "./MultiStepForm";
-import FollowButton from "../../components/FollowButton";
+import { Col, Button } from "react-bootstrap";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import btnStyles from "../../styles/components/Button.module.css";
+
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const { id } = useParams();
-  const setProfileData = useSetProfileData();
+  const { setProfileData, handleFollow, handleUnfollow } = useSetProfileData();
   const { pageProfile } = useProfileData();
   const [profile] = pageProfile?.results || [];
   const [showMultiStepForm, setShowMultiStepForm] = useState(false);
+  const currentUser = useCurrentUser();
+
+  const is_owner = currentUser?.username === profile?.owner;
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +53,6 @@ function ProfilePage() {
       <div>
         <HeaderImageCircle HeaderTitle={profile?.owner} imageUrl={profile?.image} style={{ height: '100vh' }} />
       </div>
-      <FollowButton />
       {showMultiStepForm ? (
         <MultiStepForm
           needsEditing={!profile?.bio}
@@ -74,6 +80,25 @@ function ProfilePage() {
         data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
                 labels={['Recipes', 'Followers', 'Following']}
               />
+      <Col lg={3} className="text-lg-right">
+          {currentUser &&
+            !is_owner &&
+            (profile?.following_id ? (
+              <Button
+                className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
+                onClick={() => handleUnfollow(profile)}
+              >
+                unfollow
+              </Button>
+            ) : (
+              <Button
+                className={`${btnStyles.Button} ${btnStyles.Black}`}
+                onClick={() => handleFollow(profile)}
+              >
+                follow
+              </Button>
+            ))}
+        </Col>
       <TopProfiles />
     </>
   );
