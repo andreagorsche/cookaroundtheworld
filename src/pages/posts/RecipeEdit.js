@@ -12,6 +12,7 @@ import Asset from "../../components/Asset.js";
 import { useParams } from 'react-router';
 
 const RecipeEdit = ({ isEditing, setIsEditing }) => {
+  debugger;
   const currentRecipe  = useCurrentRecipe();
   const setCurrentRecipe = useSetCurrentRecipe();
   const imageInput = useRef(null);
@@ -20,11 +21,11 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
   const fetchRecipeById = useFetchRecipeById();
 
 
-  const [newTitle, setNewTitle] = useState(currentRecipe.results[0]?.title || '');
-  const [newDescription, setNewDescription] = useState(currentRecipe.results[0]?.description || '');
-  const [newIngredients, setNewIngredients] = useState(currentRecipe.results[0]?.ingredients || '');
-  const [newImage, setNewImage] = useState(currentRecipe.results[0]?.image || '');
-  const [newTimeEffort, setNewTimeEffort] = useState(currentRecipe.results[0]?.time_effort || '');
+  const [newTitle, setNewTitle] = useState(currentRecipe?.title || '');
+  const [newDescription, setNewDescription] = useState(currentRecipe?.description || '');
+  const [newIngredients, setNewIngredients] = useState(currentRecipe?.ingredients || '');
+  const [newImage, setNewImage] = useState(currentRecipe?.image || '');
+  const [newTimeEffort, setNewTimeEffort] = useState(currentRecipe?.time_effort || '');
   const [errors, setErrors] = useState({ image: [] });
 
 
@@ -33,8 +34,8 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
       await fetchRecipeById(id, setCurrentRecipe);
       console.log("Fetched Recipe:", currentRecipe);
       
-      if (isEditing && currentRecipe.results && currentRecipe.results[0]) {
-        const { title, description, ingredients, image, time_effort } = currentRecipe.results[0];
+      if (isEditing && currentRecipe.results && currentRecipe) {
+        const { title, description, ingredients, image, time_effort } = currentRecipe;
         setNewTitle(title || '');
         setNewDescription(description || '');
         setNewIngredients(ingredients || '');

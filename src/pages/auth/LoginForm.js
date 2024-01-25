@@ -34,6 +34,7 @@ function LoginForm() {
     };
 
     const handleSubmit = async (event) => {
+      debugger;
       event.preventDefault();
       try {
         const response = await axios.post("/dj-rest-auth/login/", loginData);
@@ -60,6 +61,7 @@ function LoginForm() {
       }
     };
 
+    console.log('---', username, password)
   return (
     <div>
     <Header imageUrl={JoinHeader} />

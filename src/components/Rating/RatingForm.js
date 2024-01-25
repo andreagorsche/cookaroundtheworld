@@ -35,7 +35,7 @@ const RatingForm = ({ owner, recipe_id }) => {
 
     // Cleanup function to run when the component is unmounted
     return () => {
-      isMounted = false;
+      setIsMounted(false);
     };
   }, [recipe_id, owner]);
 

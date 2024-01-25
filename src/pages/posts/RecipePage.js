@@ -15,7 +15,6 @@ const RecipePage = () => {
 
   // Function to handle the "Edit Recipe" button click
   const handleEditClick = () => {
-    history.push(`/recipes/${id}`);
     setIsEditing(true);
   };
 

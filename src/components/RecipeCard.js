@@ -21,19 +21,25 @@ function RecipeCard({ recipe }) {
 } = recipe || {};
 
 const currentUser = useCurrentUser();
-const is_owner = currentUser?.username === owner; 
+const isOwner = currentUser?.username === owner; 
 
   return (
     <Card className={styles.recipeCard}>
       <Card.Body>
         <Media className="align-items-center justify-content-between">
           <Link to={`/profiles/${profile_id}`}>
-              <Avatar src={profile_image} height={40} />
+              <Avatar src={currentUser.profile_image} height={40} />
               {owner}
           </Link>
           <div>
             <span>{updated_at}</span>
-            {is_owner && recipePage && "..."}
+            {isOwner ?  
+              (
+                <Link to={`/recipes/${id}`}>
+                  <button>Edit Recipe</button>
+                </Link>
+              ) : null
+            }
           </div>
       </Media>
       </Card.Body>
@@ -42,7 +48,7 @@ const is_owner = currentUser?.username === owner;
           <Card.Img variant="top" src={image} className={styles.recipeImage} />
           <Card.Title>{title}</Card.Title>
           <Card.Text>{cuisine}</Card.Text>
-          <button className={styles.recipeButton}>View Recipe</button>
+          <button>View Recipe</button>
         </Link>
       </Card.Body>
       <Card.Body>

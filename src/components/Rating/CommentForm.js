@@ -6,9 +6,10 @@ import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
 
 function CommentForm(props) {
-  const { recipe_id, setRecipe, setComments, profileImage, profile_id } = props;
+  const { recipeId, setRecipe, setComments, profileImage, profileId } = props;
+  
   const [content, setContent] = useState("");
-
+console.log(props)
   const handleChange = (event) => {
     setContent(event.target.value);
   };
@@ -18,24 +19,27 @@ function CommentForm(props) {
     try {
       const { data } = await axiosRes.post("/comments/", {
         content,
-        recipe: recipe_id,
+        recipe: recipeId,
       });
+
+      debugger;
       setComments((prevComments) => ({
         ...prevComments,
         results: [data, ...prevComments.results],
       }));
-      setRecipe((prevRecipe) => ({
-        results: [
-          {
-            ...prevRecipe.results[0],
-            comments_count: prevRecipe.results[0].comments_count + 1,
-          },
-        ],
-      }));
+      // setRecipe((prevRecipe) => ({
+      //   ...prevRecipe,
+      //   results: [
+      //     {
+      //       ...prevRecipe.results,
+      //       comments_count: prevRecipe.results[0].comments_count + 1,
+      //     },
+      //   ],
+      // }));
       setContent("");
       console.log('Sending data:', {
         content,
-        recipe_id,
+        recipeId,
       });
   
   
@@ -51,7 +55,7 @@ function CommentForm(props) {
     <Form className="mt-2" onSubmit={handleSubmit}>
       <Form.Group>
         <InputGroup>
-          <Link to={`/profiles/${profile_id}`}>
+          <Link to={`/profiles/${profileId}`}>
             <Avatar src={profileImage} />
           </Link>
           <Form.Control
