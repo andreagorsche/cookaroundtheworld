@@ -9,13 +9,13 @@ export const useProfileData = () => useContext(ProfileDataContext);
 export const useSetProfileData = () => useContext(SetProfileDataContext);
 
 //follow/unfollow helper functions 
-export const followHelper = (profile, clickedProfile, following_id) => {
+export const followHelper = (profile, clickedProfile, followed_id) => {
   switch (true) {
     case profile.id === clickedProfile.id:
       return {
         ...profile,
         followers_count: profile.followers_count + 1,
-        following_id,
+        followed_id,
       };
     case profile.is_owner:
       return { ...profile, following_count: profile.following_count + 1 };
@@ -30,7 +30,7 @@ export const unfollowHelper = (profile, clickedProfile) => {
       return {
         ...profile,
         followers_count: profile.followers_count - 1,
-        following_id: null,
+        followed_id: null,
       };
     case profile.is_owner:
       return { ...profile, following_count: profile.following_count - 1 };
@@ -98,13 +98,13 @@ export const ProfileDataProvider = ({ children }) => {
       setProfileData((prevState) => ({
         ...prevState,
         pageProfile: {
-          results: prevState.pageProfile.results.map((profile) =>
+          results: prevState.pageProfile?.results.map((profile) =>
             followHelper(profile, clickedProfile, data.id)
           ),
         },
         popularProfiles: {
           ...prevState.popularProfiles,
-          results: prevState.popularProfiles.results.map((profile) =>
+          results: prevState.popularProfiles?.results.map((profile) =>
             followHelper(profile, clickedProfile, data.id)
           ),
         },
@@ -116,18 +116,18 @@ export const ProfileDataProvider = ({ children }) => {
 
   const handleUnfollow = async (clickedProfile) => {
     try {
-      await axiosRes.delete(`/unfollow/${clickedProfile.following_id}/`);
+      await axiosRes.delete(`/unfollow/${clickedProfile.followed_id}/`);
 
       setProfileData((prevState) => ({
         ...prevState,
         pageProfile: {
-          results: prevState.pageProfile.results.map((profile) =>
+          results:(prevState.pageProfile?.results || []).map((profile) =>
             unfollowHelper(profile, clickedProfile)
           ),
         },
         topProfiles: {
           ...prevState.topProfiles,
-          results: prevState.topProfiles.results.map((profile) =>
+          results: (prevState.topProfiles?.results || []).map((profile) =>
             unfollowHelper(profile, clickedProfile)
           ),
         },

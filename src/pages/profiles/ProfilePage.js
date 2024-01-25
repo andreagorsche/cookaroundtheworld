@@ -36,9 +36,6 @@ function ProfilePage() {
           ...prevState,
           pageProfile: { results: [pageProfile] },
         }));
-
-        // Set showMultiStepForm to true if the user's bio is empty
-        setShowMultiStepForm(!pageProfile.bio);
       } catch (err) {
         console.log(err);
       }
@@ -48,6 +45,10 @@ function ProfilePage() {
     setHasLoaded(true);
   }, [id, setProfileData, setHasLoaded]);
 
+  const handleEditButtonClick = () => {
+    setShowMultiStepForm(true);
+  };
+
   return (
     <>
       <div>
@@ -55,8 +56,6 @@ function ProfilePage() {
       </div>
       {showMultiStepForm ? (
         <MultiStepForm
-          needsEditing={!profile?.bio}
-          setNeedsEditing={(value) => setShowMultiStepForm(value)}
           profile={profile}
         />
       ) : (
@@ -80,7 +79,15 @@ function ProfilePage() {
         data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
                 labels={['Recipes', 'Followers', 'Following']}
               />
-      <Col lg={3} className="text-lg-right">
+        <Col lg={3} className="text-lg-right">
+        {currentUser && is_owner && (
+          <Button
+            className={`${btnStyles.Button} ${btnStyles.Black}`}
+            onClick={handleEditButtonClick}
+          >
+            Edit Profile
+          </Button>
+        )}
           {currentUser &&
             !is_owner &&
             (profile?.following_id ? (

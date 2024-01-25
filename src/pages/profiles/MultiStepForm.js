@@ -22,16 +22,16 @@ const MultiStepForm = () => {
     'SPANISH',
   ];
 
+  const profileData = useProfileData();
+  const setProfileData = useSetProfileData();
+
   const [formData, setFormData] = useState({
     bio: profileData.pageProfile.bio || '',
     image: profileData.pageProfile.image || '',
     favorite_cuisine: profileData.pageProfile.favorite_cuisine || '',
   });
 
-  
   const [imageFile, setImageFile] = useState(null);
-  const profileData = useProfileData();
-  const setProfileData = useSetProfileData();
 
   const [currentStep, setCurrentStep] = useState(1);
   const imageInput = useRef(null);
@@ -126,7 +126,7 @@ const MultiStepForm = () => {
           <div>
             <label>Favorite Cuisine:</label>
             <select
-              name="favoriteCuisine"
+              name="favorite_cuisine"
               value={formData.favorite_cuisine}
               onChange={handleChange}
             >
