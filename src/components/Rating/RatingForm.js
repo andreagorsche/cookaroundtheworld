@@ -4,30 +4,39 @@ import { axiosReq } from "../../api/axiosDefaults";
 const RatingForm = ({ owner, recipe_id }) => {
   const [stars, setStars] = useState(1);
   const [existingRating, setExistingRating] = useState(null);
-  const [showThankYouMessage, setShowThankYouMessage] = useState(false); 
+  const [showThankYouMessage, setShowThankYouMessage] = useState(false);
+  const [isMounted, setIsMounted] = useState(true);
 
 
   useEffect(() => {
-    // Fetch existing rating when the component mounts
+
     const fetchExistingRating = async () => {
       try {
         const response = await axiosReq.get(`/ratings/?recipe_id=${recipe_id}&owner=${owner}`);
 
-        // Assuming there is only one rating per user per recipe
-        const existingRating = response.data[0];
+        if (isMounted) {
+          const existingRating = response.data[0];
+          setExistingRating(existingRating);
 
-        setExistingRating(existingRating);
-        if (existingRating) {
-          setStars(existingRating.stars);
+          if (existingRating) {
+            setStars(existingRating.stars);
+          }
         }
       } catch (error) {
         // If there's an error, set existingRating to null
-        setExistingRating(null);
-        console.error('Error fetching existing rating:', error.response?.data);
+        if (isMounted) {
+          setExistingRating(null);
+          console.error('Error fetching existing rating:', error.response?.data);
+        }
       }
     };
 
     fetchExistingRating();
+
+    // Cleanup function to run when the component is unmounted
+    return () => {
+      isMounted = false;
+    };
   }, [recipe_id, owner]);
 
   const handleRatingChange = (e) => {
@@ -44,28 +53,31 @@ const RatingForm = ({ owner, recipe_id }) => {
 
         console.log('Rating updated successfully:', response.data);
       } else {
-      console.log('Sending data:', {
-        owner: owner,
-        recipe_id: recipe_id,
-        stars: stars,
-      });
+        console.log('Sending data:', {
+          owner: owner,
+          recipe_id: recipe_id,
+          stars: stars,
+        });
 
         // If there's no existing rating, create a new one with a POST request
         const response = await axiosReq.post('/ratings/', {
-            owner: owner,
-            recipe: recipe_id,
-            stars: stars,
-        },
-        );
-        setShowThankYouMessage(true);
+          owner: owner,
+          recipe: recipe_id,
+          stars: stars,
+        });
+
+        if (isMounted) {
+          setShowThankYouMessage(true);
+        }
 
         console.log('Rating submitted successfully:', response.data);
       }
     } catch (error) {
-      console.error('Error submitting/updating rating:', error.response?.data);
+      if (isMounted) {
+        console.error('Error submitting/updating rating:', error.response?.data);
+      }
     }
   };
-
 
   return (
     <div>

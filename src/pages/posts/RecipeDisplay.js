@@ -12,13 +12,13 @@ import RatingDisplay from '../../components/Rating/RatingDisplay';
 import CommentDisplay from '../../components/Rating/CommentDisplay';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import RatingForm from '../../components/Rating/RatingForm';
+import AverageRatingDisplay from '../../components/Rating/AverageRatingDisplay';
 
-function RecipeDisplay({ isEditing, setIsEditing }) {
+function RecipeDisplay({handleEditClick}) {
   const { id } = useParams();
   const currentRecipe = useCurrentRecipe();
   const setCurrentRecipe = useSetCurrentRecipe();
   const currentUser = useCurrentUser();
-  const history = useHistory();
   const fetchRecipeById = useFetchRecipeById();
 
 
@@ -27,11 +27,6 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
   }, [id, setCurrentRecipe]);
 
   console.log("Current Recipe:", currentRecipe);
-
-  const handleEditClick = () => {
-    history.push(`/recipes/${id}`);
-    setIsEditing(true);
-  };
 
   const {
     title,
@@ -66,8 +61,8 @@ function RecipeDisplay({ isEditing, setIsEditing }) {
           <Container className="text-center">
             {is_owner ? (
               <>
-              <button onClick={handleEditClick}>Edit</button>
-              <RatingDisplay />
+              <button onClick={handleEditClick}>Edit Recipe</button>
+              <AverageRatingDisplay />
               <CommentDisplay />
               </>
             ) : (

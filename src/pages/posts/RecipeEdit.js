@@ -2,12 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useCurrentRecipe, useSetCurrentRecipe, useFetchRecipeById } from '../../contexts/RecipeDataContext';
 import { axiosReq } from '../../api/axiosDefaults';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
-import RatingVote from '../../components/Rating/RatingVote';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import Alert from 'react-bootstrap/Alert';
@@ -16,7 +12,7 @@ import Asset from "../../components/Asset.js";
 import { useParams } from 'react-router';
 
 const RecipeEdit = ({ isEditing, setIsEditing }) => {
-  const { currentRecipe } = useCurrentRecipe();
+  const currentRecipe  = useCurrentRecipe();
   const setCurrentRecipe = useSetCurrentRecipe();
   const imageInput = useRef(null);
   const { id } = useParams();
@@ -35,7 +31,8 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
   useEffect(() => {
     const fetchData = async () => {
       await fetchRecipeById(id, setCurrentRecipe);
-  
+      console.log("Fetched Recipe:", currentRecipe);
+      
       if (isEditing && currentRecipe.results && currentRecipe.results[0]) {
         const { title, description, ingredients, image, time_effort } = currentRecipe.results[0];
         setNewTitle(title || '');
@@ -85,7 +82,7 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
       // Update the recipe data context after successful submission
       const { data } = await axiosReq.get(`/recipes/${id}`);
       setCurrentRecipe({ currentRecipe: { results: [data] } });
-      setIsEditing();
+      setIsEditing(false);
       } catch (error) {
       console.error('Error submitting edited data:', error);
       // Handle error and set appropriate error messages
@@ -140,10 +137,15 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
         secondPhrase="with us"
         firstParagraph={newDescription}
         secondParagraph={<textarea value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />}
-        heading="Ingredients"
-        timeEffort={newTimeEffort}
-        listItems={<input type="text" value={newIngredients} onChange={(e) => setNewIngredients(e.target.value)} />}
-      />
+      /> 
+        <div>
+        <label htmlFor="time-effort">Time Effort</label>
+        <input type="text" id="time-effort" value={newTimeEffort} onChange={(e) => setNewTimeEffort(e.target.value)} />
+        </div>
+      <div>
+        <label htmlFor="ingredients">Ingredients</label>
+        <textarea id="ingredients" value={newIngredients} onChange={(e) => setNewIngredients(e.target.value)} />
+      </div>
       <button onClick={handleSave}>Save</button>
       <button onClick={handleCancelEdit}>Cancel</button>
     </>

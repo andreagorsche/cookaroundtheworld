@@ -8,7 +8,7 @@ function RatingDisplay({ isEditing, setIsEditing }) {
   const ratingData = useRating();
   const history = useHistory();
 
-  const handleEditClick = async () => {
+  const handleRatingUpdate = async () => {
     history.push(`/ratings/${id}`);
     setIsEditing(true);
   };
@@ -16,7 +16,7 @@ function RatingDisplay({ isEditing, setIsEditing }) {
   return (
     <div>
       <p>Your Rating: {ratingData && ratingData.length > 0 ? ratingData[0].stars : 'Not rated yet'}</p>
-      <button onClick={handleEditClick}>Edit</button>
+      <button onClick={handleRatingUpdate}>Update Rating</button>
     </div>
   );
 }
