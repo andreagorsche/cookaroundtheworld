@@ -36,7 +36,7 @@ const CommentDisplay = () => {
   return (
     <div>
       <h3>Comments</h3>
-      <ul>
+      <ul className="list-unstyled">
         {comments.map((comment) => (
           <li key={comment.id}>
             {comment.content}

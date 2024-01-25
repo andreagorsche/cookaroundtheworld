@@ -54,10 +54,18 @@ function RecipeDisplay({handleEditClick}) {
         heading="Ingredients"
       />
       <div>
-        <h3>Time Effort</h3>
-        {time_effort}
-        <h3>Ingredients</h3>
-        {ingredientsArray}
+        <Row>
+          <Col className="d-flex justify-content-center">
+            <p className="mr-2">Time Effort: </p>
+            {time_effort}
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex justify-content-center">
+            <p className="mr-2">Ingredients: </p>
+            {ingredientsArray.join(', ')}
+          </Col>
+        </Row>
       </div>
       <Row className="justify-content-center">
         <Col className="py-2 p-0 p-lg-2" lg={8}>

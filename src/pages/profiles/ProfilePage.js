@@ -5,7 +5,7 @@ import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataCon
 import HeaderImageCircle from "../../components/HeaderImageCircle";
 import Intro from "../../components/Intro";
 import CircleRow from "../../components/CircleRow"
-import RecipeCard from "../../components/RecipeCard";
+import TopProfiles from "../../components/TopProfiles";
 import MultiStepForm from "./MultiStepForm";
 import FollowButton from "../../components/FollowButton";
 
@@ -74,7 +74,7 @@ function ProfilePage() {
         data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
                 labels={['Recipes', 'Followers', 'Following']}
               />
-      <RecipeCard />
+      <TopProfiles />
     </>
   );
 }

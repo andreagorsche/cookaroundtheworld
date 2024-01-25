@@ -36,7 +36,26 @@ export const ProfileDataProvider = ({ children }) => {
     handleMount();
   }, [currentUser]);
 
-  
+  useEffect(() => {
+    const handleMount = async () => {
+      try {
+        const { data } = await axiosReq.get(
+          "/profiles/?ordering=-updated_at"
+        );
+        console.log("Updated topProfiles:", data);
+
+        setProfileData((prevState) => ({
+          ...prevState,
+          topProfiles: { results: [data] },
+        }));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    handleMount();
+  }, [currentUser]);
+
 
   return (
     <ProfileDataContext.Provider value={profileData}>

@@ -10,6 +10,8 @@ import Alert from 'react-bootstrap/Alert';
 import upload from "../../assets/upload.png";
 import Asset from "../../components/Asset.js";
 import { useParams } from 'react-router';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 const RecipeEdit = ({ isEditing, setIsEditing }) => {
   debugger;
@@ -74,9 +76,13 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
       formData.append('time_effort', newTimeEffort);
 
       // Append the image only if it's changed
-    if (newImage instanceof File) {
+      if (newImage instanceof File) {
       formData.append('image', newImage);
-    }
+      } else {
+      // Resend the currently used image
+      formData.append('image', currentRecipe?.image || '');
+      }
+
       // Make the axios request to update the data
       await axiosReq.put(`/recipes/${id}/`, formData);
 
@@ -139,16 +145,24 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
         firstParagraph={newDescription}
         secondParagraph={<textarea value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />}
       /> 
-        <div>
+        <Row>
+        <Col className="d-flex justify-content-center">
         <label htmlFor="time-effort">Time Effort</label>
         <input type="text" id="time-effort" value={newTimeEffort} onChange={(e) => setNewTimeEffort(e.target.value)} />
-        </div>
-      <div>
+        </Col>
+        </Row>
+        <Row>
+        <Col className="d-flex justify-content-center">
         <label htmlFor="ingredients">Ingredients</label>
         <textarea id="ingredients" value={newIngredients} onChange={(e) => setNewIngredients(e.target.value)} />
-      </div>
-      <button onClick={handleSave}>Save</button>
-      <button onClick={handleCancelEdit}>Cancel</button>
+        </Col>
+        </Row>
+        <Row>
+        <Col className="d-flex justify-content-center">
+        <button onClick={handleSave}>Save</button>
+        <button onClick={handleCancelEdit}>Cancel</button>
+        </Col>
+        </Row>
     </>
   );
 };
