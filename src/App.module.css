@@ -37,6 +37,7 @@ figure {
 .App a {
   font-size: 1.3rem;
   padding-left: 1%;
+  margin-left: 2%;
   color: indigo;
   transition: color ease-in-out 0.3 sec;
   text-decoration: none;

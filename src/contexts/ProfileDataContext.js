@@ -24,13 +24,13 @@ export const followHelper = (profile, clickedProfile, followedId) => {
   }
 };
 
-export const unfollowHelper = (profile, extractedFollowedId) => {
+export const unfollowHelper = (profile, followed_id) => {
   switch (true) {
-    case profile.id === extractedFollowedId:
+    case profile.id === followed_id:
       return {
         ...profile,
         followers_count: profile.followers_count - 1,
-        extractedFollowedId: null,
+        followed_id: null,
       };
     case profile.is_owner:
       return { ...profile, following_count: profile.following_count - 1 };
@@ -46,7 +46,7 @@ export const ProfileDataProvider = ({ children }) => {
     followedId: null,
   });
   
-  const extractedFollowedId = profileData.followedId?.pageProfile?.results?.[0]?.id;
+  const followedId = profileData.pageProfile?.results?.[0]?.id;
   const currentUser = useCurrentUser();
 
   useEffect(() => {
@@ -116,21 +116,24 @@ export const ProfileDataProvider = ({ children }) => {
     }
   };
 
-  const handleUnfollow = async (extractedFollowedId) => {
-    try {
-      await axiosRes.delete(`/unfollow/${extractedFollowedId}/`);
+  const handleUnfollow = async () => {
+  
+      const followed_id = profileData.pageProfile?.results?.[0]?.id;
+      try {
+        await axiosRes.delete(`/unfollow/${followed_id}/`, {
+        });
 
       setProfileData((prevState) => ({
         ...prevState,
         pageProfile: {
           results:(prevState.pageProfile?.results || []).map((profile) =>
-            unfollowHelper(profile, extractedFollowedId)
+            unfollowHelper(profile, followed_id)
           ),
         },
         topProfiles: {
           ...prevState.topProfiles,
           results: (prevState.topProfiles?.results || []).map((profile) =>
-            unfollowHelper(profile, extractedFollowedId)
+            unfollowHelper(profile, followed_id)
           ),
         },
       }));

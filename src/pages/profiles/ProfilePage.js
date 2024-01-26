@@ -20,11 +20,10 @@ function ProfilePage() {
   const [profile] = pageProfile?.results || [];
   const [showMultiStepForm, setShowMultiStepForm] = useState(false);
   const currentUser = useCurrentUser();
-  const followedId = useProfileData();
 
-  const extractedFollowedId = followedId?.pageProfile?.results?.[0]?.id;
 
   const is_owner = currentUser?.username === profile?.owner;
+  const followed_id = pageProfile?.results?.[0]?.id;
 
 
   useEffect(() => {
@@ -55,7 +54,7 @@ function ProfilePage() {
   useEffect(() => {
     // Log values when the component mounts
     console.log('Current User ID:', currentUser.profile_id);
-    console.log('Followed ID:', extractedFollowedId);
+    console.log('Followed ID:', followed_id);
   }, [currentUser, profile]);
 
 
@@ -99,11 +98,11 @@ function ProfilePage() {
           </Button>
         )}
           {currentUser && !is_owner && (
-          followedId ? (
+          followed_id ? (
             // If the user is following, show the "unfollow" button
             <Button
               className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
-              onClick={() => handleUnfollow(extractedFollowedId)}
+              onClick={() => handleUnfollow(followed_id)}
             >
               Unfollow
             </Button>
