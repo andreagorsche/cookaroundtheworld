@@ -4,13 +4,12 @@ import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
 import HeaderImageCircle from "../../components/HeaderImageCircle";
 import Intro from "../../components/Intro";
-import CircleRow from "../../components/CircleRow"
+import CircleRow from "../../components/CircleRow";
 import TopProfiles from "../../components/TopProfiles";
 import MultiStepForm from "./MultiStepForm";
 import { Col, Button } from "react-bootstrap";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import btnStyles from "../../styles/components/Button.module.css";
-
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -21,45 +20,61 @@ function ProfilePage() {
   const [showMultiStepForm, setShowMultiStepForm] = useState(false);
   const currentUser = useCurrentUser();
 
-
   const is_owner = currentUser?.username === profile?.owner;
   const followed_id = pageProfile?.results?.[0]?.id;
-  const userfollowing = pageProfile?.results?.[0]?.owner;
- 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosReq.get(`/profiles/${id}/`);
-        const pageProfile = response.data;
+// Declare state variables for followers and isCurrentUserFollowing
+const [followers, setFollowers] = useState([]);
+const [isCurrentUserFollowing, setIsCurrentUserFollowing] = useState(false);
 
-        console.log('pageProfile:', pageProfile);
+const fetchData = async () => {
+  try {
+    // Extracting the list of followers and followed users
+    const followersResponse = await axiosReq.get(`/followers/`);
+    const fetchedFollowers = followersResponse.data.results; // Access the 'results' property
 
-        setProfileData((prevState) => ({
-          ...prevState,
-          pageProfile: { results: [pageProfile] },
-        }));
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    // Check if fetchedFollowers is an array
+    if (Array.isArray(fetchedFollowers)) {
+      // Check if the current user is following the profile owner
+      const fetchedIsCurrentUserFollowing = fetchedFollowers.some(follower => follower.owner === currentUser?.username);
 
-    fetchData();
-    setHasLoaded(true);
-  }, [id, setProfileData, setHasLoaded]);
+      // Set state variables
+      setFollowers(fetchedFollowers);
+      setIsCurrentUserFollowing(fetchedIsCurrentUserFollowing);
+
+      // Fetch profile data
+      const response = await axiosReq.get(`/profiles/${id}/`);
+      const pageProfile = response.data;
+
+      console.log('pageProfile:', pageProfile);
+
+      setProfileData((prevState) => ({
+        ...prevState,
+        pageProfile: { results: [pageProfile] },
+      }));
+
+      // Log values for debugging
+      console.log('Is Owner:', is_owner);
+      console.log('Followed ID:', followed_id);
+      console.log('Followers:', fetchedFollowers);
+      console.log('Is Current User Following:', fetchedIsCurrentUserFollowing);
+    } else {
+      console.error("Invalid format for fetchedFollowers:", fetchedFollowers);
+    }
+
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+useEffect(() => {
+  fetchData();
+  setHasLoaded(true);
+}, [id, setProfileData, setHasLoaded]);
 
   const handleEditButtonClick = () => {
     setShowMultiStepForm(true);
   };
-
-  useEffect(() => {
-    // Log values when the component mounts
-    console.log('Current User ID:', currentUser.profile_id);
-    console.log('Followed ID:', followed_id);
-    console.log('Follower:', userfollowing);
-    console.log('user that is followed:', profile.owner);
-  }, [currentUser, profile]);
-
 
   return (
     <>
@@ -67,32 +82,28 @@ function ProfilePage() {
         <HeaderImageCircle HeaderTitle={profile?.owner} imageUrl={profile?.image} style={{ height: '100vh' }} />
       </div>
       {showMultiStepForm ? (
-        <MultiStepForm
-          profile={profile}
-        />
+        <MultiStepForm profile={profile} />
       ) : (
         <>
           {hasLoaded ? (
-            <>
-              <Intro
-                firstWord="Chef"
-                secondWord={profile?.owner}
-                secondPhrase=""
-                firstParagraph={profile?.bio}
-              />
-            </>
+            <Intro
+              firstWord="Chef"
+              secondWord={profile?.owner}
+              secondPhrase=""
+              firstParagraph={profile?.bio}
+            />
           ) : (
             <p>Loading...</p>
           )}
         </>
       )}
-       <p>{`Favorite Cuisine: ${profile?.favorite_cuisine}`}</p>
+      <p>{`Favorite Cuisine: ${profile?.favorite_cuisine}`}</p>
       <CircleRow
         data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
-                labels={['Recipes', 'Followers', 'Following']}
-              />
-        <Col lg={3} className="text-lg-right">
-        {currentUser && is_owner && (
+        labels={['Recipes', 'Followers', 'Following']}
+      />
+      <Col lg={3} className="text-lg-right">
+        {is_owner && (
           <Button
             className={`${btnStyles.Button} ${btnStyles.Black}`}
             onClick={handleEditButtonClick}
@@ -100,8 +111,8 @@ function ProfilePage() {
             Edit Profile
           </Button>
         )}
-          {currentUser && !is_owner && (
-          userfollowing === profile.owner ? (
+        {currentUser && !is_owner && (
+          isCurrentUserFollowing ? (
             // If the user is following, show the "unfollow" button
             <Button
               className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
@@ -119,7 +130,7 @@ function ProfilePage() {
             </Button>
           )
         )}
-        </Col>
+      </Col>
       <TopProfiles />
     </>
   );
