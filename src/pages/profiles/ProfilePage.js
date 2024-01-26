@@ -27,6 +27,20 @@ function ProfilePage() {
 const [followers, setFollowers] = useState([]);
 const [isCurrentUserFollowing, setIsCurrentUserFollowing] = useState(false);
 
+const handleFollowButtonClick = async () => {
+  // Perform follow or unfollow action based on isCurrentUserFollowing
+  if (isCurrentUserFollowing) {
+    // Unfollow
+    await handleUnfollow(followed_id);
+  } else {
+    // Follow
+    await handleFollow(profile);
+  }
+
+  // After following or unfollowing, fetch data again to update the state
+  fetchData();
+};
+
 const fetchData = async () => {
   try {
     // Extracting the list of followers and followed users
@@ -111,25 +125,26 @@ useEffect(() => {
             Edit Profile
           </Button>
         )}
-        {currentUser && !is_owner && (
-          isCurrentUserFollowing ? (
-            // If the user is following, show the "unfollow" button
-            <Button
-              className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
-              onClick={() => handleUnfollow(followed_id)}
-            >
-              Unfollow
-            </Button>
-          ) : (
-            // If the user is not following, show the "follow" button
-            <Button
-              className={`${btnStyles.Button} ${btnStyles.Black}`}
-              onClick={() => handleFollow(profile)}
-            >
-              Follow
-            </Button>
-          )
-        )}
+       {is_owner && (
+        <Button
+          className={`${btnStyles.Button} ${btnStyles.Black}`}
+          onClick={handleEditButtonClick}
+        >
+          Edit Profile
+        </Button>
+      )}
+      {currentUser && !is_owner && (
+        <Button
+          className={`${btnStyles.Button} ${
+            isCurrentUserFollowing
+              ? btnStyles.BlackOutline
+              : btnStyles.Black
+          }`}
+          onClick={handleFollowButtonClick}
+        >
+          {isCurrentUserFollowing ? 'Unfollow' : 'Follow'}
+        </Button>
+      )}
       </Col>
       <TopProfiles />
     </>
