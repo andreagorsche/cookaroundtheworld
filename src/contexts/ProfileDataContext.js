@@ -9,13 +9,13 @@ export const useProfileData = () => useContext(ProfileDataContext);
 export const useSetProfileData = () => useContext(SetProfileDataContext);
 
 //follow/unfollow helper functions 
-export const followHelper = (profile, clickedProfile, followed_id) => {
+export const followHelper = (profile, clickedProfile, followedId) => {
   switch (true) {
     case profile.id === clickedProfile.id:
       return {
         ...profile,
         followers_count: profile.followers_count + 1,
-        followed_id,
+        followedId,
       };
     case profile.is_owner:
       return { ...profile, following_count: profile.following_count + 1 };
@@ -24,13 +24,13 @@ export const followHelper = (profile, clickedProfile, followed_id) => {
   }
 };
 
-export const unfollowHelper = (profile, clickedProfile) => {
+export const unfollowHelper = (profile, extractedFollowedId) => {
   switch (true) {
-    case profile.id === clickedProfile.id:
+    case profile.id === extractedFollowedId:
       return {
         ...profile,
         followers_count: profile.followers_count - 1,
-        followed_id: null,
+        extractedFollowedId: null,
       };
     case profile.is_owner:
       return { ...profile, following_count: profile.following_count - 1 };
@@ -43,8 +43,10 @@ export const ProfileDataProvider = ({ children }) => {
   const [profileData, setProfileData] = useState({
     pageProfile: { results: [] },
     topProfiles: { results: [] },
+    followedId: null,
   });
-
+  
+  const extractedFollowedId = profileData.followedId?.pageProfile?.results?.[0]?.id;
   const currentUser = useCurrentUser();
 
   useEffect(() => {
@@ -104,7 +106,7 @@ export const ProfileDataProvider = ({ children }) => {
         },
         popularProfiles: {
           ...prevState.popularProfiles,
-          results: prevState.popularProfiles?.results.map((profile) =>
+            results: (prevState.popularProfiles?.results || []).map((profile) =>
             followHelper(profile, clickedProfile, data.id)
           ),
         },
@@ -114,21 +116,21 @@ export const ProfileDataProvider = ({ children }) => {
     }
   };
 
-  const handleUnfollow = async (clickedProfile) => {
+  const handleUnfollow = async (extractedFollowedId) => {
     try {
-      await axiosRes.delete(`/unfollow/${clickedProfile.followed_id}/`);
+      await axiosRes.delete(`/unfollow/${extractedFollowedId}/`);
 
       setProfileData((prevState) => ({
         ...prevState,
         pageProfile: {
           results:(prevState.pageProfile?.results || []).map((profile) =>
-            unfollowHelper(profile, clickedProfile)
+            unfollowHelper(profile, extractedFollowedId)
           ),
         },
         topProfiles: {
           ...prevState.topProfiles,
           results: (prevState.topProfiles?.results || []).map((profile) =>
-            unfollowHelper(profile, clickedProfile)
+            unfollowHelper(profile, extractedFollowedId)
           ),
         },
       }));

@@ -20,6 +20,9 @@ function ProfilePage() {
   const [profile] = pageProfile?.results || [];
   const [showMultiStepForm, setShowMultiStepForm] = useState(false);
   const currentUser = useCurrentUser();
+  const followedId = useProfileData();
+
+  const extractedFollowedId = followedId?.pageProfile?.results?.[0]?.id;
 
   const is_owner = currentUser?.username === profile?.owner;
 
@@ -48,6 +51,13 @@ function ProfilePage() {
   const handleEditButtonClick = () => {
     setShowMultiStepForm(true);
   };
+
+  useEffect(() => {
+    // Log values when the component mounts
+    console.log('Current User ID:', currentUser.profile_id);
+    console.log('Followed ID:', extractedFollowedId);
+  }, [currentUser, profile]);
+
 
   return (
     <>
@@ -88,23 +98,25 @@ function ProfilePage() {
             Edit Profile
           </Button>
         )}
-          {currentUser &&
-            !is_owner &&
-            (profile?.following_id ? (
-              <Button
-                className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
-                onClick={() => handleUnfollow(profile)}
-              >
-                unfollow
-              </Button>
-            ) : (
-              <Button
-                className={`${btnStyles.Button} ${btnStyles.Black}`}
-                onClick={() => handleFollow(profile)}
-              >
-                follow
-              </Button>
-            ))}
+          {currentUser && !is_owner && (
+          followedId ? (
+            // If the user is following, show the "unfollow" button
+            <Button
+              className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
+              onClick={() => handleUnfollow(extractedFollowedId)}
+            >
+              Unfollow
+            </Button>
+          ) : (
+            // If the user is not following, show the "follow" button
+            <Button
+              className={`${btnStyles.Button} ${btnStyles.Black}`}
+              onClick={() => handleFollow(profile)}
+            >
+              Follow
+            </Button>
+          )
+        )}
         </Col>
       <TopProfiles />
     </>
