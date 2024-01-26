@@ -34,7 +34,6 @@ function LoginForm() {
     };
 
     const handleSubmit = async (event) => {
-      debugger;
       event.preventDefault();
       try {
         const response = await axios.post("/dj-rest-auth/login/", loginData);

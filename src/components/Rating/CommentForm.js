@@ -22,20 +22,19 @@ console.log(props)
         recipe: recipeId,
       });
 
-      debugger;
       setComments((prevComments) => ({
         ...prevComments,
         results: [data, ...prevComments.results],
       }));
-      // setRecipe((prevRecipe) => ({
-      //   ...prevRecipe,
-      //   results: [
-      //     {
-      //       ...prevRecipe.results,
-      //       comments_count: prevRecipe.results[0].comments_count + 1,
-      //     },
-      //   ],
-      // }));
+      setRecipe((prevRecipe) => ({
+         ...prevRecipe,
+         results: [
+           {
+             ...prevRecipe.results,
+             comments_count: prevRecipe.comments_count + 1,
+           },
+         ],
+        }));
       setContent("");
       console.log('Sending data:', {
         content,
