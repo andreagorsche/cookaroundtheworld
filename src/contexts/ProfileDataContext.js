@@ -120,7 +120,7 @@ export const ProfileDataProvider = ({ children }) => {
   
       const followed_id = profileData.pageProfile?.results?.[0]?.id;
       try {
-        await axiosRes.delete(`/unfollow/${followed_id}/`, {
+        await axiosRes.delete(`/unfollow/${followed_id}`, {
         });
 
       setProfileData((prevState) => ({

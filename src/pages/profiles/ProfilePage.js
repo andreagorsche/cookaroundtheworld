@@ -24,7 +24,8 @@ function ProfilePage() {
 
   const is_owner = currentUser?.username === profile?.owner;
   const followed_id = pageProfile?.results?.[0]?.id;
-
+  const userfollowing = pageProfile?.results?.[0]?.owner;
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +56,8 @@ function ProfilePage() {
     // Log values when the component mounts
     console.log('Current User ID:', currentUser.profile_id);
     console.log('Followed ID:', followed_id);
+    console.log('Follower:', userfollowing);
+    console.log('user that is followed:', profile.owner);
   }, [currentUser, profile]);
 
 
@@ -98,7 +101,7 @@ function ProfilePage() {
           </Button>
         )}
           {currentUser && !is_owner && (
-          followed_id ? (
+          userfollowing === profile.owner ? (
             // If the user is following, show the "unfollow" button
             <Button
               className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
