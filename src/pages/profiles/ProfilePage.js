@@ -117,14 +117,6 @@ useEffect(() => {
         labels={['Recipes', 'Followers', 'Following']}
       />
       <Col lg={3} className="text-lg-right">
-        {is_owner && (
-          <Button
-            className={`${btnStyles.Button} ${btnStyles.Black}`}
-            onClick={handleEditButtonClick}
-          >
-            Edit Profile
-          </Button>
-        )}
        {is_owner && (
         <Button
           className={`${btnStyles.Button} ${btnStyles.Black}`}

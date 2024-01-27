@@ -7,29 +7,33 @@ import { useProfileData, useSetProfileData } from '../../contexts/ProfileDataCon
 const MultiStepForm = () => {
   const { id } = useParams();
   const CUISINE_CHOICES = [
-    'AMERICAN',
-    'AUSTRIAN',
-    'CARIBBEAN',
-    'CHINESE',
-    'FRENCH',
-    'GERMAN',
-    'GREEK',
-    'INDIAN',
-    'ITALIAN',
-    'MEDITERRANEAN',
-    'MEXICAN',
-    'SLOVAK',
-    'SPANISH',
+    'american',
+    'austrian',
+    'caribean',
+    'chinese',
+    'french',
+    'german',
+    'greek',
+    'indian',
+    'italian',
+    'mediterranean',
+    'mexican',
+    'slovak',
+    'spanish',
   ];
 
   const profileData = useProfileData();
   const setProfileData = useSetProfileData();
 
   const [formData, setFormData] = useState({
-    bio: profileData.pageProfile.bio || '',
-    image: profileData.pageProfile.image || '',
-    favorite_cuisine: profileData.pageProfile.favorite_cuisine || '',
+    bio: profileData.pageProfile.results[0]?.bio || '',
+    image: profileData.pageProfile.results[0]?.image || '',
+    favorite_cuisine: profileData.pageProfile.results[0]?.favorite_cuisine || '',
   });
+  
+  console.log('Bio from profileData:', formData.bio);
+  console.log('Cuisine from profileData:', formData.favorite_cuisine);
+
 
   const [imageFile, setImageFile] = useState(null);
 
@@ -48,18 +52,47 @@ const MultiStepForm = () => {
   const handleChangeImage = (event) => {
     if (event.target.files.length) {
       const file = event.target.files[0];
-      URL.revokeObjectURL(formData.image);
-      setFormData({
-        ...formData,
-        image: URL.createObjectURL(file),
-      });
-      setImageFile(file);
+  
+      // Check if the image height is larger than 1024px
+      if (file.type.startsWith('image/') && file.size > 0) {
+        const img = new Image();
+  
+        img.onload = function () {
+          if (img.height > 1024) {
+            setErrors({ image: ['Image height larger than 1024px!'] });
+            // Optionally, you can clear the selected file and reset the input
+            event.target.value = null;
+          } else {
+            // Image is within the desired size, proceed with setting it
+            URL.revokeObjectURL(formData.image);
+            setFormData({
+              ...formData,
+              image: URL.createObjectURL(file),
+            });
+            setImageFile(file);
+          }
+        };
+  
+        // Load the image source for checking dimensions
+        img.src = URL.createObjectURL(file);
+      } else {
+        // File is not an image or has no size, you can handle this case accordingly
+        console.error('Invalid file or file size is zero.');
+      }
     }
   };
-
+  
 
   const handleNext = () => {
-    setCurrentStep((prevStep) => prevStep + 1);
+    // Check if the required fields are filled before moving to the next step
+    if (currentStep === 1 && formData.bio.trim() === '') {
+      setErrors({ bio: ['Bio is required.'] });
+    } else if (currentStep === 2 && formData.favorite_cuisine === '') {
+      setErrors({ favorite_cuisine: ['Favorite cuisine is required.'] });
+    } else {
+      // No errors, proceed to the next step
+      setCurrentStep((prevStep) => prevStep + 1);
+    }
   };
 
   const handlePrev = () => {
@@ -75,7 +108,7 @@ const MultiStepForm = () => {
     if (imageFile) {
       formDataToSend.append('image', imageFile);
     }
-    formDataToSend.append('favorite_cuisine', formData.favorite_cuisine);
+    formDataToSend.append('favorite_cuisine', String(formData.favorite_cuisine));
   
   
     try {
@@ -108,6 +141,9 @@ const MultiStepForm = () => {
   };
 
   const renderStep = () => {
+    if (profileData.loading) {
+      return <p>Loading...</p>;
+    }
     switch (currentStep) {
       case 1:
         return (

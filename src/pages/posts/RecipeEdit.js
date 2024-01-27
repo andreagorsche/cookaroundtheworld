@@ -5,7 +5,6 @@ import { axiosReq } from '../../api/axiosDefaults';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
 import Form from 'react-bootstrap/Form';
-import Image from 'react-bootstrap/Image';
 import Alert from 'react-bootstrap/Alert';
 import upload from "../../assets/upload.png";
 import Asset from "../../components/Asset.js";
@@ -14,30 +13,27 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 const RecipeEdit = ({ isEditing, setIsEditing }) => {
-  debugger;
-  const currentRecipe  = useCurrentRecipe();
+  const currentRecipe = useCurrentRecipe();
   const setCurrentRecipe = useSetCurrentRecipe();
   const imageInput = useRef(null);
   const { id } = useParams();
   const history = useHistory();
   const fetchRecipeById = useFetchRecipeById();
 
+  const [errors, setErrors] = useState({});
 
   const [newTitle, setNewTitle] = useState(currentRecipe?.title || '');
   const [newDescription, setNewDescription] = useState(currentRecipe?.description || '');
   const [newIngredients, setNewIngredients] = useState(currentRecipe?.ingredients || '');
   const [newImage, setNewImage] = useState(currentRecipe?.image || '');
   const [newTimeEffort, setNewTimeEffort] = useState(currentRecipe?.time_effort || '');
-  const [errors, setErrors] = useState({ image: [] });
-
 
   useEffect(() => {
     const fetchData = async () => {
       await fetchRecipeById(id, setCurrentRecipe);
-      console.log("Fetched Recipe:", currentRecipe);
-      
-      if (isEditing && currentRecipe.results && currentRecipe) {
-        const { title, description, ingredients, image, time_effort } = currentRecipe;
+
+      if (isEditing && currentRecipe.results && currentRecipe.results.length > 0) {
+        const { title, description, ingredients, image, time_effort } = currentRecipe.results[0];
         setNewTitle(title || '');
         setNewDescription(description || '');
         setNewIngredients(ingredients || '');
@@ -45,7 +41,7 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
         setNewTimeEffort(time_effort || '');
       }
     };
-  
+
     fetchData();
   }, [id, isEditing, setCurrentRecipe, currentRecipe.results]);
 
@@ -65,36 +61,53 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
     imageInput.current.click();
   };
 
-  const handleSave = async () => {
+  const handleSubmit = async () => {
     try {
-      const id = currentRecipe.results[0]?.id;
-
-      const formData = new FormData();
-      formData.append('title', newTitle);
-      formData.append('description', newDescription);
-      formData.append('ingredients', newIngredients);
-      formData.append('time_effort', newTimeEffort);
-
-      // Append the image only if it's changed
-      if (newImage instanceof File) {
-      formData.append('image', newImage);
-      } else {
-      // Resend the currently used image
-      formData.append('image', currentRecipe?.image || '');
-      }
-
-      // Make the axios request to update the data
-      await axiosReq.put(`/recipes/${id}/`, formData);
-
       // Update the recipe data context after successful submission
-      const { data } = await axiosReq.get(`/recipes/${id}`);
-      setCurrentRecipe({ currentRecipe: { results: [data] } });
+      await updateRecipe();
       setIsEditing(false);
-      } catch (error) {
+    } catch (error) {
       console.error('Error submitting edited data:', error);
-      // Handle error and set appropriate error messages
       setErrors({ image: ['Error uploading the image.'] });
     }
+  };
+
+  const updateRecipe = async () => {
+    // Fetch the recipe data again to ensure it's up-to-date
+    await fetchRecipeById(id, setCurrentRecipe);
+
+    // Check if the fetched recipe data is available
+    if (currentRecipe.results && currentRecipe.results.length > 0) {
+      const updatedRecipe = currentRecipe.results[0];
+      const recipeId = updatedRecipe.id;
+
+      const formData = createFormData();
+      await axiosReq.put(`/recipes/${recipeId}/`, formData);
+
+      // Update the recipe data context after successful submission
+      const { data } = await axiosReq.get(`/recipes/${recipeId}`);
+      setCurrentRecipe({ currentRecipe: { results: [data] } });
+    } else {
+      console.error('Error: No recipe data available.');
+    }
+  };
+
+  const createFormData = () => {
+    const formData = new FormData();
+    formData.append('title', newTitle);
+    formData.append('description', newDescription);
+    formData.append('ingredients', newIngredients.join(','));
+    formData.append('time_effort', newTimeEffort);
+
+    // Append the image only if a new file has been selected
+    if (newImage instanceof File) {
+      formData.append('image', newImage);
+    } else {
+      // Resend the currently used image
+      formData.append('image', currentRecipe.results[0]?.image || '');
+    }
+
+    return formData;
   };
 
   return (
@@ -102,9 +115,6 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
       <Header imageUrl={newImage} />
       {newImage ? (
         <>
-          <figure>
-            <Image src={newImage} rounded />
-          </figure>
           <div>
             <Form.Label
               htmlFor="image-upload"
@@ -145,24 +155,24 @@ const RecipeEdit = ({ isEditing, setIsEditing }) => {
         firstParagraph={newDescription}
         secondParagraph={<textarea value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />}
       /> 
-        <Row>
+      <Row>
         <Col className="d-flex justify-content-center">
-        <label htmlFor="time-effort">Time Effort</label>
-        <input type="text" id="time-effort" value={newTimeEffort} onChange={(e) => setNewTimeEffort(e.target.value)} />
+          <label htmlFor="time-effort">Time Effort</label>
+          <input type="text" id="time-effort" value={newTimeEffort} onChange={(e) => setNewTimeEffort(e.target.value)} />
         </Col>
-        </Row>
-        <Row>
+      </Row>
+      <Row>
         <Col className="d-flex justify-content-center">
-        <label htmlFor="ingredients">Ingredients</label>
-        <textarea id="ingredients" value={newIngredients} onChange={(e) => setNewIngredients(e.target.value)} />
+          <label htmlFor="ingredients">Ingredients</label>
+          <textarea id="ingredients" value={newIngredients} onChange={(e) => setNewIngredients(e.target.value)} />
         </Col>
-        </Row>
-        <Row>
+      </Row>
+      <Row>
         <Col className="d-flex justify-content-center">
-        <button onClick={handleSave}>Save</button>
-        <button onClick={handleCancelEdit}>Cancel</button>
+          <button onClick={handleSubmit}>Save</button>
+          <button onClick={handleCancelEdit}>Cancel</button>
         </Col>
-        </Row>
+      </Row>
     </>
   );
 };
