@@ -12,6 +12,10 @@
   z-index: 1000; 
 }
 
+.NavLink {
+  width: 10rem;
+}
+
 .Active i {
   color: rgb(68, 25, 68);
   text-decoration: none;
