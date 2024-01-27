@@ -36,11 +36,11 @@ const MultiStepForm = () => {
 
 
   const [imageFile, setImageFile] = useState(null);
-
   const [currentStep, setCurrentStep] = useState(1);
   const imageInput = useRef(null);
   const [errors, setErrors] = useState({});
   const history = useHistory();
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const handleChange = (event) => {
     setFormData({
@@ -60,8 +60,6 @@ const MultiStepForm = () => {
         img.onload = function () {
           if (img.height > 1024) {
             setErrors({ image: ['Image height larger than 1024px!'] });
-            // Optionally, you can clear the selected file and reset the input
-            event.target.value = null;
           } else {
             // Image is within the desired size, proceed with setting it
             URL.revokeObjectURL(formData.image);
@@ -70,11 +68,11 @@ const MultiStepForm = () => {
               image: URL.createObjectURL(file),
             });
             setImageFile(file);
+            // Clear any previous image-related errors
+            setErrors({});
           }
         };
   
-        // Load the image source for checking dimensions
-        img.src = URL.createObjectURL(file);
       } else {
         // File is not an image or has no size, you can handle this case accordingly
         console.error('Invalid file or file size is zero.');
@@ -84,15 +82,7 @@ const MultiStepForm = () => {
   
 
   const handleNext = () => {
-    // Check if the required fields are filled before moving to the next step
-    if (currentStep === 1 && formData.bio.trim() === '') {
-      setErrors({ bio: ['Bio is required.'] });
-    } else if (currentStep === 2 && formData.favorite_cuisine === '') {
-      setErrors({ favorite_cuisine: ['Favorite cuisine is required.'] });
-    } else {
-      // No errors, proceed to the next step
-      setCurrentStep((prevStep) => prevStep + 1);
-    }
+    setCurrentStep((prevStep) => prevStep + 1);
   };
 
   const handlePrev = () => {
@@ -104,24 +94,27 @@ const MultiStepForm = () => {
     const formDataToSend = new FormData();
   
     formDataToSend.append('bio', formData.bio);
-    // Check if an image is selected before appending to FormData
     if (imageFile) {
       formDataToSend.append('image', imageFile);
     }
     formDataToSend.append('favorite_cuisine', String(formData.favorite_cuisine));
   
-  
     try {
-      // Make the axios request to update the data
-      await axiosReq.put(`/profiles/${id}/`, formDataToSend);
+      const response = await axiosReq.put(`/profiles/${id}/`, formDataToSend);
   
-      // Update the profile data after successful submission
-      const { data } = await axiosReq.get(`/profiles/${id}`);
-      // Update the profile data context after successful submission
-      setProfileData((prevState) => ({
-        ...prevState,
-        pageProfile: { results: [data] },
-      }));
+      // Only update the state if the request is successful
+      if (response.status === 200) {
+        const { data } = await axiosReq.get(`/profiles/${id}`);
+        setProfileData((prevState) => ({
+          ...prevState,
+          pageProfile: { results: [data] },
+        }));
+        setSuccessMessage('Profile successfully updated!');
+      } else {
+        // Handle other response statuses if needed
+        console.error('Unexpected response status:', response.status);
+        setErrors({ image: ['Unexpected response status'] });
+      }
     } catch (error) {
       console.error('Error submitting profile data:', error);
   
@@ -139,7 +132,7 @@ const MultiStepForm = () => {
       setErrors({ image: ['Error uploading the image.'] });
     }
   };
-
+  
   const renderStep = () => {
     if (profileData.loading) {
       return <p>Loading...</p>;
@@ -203,6 +196,7 @@ const MultiStepForm = () => {
 
   return (
     <div>
+      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
       <div>
         <h1>Welcome to the Chef's World!</h1>
         <p>

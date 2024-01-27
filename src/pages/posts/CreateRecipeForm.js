@@ -9,8 +9,6 @@ import Container from "react-bootstrap/Container";
 import { useHistory } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 
-
-
 // Components
 import Asset from "../../components/Asset.js";
 import Alert from "react-bootstrap/Alert";

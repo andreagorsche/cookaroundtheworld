@@ -28,7 +28,6 @@ const isOwner = currentUser?.username === owner;
       <Card.Body>
         <Media className="align-items-center justify-content-between">
           <Link to={`/profiles/${profile_id}`}>
-              <Avatar src={currentUser.profile_image} height={40} />
               {owner}
           </Link>
           <div>

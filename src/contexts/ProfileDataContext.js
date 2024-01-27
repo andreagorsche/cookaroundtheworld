@@ -104,8 +104,8 @@ export const ProfileDataProvider = ({ children }) => {
             followHelper(profile, clickedProfile, data.id)
           ),
         },
-        popularProfiles: {
-          ...prevState.popularProfiles,
+        topProfiles: {
+          ...prevState.topProfiles,
             results: (prevState.popularProfiles?.results || []).map((profile) =>
             followHelper(profile, clickedProfile, data.id)
           ),
