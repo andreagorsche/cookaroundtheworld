@@ -127,7 +127,7 @@ const RegisterForm = () => {
                 				{message}
               				</Alert>
             			))}
-						<Button className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
+						<Button className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright} btn btn-dark`}
 						type="submit">
 						Register
 						</Button>

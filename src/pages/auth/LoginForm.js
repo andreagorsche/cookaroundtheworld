@@ -104,8 +104,9 @@ function LoginForm() {
             	))}
 
             <Button 
-                className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
-                type="submit">
+                className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright} btn btn-dark`}
+                type="submit"
+                >
                 Login
             </Button>
             {errors.non_field_errors?.map((message, idx) => (
