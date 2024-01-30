@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useRating, useSetRating } from './RatingContext'; // Adjust the path based on your file structure
-import Rating from './Rating'; // Adjust the path based on your file structure
+import { useRating, useSetRating } from './RatingContext';
+import Rating from './Rating'; 
 
 const RecipeDetails = () => {
   const ratings = useRating();
@@ -10,12 +10,6 @@ const RecipeDetails = () => {
   const handleRatingChange = (newRating) => {
     // Update the user's rating locally
     setUserRating(newRating);
-    
-    // Send a request to update the rating on the server (adjust this according to your API)
-    // Assuming you have an API endpoint like /ratings/:recipeId to update the rating
-    // You may need to adjust the API endpoint based on your backend implementation
-    // axios.put(`/ratings/${recipeId}/`, { stars: newRating });
-  };
 
   return (
     <div>
@@ -37,5 +31,6 @@ const calculateAverageRating = (ratings) => {
   }
   return 0;
 };
+}
 
 export default RecipeDetails;

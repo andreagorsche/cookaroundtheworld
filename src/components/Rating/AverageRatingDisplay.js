@@ -1,6 +1,5 @@
 // AverageRatingDisplay.jsx
 import React, { useEffect, useState } from 'react';
-import { Rating } from '@mui/material';
 import { useRating } from '../../contexts/RatingDataContext';
 
 function AverageRatingDisplay({ recipeId }) {
@@ -32,7 +31,6 @@ function AverageRatingDisplay({ recipeId }) {
   return (
     <div>
       <p>Average Rating: {averageRating.toFixed(1)}</p>
-      <Rating name="recipe-rating" value={averageRating} precision={0.5} readOnly />
     </div>
   );
 }

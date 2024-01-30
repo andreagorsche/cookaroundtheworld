@@ -1,7 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { FaInstagram, FaFacebook } from 'react-icons/fa';
 import '../styles/components/Footer.module.css';
 
 const Footer = () => {
@@ -19,10 +18,10 @@ const Footer = () => {
 
         <Col xs={12} sm={12} md={4} lg={4} className="footer-column social-icons" style={{ display: 'flex', justifyContent: 'space-around', alignItems:'center' }}>
           <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-            <FaInstagram className="social-icon" style={{ color: 'white' }}  />
+            Instragram
           </a>
           <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-            <FaFacebook className="social-icon" style={{ color: 'white' }}  />
+            Facebook
           </a>
         </Col>
       </Row>
