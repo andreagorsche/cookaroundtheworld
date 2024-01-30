@@ -2,7 +2,7 @@
   "name": "cookaroundtheworld",
   "version": "0.1.0",
   "engines": {
-    "node": "16.20.2"
+    "node": "18.16.0"
   },
   "private": true,
   "dependencies": {
