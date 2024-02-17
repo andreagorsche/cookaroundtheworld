@@ -41,6 +41,10 @@ function RecipeDisplay({handleEditClick}) {
   const owner = currentRecipe?.owner;
   const isOwner = currentUser?.username === owner;
 
+  if (!currentRecipe || !currentRecipe.id) {
+    // If the current recipe is not yet available, display a loading message or spinner
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -73,8 +77,6 @@ function RecipeDisplay({handleEditClick}) {
             {isOwner ? (
               <>
                 <button onClick={handleEditClick}>Edit Recipe</button>
-                <AverageRatingDisplay />
-                <CommentDisplay />
               </>
             ) : (
               <>
@@ -88,6 +90,8 @@ function RecipeDisplay({handleEditClick}) {
                   />
               </>
             )}
+            <AverageRatingDisplay currentRecipe={currentRecipe} />
+            <CommentDisplay currentRecipe={currentRecipe} />
           </Container>
         </Col>
       </Row>

@@ -7,21 +7,30 @@ import Avatar from '../Avatar';
 
 const CommentDisplay = () => {
   const [comments, setComments] = useState([]);
-  const { recipeId } = useParams();
+  const { id } = useParams();
   const currentUser = useCurrentUser();
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axiosReq.get(`/comments/?recipe_id=${recipeId}`);
-        setComments(response.data.results);
+        const response = await axiosReq.get(`/comments/?recipe=${id}`);
+        const filteredComments = response.data.results.filter(comment => comment.recipe === parseInt(id));
+        setComments(filteredComments);
       } catch (error) {
         console.error('Error fetching comments:', error);
       }
     };
 
     fetchComments();
-  }, [recipeId]);
+  }, [id]);
+
+  useEffect(() => {
+    console.log('Comments:', comments);
+  }, [comments]);
+
+  useEffect(() => {
+    console.log('Comments:', comments);
+  }, [comments]);
 
   const markAsInappropriate = async (commentId) => {
     try {
@@ -32,12 +41,14 @@ const CommentDisplay = () => {
       });
 
       // Refresh the comments after marking as inappropriate
-      const response = await axiosReq.get(`/comments/?recipe_id=${recipeId}`);
+      const response = await axiosReq.get(`/comments/?recipe=${id}`);
       setComments(response.data.results);
     } catch (error) {
       console.error('Error marking comment as inappropriate:', error);
     }
   };
+
+  
   return (
     <div>
       <h3>Comments</h3>

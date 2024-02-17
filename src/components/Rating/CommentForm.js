@@ -6,7 +6,7 @@ import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
 
 function CommentForm(props) {
-  const { recipeId, setRecipe, setComments, profileImage, profileId } = props;
+  const { recipe_id, setRecipe, setComments, profileImage, profileId } = props;
   
   const [content, setContent] = useState("");
 console.log(props)
@@ -19,7 +19,7 @@ console.log(props)
     try {
       const { data } = await axiosRes.post("/comments/", {
         content,
-        recipe: recipeId,
+        recipe: recipe_id,
       });
 
       setComments((prevComments) => ({
@@ -38,7 +38,7 @@ console.log(props)
       setContent("");
       console.log('Sending data:', {
         content,
-        recipeId,
+        recipe_id,
       });
   
   
