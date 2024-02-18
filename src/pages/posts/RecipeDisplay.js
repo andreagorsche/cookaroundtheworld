@@ -11,6 +11,7 @@ import CommentDisplay from '../../components/Rating/CommentDisplay';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import RatingForm from '../../components/Rating/RatingForm';
 import AverageRatingDisplay from '../../components/Rating/AverageRatingDisplay';
+import { axiosReq } from '../../api/axiosDefaults';
 
 function RecipeDisplay({handleEditClick}) {
   const { id } = useParams();

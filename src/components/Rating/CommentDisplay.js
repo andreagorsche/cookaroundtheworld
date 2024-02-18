@@ -22,7 +22,7 @@ const CommentDisplay = () => {
     };
 
     fetchComments();
-  }, [id]);
+  }, [id, comments]);
 
   useEffect(() => {
     console.log('Comments:', comments);

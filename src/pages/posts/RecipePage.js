@@ -12,7 +12,6 @@ const RecipePage = () => {
   const currentRecipe = useCurrentRecipe();
 
 
-
   // Function to handle the "Edit Recipe" button click
   const handleEditClick = () => {
     setIsEditing(true);
@@ -22,6 +21,7 @@ const RecipePage = () => {
   const handleCancelEdit = () => {
     setIsEditing(false);
   };
+
 
   return (
     <div>

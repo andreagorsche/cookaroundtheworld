@@ -1,17 +1,20 @@
 // AverageRatingDisplay.jsx
 import React, { useEffect, useState } from 'react';
 import { useRating } from '../../contexts/RatingDataContext';
+import { useParams } from 'react-router-dom';
+
 
 function AverageRatingDisplay({ recipeId }) {
   const ratingData = useRating();
   const [averageRating, setAverageRating] = useState(0);
+  const { id } = useParams();
 
   const calculateAverageRating = () => {
     if (!ratingData || ratingData.length === 0) {
       return 0;
     }
 
-    const recipeRatings = ratingData.filter((rating) => rating.recipe === recipeId);
+    const recipeRatings = ratingData.filter((rating) => rating.recipe === id);
 
     if (recipeRatings.length === 0) {
       return 0;
