@@ -7,6 +7,7 @@ import Avatar from '../Avatar';
 
 const CommentDisplay = () => {
   const [comments, setComments] = useState([]);
+  const [markedAsInappropriate, setMarkedAsInappropriate] = useState([]);
   const { id } = useParams();
   const currentUser = useCurrentUser();
 
@@ -28,25 +29,14 @@ const CommentDisplay = () => {
     console.log('Comments:', comments);
   }, [comments]);
 
-  useEffect(() => {
-    console.log('Comments:', comments);
-  }, [comments]);
 
-  const markAsInappropriate = async (commentId) => {
-    try {
-      // Send the comment ID and is_inappropriate flag in the payload
-      await axiosReq.patch(`/comments/${commentId}/mark_inappropriate/`, {
-        comment_id: commentId,
-        is_inappropriate: true,  // or false based on your logic
-      });
-
-      // Refresh the comments after marking as inappropriate
-      const response = await axiosReq.get(`/comments/?recipe=${id}`);
-      setComments(response.data.results);
-    } catch (error) {
-      console.error('Error marking comment as inappropriate:', error);
-    }
+  const handleMarkedAsInappropriate = (commentId) => {
+    setMarkedAsInappropriate(prevState => [...prevState, commentId]);
   };
+
+  // Filter out comments marked as inappropriate
+  const visibleComments = comments.filter(comment => !markedAsInappropriate.includes(comment.id));
+
 
   
   return (
@@ -56,15 +46,13 @@ const CommentDisplay = () => {
         {comments.map((comment) => (
           <li key={comment.id}>
             <Avatar src={currentUser.profile_image} height={40} />
-            {comment.content}
-            {!currentUser.is_owner && !comment.is_owner && !comment.is_inappropriate && (
-              <button onClick={() => markAsInappropriate(comment.id)}>
-                Mark as Inappropriate
-              </button>
+            {visibleComments.content}
+            {!currentUser.is_owner && !comment.is_owner && (
+              <MarkAsInappropriateButton
+                commentId={comment.id}
+                onMarkedAsInappropriate={handleMarkedAsInappropriate}
+              />
             )}
-            {comment.is_inappropriate && <p>This comment has been marked as inappropriate.</p>}
-          </li>
-        ))}
       </ul>
     </div>
   );
