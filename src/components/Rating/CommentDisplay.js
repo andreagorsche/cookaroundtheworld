@@ -4,10 +4,10 @@ import { useParams } from 'react-router-dom';
 import { axiosReq } from '../../api/axiosDefaults';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Avatar from '../Avatar';
+import MarkAsInappropriateButton from '../Rating/MarkAsInappropriateButton'
 
 const CommentDisplay = () => {
   const [comments, setComments] = useState([]);
-  const [markedAsInappropriate, setMarkedAsInappropriate] = useState([]);
   const { id } = useParams();
   const currentUser = useCurrentUser();
 
@@ -27,15 +27,19 @@ const CommentDisplay = () => {
 
   useEffect(() => {
     console.log('Comments:', comments);
-  }, [comments]);
+  }, []);
 
 
   const handleMarkedAsInappropriate = (commentId) => {
-    setMarkedAsInappropriate(prevState => [...prevState, commentId]);
+    setComments(prevComments =>
+      prevComments.map(comment =>
+        comment.id === commentId ? { ...comment, is_inappropriate: true } : comment
+      )
+    );
   };
 
   // Filter out comments marked as inappropriate
-  const visibleComments = comments.filter(comment => !markedAsInappropriate.includes(comment.id));
+  const visibleComments = comments.filter(comment => !comment.is_inappropriate);
 
 
   
@@ -43,16 +47,18 @@ const CommentDisplay = () => {
     <div>
       <h3>Comments</h3>
       <ul className="list-unstyled">
-        {comments.map((comment) => (
+        {visibleComments.map((comment) => (
           <li key={comment.id}>
             <Avatar src={currentUser.profile_image} height={40} />
-            {visibleComments.content}
+            {comment.content}
             {!currentUser.is_owner && !comment.is_owner && (
               <MarkAsInappropriateButton
                 commentId={comment.id}
                 onMarkedAsInappropriate={handleMarkedAsInappropriate}
               />
             )}
+          </li>
+        ))}
       </ul>
     </div>
   );

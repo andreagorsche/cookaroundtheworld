@@ -54,6 +54,9 @@ function LoginForm() {
         setCurrentUser(user);
     
         history.push("/");
+      if (!user.is_active) {
+          alert('Your account has been set to inactive. Please contact andrea.gorsche@gmail.com');
+        }
       } catch (err) {
         console.error("Login error:", err);
         setErrors(err.response?.data);

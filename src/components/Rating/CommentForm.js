@@ -37,7 +37,6 @@ console.log(props)
           ],
         }));
         setContent("");
-        updateComments();
         console.log('Sending data:', {
           content,
           recipeId,
