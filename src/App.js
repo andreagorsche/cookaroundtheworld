@@ -13,6 +13,7 @@ import Impressum from "./legal/Impressum";
 import DataProtection from "./legal/DataProtection";
 import Footer from "./components/Footer";
 import FoodFeed from "./pages/posts/FoodFeed";
+import ConfirmationPage from "./pages/auth/ConfirmationPage";
 
 function App() {
 
@@ -32,6 +33,8 @@ function App() {
           <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
           <Route exact path="/recipes/:id" render={() => <RecipePage />} />
           <Route exact path ="/register" render = {() => <RegisterForm />}/>
+          <Route path="/confirmation" render={ConfirmationPage} />
+
           <Route exact path ="/login" render = {() => <LoginForm />}/>
           <Route render = {()=><p>Page not found!</p>}/>
           <Route path="/dataprotection" element={<DataProtection />} />

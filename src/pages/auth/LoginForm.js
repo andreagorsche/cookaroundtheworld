@@ -52,11 +52,16 @@ function LoginForm() {
     
         // Use setCurrentUser or any other logic to manage the user state
         setCurrentUser(user);
-    
-        history.push("/");
-      if (!user.is_active) {
+
+        if (!user.is_active) {
+          // If the user's account is inactive, prevent the login
+          // Display a message to the user
           alert('Your account has been set to inactive. Please contact andrea.gorsche@gmail.com');
+          return; // Exit the function
         }
+
+        // Proceed with redirecting the user to the home page
+        history.push("/");
       } catch (err) {
         console.error("Login error:", err);
         setErrors(err.response?.data);
