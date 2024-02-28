@@ -55,10 +55,7 @@ const RegisterForm = () => {
 					{registrationSuccess ? (
         			<Alert variant="success">
           			Thank you for your registration! To complete your registration, please confirm your email address.{" "}
-          			<Link to="/login" className={styles.SuccessLink}>
-    				Email address confirmed? Click here to login.
-          			</Link>
-       				</Alert>
+          			</Alert>
       				) : (
 					<Form onSubmit={handleSubmit}>
 						<Form.Group controlId="username">
