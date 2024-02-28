@@ -55,8 +55,7 @@ function LoginForm() {
 
         if (!user.is_active) {
           // If the user's account is inactive, prevent the login
-          // Display a message to the user
-          alert('Your account has been set to inactive. Please contact andrea.gorsche@gmail.com');
+          history.push("/inactive-account");
           return; // Exit the function
         }
 

@@ -108,7 +108,7 @@ const NavMenu = () => {
               <i className="fa-solid fa-utensils"></i> Welcome
           </NavLink>
           
-          {currentUser ? loggedInIcons : loggedOutIcons}
+          {currentUser && currentUser.is_active ? loggedInIcons : loggedOutIcons}
 
         </Nav>
       </Navbar.Collapse>

@@ -14,6 +14,7 @@ import DataProtection from "./legal/DataProtection";
 import Footer from "./components/Footer";
 import FoodFeed from "./pages/posts/FoodFeed";
 import ConfirmationPage from "./pages/auth/ConfirmationPage";
+import InactiveAccount from "./pages/auth/InactiveAccount";
 
 function App() {
 
@@ -34,7 +35,7 @@ function App() {
           <Route exact path="/recipes/:id" render={() => <RecipePage />} />
           <Route exact path ="/register" render = {() => <RegisterForm />}/>
           <Route path="/verify-email/:key" render={() => <ConfirmationPage />}/>
-
+          <Route path="/inactive-account" render={() => <InactiveAccount />}/>
           <Route exact path ="/login" render = {() => <LoginForm />}/>
           <Route render = {()=><p>Page not found!</p>}/>
           <Route path="/dataprotection" element={<DataProtection />} />
