@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { useParams } from 'react-router-dom';
@@ -6,9 +6,25 @@ import styles from "../../styles/pages/auth/LoginRegister.module.css";
 import appStyles from "../../App.module.css";
 import JoinHeader from "../../assets/images/JoinHeader.jpg"
 import Header from "../../components/Header";
+import { axiosReq } from "../../api/axiosDefaults";
+
 
 const ConfirmationPage = () => {
   const { key } = useParams(); 
+
+  useEffect(() => {
+    confirmEmail(key);
+  }, [key]);
+
+  const confirmEmail = async (key) => {
+    try {
+      const response = await axiosReq.get(`/verify-email/${key}/`);
+      console.log(response.data); 
+    } catch (error) {
+      console.error('Error confirming email:', error);
+    }
+  };
+
   return (
       <div>
       <Header imageUrl={JoinHeader} />
