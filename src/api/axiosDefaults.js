@@ -14,11 +14,11 @@ export const axiosRes = axios.create();
 axiosReq.interceptors.request.use(
   async (config) => {
     try {
-      // Perform any request-specific logic here
-      // ...
+       // Determine frontend environment (development or production)
+       const frontendEnvironment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
 
-      // Example: Refresh token before making the request
-      // await axios.post("/dj-rest-auth/token/refresh/");
+       // Add X-Frontend-Environment header to the request
+       config.headers['X-Frontend-Environment'] = frontendEnvironment;
 
       return config;
     } catch (err) {
