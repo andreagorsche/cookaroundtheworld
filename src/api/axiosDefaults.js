@@ -20,6 +20,7 @@ axiosReq.interceptors.request.use(
        // Add X-Frontend-Environment header to the request
        config.headers['X-Frontend-Environment'] = frontendEnvironment;
 
+      console.log(config.headers);
       return config;
     } catch (err) {
       // Handle error (e.g., token refresh failed)

@@ -53,11 +53,17 @@ function LoginForm() {
         // Use setCurrentUser or any other logic to manage the user state
         setCurrentUser(user);
 
-        if (!user.is_active) {
-          // If the user's account is inactive, prevent the login
-          history.push("/inactive-account");
-          return; // Exit the function
-        }
+          // Check if the user's account is active or inactive
+      if (user.is_active) {
+        // Use setCurrentUser or any other logic to manage the user state
+        setCurrentUser(user);
+
+        // Proceed with redirecting the user to the home page
+        history.push("/");
+      } else {
+        console.log("User account is inactive.");
+        history.push("/inactive-account");
+      }
 
         // Proceed with redirecting the user to the home page
         history.push("/");
