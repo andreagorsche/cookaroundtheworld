@@ -14,7 +14,7 @@ const ConfirmationPage = () => {
 
   const confirmEmail = async (key) => {
     try {
-      const response = await axiosReq.get(`/verify-email/${key}/`);
+      const response = await axiosReq.post(`/verify-email/${key}/`);
       console.log(response.data); 
     } catch (error) {
       console.error('Error confirming email:', error);
