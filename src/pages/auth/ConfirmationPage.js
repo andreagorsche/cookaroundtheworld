@@ -12,10 +12,6 @@ import { axiosReq } from "../../api/axiosDefaults";
 const ConfirmationPage = () => {
   const { key } = useParams(); 
 
-  useEffect(() => {
-    confirmEmail(key);
-  }, [key]);
-
   const confirmEmail = async (key) => {
     try {
       const response = await axiosReq.get(`/verify-email/${key}/`);
@@ -24,6 +20,10 @@ const ConfirmationPage = () => {
       console.error('Error confirming email:', error);
     }
   };
+
+  useEffect(() => {
+    confirmEmail(key);
+  }, [key]);
 
   return (
       <div>
