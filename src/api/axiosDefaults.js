@@ -14,13 +14,6 @@ export const axiosRes = axios.create();
 axiosReq.interceptors.request.use(
   async (config) => {
     try {
-       // Determine frontend environment (development or production)
-       const frontendEnvironment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
-
-       // Add X-Frontend-Environment header to the request
-       config.headers['X-Frontend-Environment'] = frontendEnvironment;
-
-      console.log(config.headers);
       return config;
     } catch (err) {
       // Handle error (e.g., token refresh failed)
