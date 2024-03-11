@@ -34,7 +34,7 @@ function App() {
           <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
           <Route exact path="/recipes/:id" render={() => <RecipePage />} />
           <Route exact path ="/register" render = {() => <RegisterForm />}/>
-          <Route path="/verify-email/:key" render={() => <ConfirmationPage />}/>
+          <Route path="/success" render={() => <ConfirmationPage />}/>
           <Route path="/inactive-account" render={() => <InactiveAccount />}/>
           <Route exact path ="/login" render = {() => <LoginForm />}/>
           <Route render = {()=><p>Page not found!</p>}/>
