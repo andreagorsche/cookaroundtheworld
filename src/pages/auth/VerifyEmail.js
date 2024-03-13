@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
-const VerifyEmail = ({ match }) => {
+const VerifyEmail = () => {
+  const { key } = useParams();
   const [verificationStatus, setVerificationStatus] = useState('verifying');
   const history = useHistory();
 
   useEffect(() => {
     const fetchVerificationStatus = async () => {
       try {
-        const response = await fetch(`/verify-email/${match.params.key}`);
+        const response = await fetch(`/verify-email/${key}`);
         const data = await response.json();
         if (response.ok && data.detail === "Email address confirmed") {
           // Email address verified successfully
@@ -30,7 +31,7 @@ const VerifyEmail = ({ match }) => {
     };
 
     fetchVerificationStatus();
-  }, [match.params.key, history]);
+  }, [key, history]);
 
   return (
     <div>
