@@ -10,6 +10,8 @@ const VerifyEmail = () => {
     const fetchVerificationStatus = async () => {
       try {
         const response = await fetch(`/verify-email/${key}`);
+        // Log the response received from the server
+        console.log(response);
         const data = await response.json();
         if (response.ok && data.detail === "Email address confirmed") {
           // Email address verified successfully
