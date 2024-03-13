@@ -15,6 +15,7 @@ import Footer from "./components/Footer";
 import FoodFeed from "./pages/posts/FoodFeed";
 import ConfirmationPage from "./pages/auth/ConfirmationPage";
 import InactiveAccount from "./pages/auth/InactiveAccount";
+import VerifyEmail from "./pages/auth/VerifyEmail";
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/recipes/:id" render={() => <RecipePage />} />
           <Route exact path ="/register" render = {() => <RegisterForm />}/>
           <Route path="/success" render={() => <ConfirmationPage />}/>
+          <Route path="/verify-email/:key" render={() => <VerifyEmail />}/>
           <Route path="/inactive-account" render={() => <InactiveAccount />}/>
           <Route exact path ="/login" render = {() => <LoginForm />}/>
           <Route render = {()=><p>Page not found!</p>}/>
