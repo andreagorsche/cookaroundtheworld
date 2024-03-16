@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { axiosReq } from "../../api/axiosDefaults";
+
 
 const VerifyEmail = () => {
   const { key } = useParams();
@@ -9,7 +11,7 @@ const VerifyEmail = () => {
   useEffect(() => {
     const fetchVerificationStatus = async () => {
       try {
-        const response = await fetch(`/verify-email/${key}`);
+        const response = await axiosReq.get(`/verify-email/${key}`);
         // Log the response received from the server
         console.log(response);
         const data = await response.json();
