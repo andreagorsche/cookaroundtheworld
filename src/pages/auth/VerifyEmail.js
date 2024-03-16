@@ -26,7 +26,7 @@ const VerifyEmail = () => {
         } else {
           // Display error message if verification failed
           setVerificationStatus('error');
-          console.error(data.detail);
+          console.error(message);
         }
       } catch (error) {
         // Display error message if request fails
