@@ -15,7 +15,7 @@ const VerifyEmail = () => {
         // Log the response received from the server
         console.log(response);
         const data = response.data;
-        if (response.ok && data.detail === "Email verfied successfully") {
+        if (response.ok && data.detail === "Email verified successfully") {
           // Email address verified successfully
           setVerificationStatus('verified');
           // Redirect to confirmation page after a delay
