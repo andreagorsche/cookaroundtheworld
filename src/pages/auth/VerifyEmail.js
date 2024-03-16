@@ -21,7 +21,7 @@ const VerifyEmail = () => {
           setVerificationStatus('verified');
           // Redirect to confirmation page after a delay
           setTimeout(() => {
-            history.push('/confirmation');
+            history.push('/success');
           }, 2000);
         } else {
           // Display error message if verification failed
