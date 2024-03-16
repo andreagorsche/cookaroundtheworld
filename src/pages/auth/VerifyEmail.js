@@ -14,7 +14,7 @@ const VerifyEmail = () => {
         const response = await axiosReq.get(`/verify-email/${key}`);
         // Log the response received from the server
         console.log(response);
-        const data = await response.json();
+        const data = response.data;
         if (response.ok && data.detail === "Email address confirmed") {
           // Email address verified successfully
           setVerificationStatus('verified');
