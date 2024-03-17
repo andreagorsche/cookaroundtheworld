@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
-import { useFetchRecipeById, useCurrentRecipe, useSetCurrentRecipe } from '../../contexts/RecipeDataContext';
+import { useFetchRecipeById, useCurrentRecipe, useSetCurrentRecipe, useSetRecipeToDelete } from '../../contexts/RecipeDataContext';
 import CommentForm from '../../components/Rating/CommentForm';
 import CommentDisplay from '../../components/Rating/CommentDisplay';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
@@ -21,6 +21,7 @@ function RecipeDisplay({handleEditClick}) {
   const fetchRecipeById = useFetchRecipeById();
   const profile_image = currentUser?.profile_image;
   const [comments, setComments] = useState({ results: [] });
+  const history = useHistory(); 
 
 
   useEffect(() => {
@@ -46,6 +47,17 @@ function RecipeDisplay({handleEditClick}) {
     // If the current recipe is not yet available, display a loading message or spinner
     return <div>Loading...</div>;
   }
+
+  const handleDeleteClick = async () => {
+    try {
+      if (window.confirm('Are you sure you want to delete this recipe?')) {
+        await axiosReq.delete(`/recipes/${id}/`);
+        history.push('/'); 
+      }
+    } catch (error) {
+      console.error('Error deleting recipe:', error);
+    }
+  };
 
   return (
     <>
@@ -78,6 +90,7 @@ function RecipeDisplay({handleEditClick}) {
             {isOwner ? (
               <>
                 <button onClick={handleEditClick}>Edit Recipe</button>
+                <button onClick={handleDeleteClick}>Delete Recipe</button>
               </>
             ) : (
               <>
