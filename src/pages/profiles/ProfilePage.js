@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
 import HeaderImageCircle from "../../components/HeaderImageCircle";
@@ -19,6 +19,7 @@ function ProfilePage() {
   const [profile] = pageProfile?.results || [];
   const [showMultiStepForm, setShowMultiStepForm] = useState(false);
   const currentUser = useCurrentUser();
+  const history = useHistory(); 
 
   const is_owner = currentUser?.username === profile?.owner;
   const followed_id = pageProfile?.results?.[0]?.id;
@@ -90,6 +91,19 @@ useEffect(() => {
     setShowMultiStepForm(true);
   };
 
+
+  const handleDeleteClick = async () => {
+    try {
+      if (window.confirm('Are you sure you want to delete this profile? Your login data will be deleted as well.')) {
+        await axiosReq.delete(`/profiles/${id}/`);
+        await axiosReq.post('/dj-rest-auth/logout/'); // Logout the user
+        history.push('/'); // Redirect to the home page
+      }
+    } catch (error) {
+      console.error('Error deleting profile:', error);
+    }
+  };
+
   return (
     <>
       <div>
@@ -118,12 +132,20 @@ useEffect(() => {
       />
       <Col lg={3} className="text-lg-right">
        {is_owner && (
+        <>
         <Button
           className={`${btnStyles.Button} ${btnStyles.Black}`}
           onClick={handleEditButtonClick}
         >
           Edit Profile
         </Button>
+         <Button
+         className={`${btnStyles.Button} ${btnStyles.Black}`}
+         onClick={handleDeleteClick}
+       >
+         Delete Profile
+       </Button>
+       </>
       )}
       {currentUser && !is_owner && (
         <Button

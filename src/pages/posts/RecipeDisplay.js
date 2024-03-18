@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
-import { useFetchRecipeById, useCurrentRecipe, useSetCurrentRecipe, useSetRecipeToDelete } from '../../contexts/RecipeDataContext';
+import { useFetchRecipeById, useCurrentRecipe, useSetCurrentRecipe } from '../../contexts/RecipeDataContext';
 import CommentForm from '../../components/Rating/CommentForm';
 import CommentDisplay from '../../components/Rating/CommentDisplay';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
