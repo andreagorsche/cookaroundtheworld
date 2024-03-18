@@ -46,7 +46,7 @@ function LoginForm() {
     
         console.log("Login successful. Access Token:", accessToken);
     
-        // Optionally, you can store other user-related data
+        //Store other user-related data
         const user = response.data.user;
         localStorage.setItem('user', JSON.stringify(user));
     

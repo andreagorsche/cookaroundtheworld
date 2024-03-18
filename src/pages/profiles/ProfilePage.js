@@ -8,8 +8,10 @@ import CircleRow from "../../components/CircleRow";
 import TopProfiles from "../../components/TopProfiles";
 import MultiStepForm from "./MultiStepForm";
 import { Col, Button } from "react-bootstrap";
-import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import { useCurrentUser, useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import btnStyles from "../../styles/components/Button.module.css";
+import axios from "axios";
+
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -19,8 +21,8 @@ function ProfilePage() {
   const [profile] = pageProfile?.results || [];
   const [showMultiStepForm, setShowMultiStepForm] = useState(false);
   const currentUser = useCurrentUser();
+  const setCurrentUser = useSetCurrentUser();
   const history = useHistory(); 
-
   const is_owner = currentUser?.username === profile?.owner;
   const followed_id = pageProfile?.results?.[0]?.id;
 
@@ -91,19 +93,6 @@ useEffect(() => {
     setShowMultiStepForm(true);
   };
 
-
-  const handleDeleteClick = async () => {
-    try {
-      if (window.confirm('Are you sure you want to delete this profile? Your login data will be deleted as well.')) {
-        await axiosReq.delete(`/profiles/${id}/`);
-        await axiosReq.post('/dj-rest-auth/logout/'); // Logout the user
-        history.push('/'); // Redirect to the home page
-      }
-    } catch (error) {
-      console.error('Error deleting profile:', error);
-    }
-  };
-
   return (
     <>
       <div>
@@ -132,20 +121,12 @@ useEffect(() => {
       />
       <Col lg={3} className="text-lg-right">
        {is_owner && (
-        <>
         <Button
           className={`${btnStyles.Button} ${btnStyles.Black}`}
           onClick={handleEditButtonClick}
         >
           Edit Profile
         </Button>
-         <Button
-         className={`${btnStyles.Button} ${btnStyles.Black}`}
-         onClick={handleDeleteClick}
-       >
-         Delete Profile
-       </Button>
-       </>
       )}
       {currentUser && !is_owner && (
         <Button
