@@ -1,6 +1,6 @@
 // CommentDisplay.js
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { axiosReq } from '../../api/axiosDefaults';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Avatar from '../Avatar';
@@ -10,6 +10,7 @@ const CommentDisplay = () => {
   const [comments, setComments] = useState([]);
   const { id } = useParams();
   const currentUser = useCurrentUser();
+  const history = useHistory();
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -38,24 +39,34 @@ const CommentDisplay = () => {
     );
   };
 
-  // Filter out comments marked as inappropriate
-  const visibleComments = comments.filter(comment => !comment.is_inappropriate);
+  const handleDeleteComment = async (commentId) => {
+    try {
+      if (window.confirm('Are you sure you want to delete this comment?')) {
+        await axiosReq.delete(`/comments/${commentId}/`);
+        // Update comments after deletion
+        setComments(prevComments => prevComments.filter(comment => comment.id !== commentId));
+      }
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
+  };
 
-
-  
   return (
     <div>
       <h3>Comments</h3>
       <ul className="list-unstyled">
-        {visibleComments.map((comment) => (
+        {comments.map((comment) => (
           <li key={comment.id}>
-            <Avatar src={currentUser.profile_image} height={40} />
+            <Avatar src={comment.profile_image} height={40} />
             {comment.content}
             {!currentUser.is_owner && !comment.is_owner && (
               <MarkAsInappropriateButton
                 commentId={comment.id}
                 onMarkedAsInappropriate={handleMarkedAsInappropriate}
               />
+            )}
+            {!currentUser.is_owner && comment.is_owner && (
+              <button onClick={() => handleDeleteComment(comment.id)}>Delete Comment</button>
             )}
           </li>
         ))}
