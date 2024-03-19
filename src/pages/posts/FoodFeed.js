@@ -31,27 +31,13 @@ const { pathname } = useLocation();
 useEffect(() => {
   setHasLoaded(true);
   fetchRecipes(`/recipes/?${id}`);
-}, [id, pathname, fetchRecipes]);
-
-const onSearch = async (searchTerm) => {
-  try {
-    const { data } = await axiosReq.get(`/recipes/?search=${searchTerm}`);
-    setRecipeData((prevData) => ({
-      ...prevData,
-      results: data.results,
-    }));
-    setHasLoaded(true);
-  } catch (err) {
-    console.log(err);
-  }
-};
+}, [id, pathname]);
 
   return (
     <>
     <Header imageUrl={FoodFeedHeader} />
     <Row className='d-flex justify-content-center h-100'>
     <Col className="p-0" lg={4}>
-        <SearchBar onSearch={onSearch} />
         <Filters style={{ width: "300px" }} />
     </Col>
     <Col className="py-2 p-0 p-lg-2" lg={8}>

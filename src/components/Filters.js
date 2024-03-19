@@ -7,8 +7,9 @@ import Select from 'react-select';
 
 const Filters = () => {
   const setRecipeData = useSetRecipeData();
-  const [filters, setFilters] = useState({ cuisine: '', ingredients: [] });
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCuisine, setSelectedCuisine] = useState('');
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
 
   const cuisineChoices = ['american', 'austrian', 'caribbean', 'chinese', 'french', 'german', 'greek', 'indian', 'italian', 'mediterranean', 'mexican', 'slovak', 'spanish']
   const popularIngredients = [
@@ -29,84 +30,78 @@ const Filters = () => {
     { value: 'cheese', label: 'Cheese' },
   ]
 
-const fetchRecipesWithFilters = async (filterOptions) => {
-  try {
-    const { cuisine, ingredients } = filterOptions;
+  const fetchRecipesWithFilters = async () => {
+    try {
+      const endpoint = `/recipes/?cuisine=${selectedCuisine}&ingredients=${selectedIngredients.join(',')}&search=${searchTerm}`;
+      const { data } = await axiosReq.get(endpoint);
+      setRecipeData((prevData) => ({
+        ...prevData,
+        results: data.results,
+      }));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    // Construct the endpoint with all the filters
-    const endpoint = `/recipes/?cuisine=${cuisine || ''}&ingredients=${ingredients || ''}`;
-    
-    const { data } = await axiosReq.get(endpoint);
+  const handleSearch = () => {
+    fetchRecipesWithFilters();
+  };
 
-    setRecipeData((prevData) => ({
-      ...prevData,
-      results: data.results,
-    }));
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-
-  const searchRecipes = () => {
-    fetchRecipesWithFilters(filters);
+  const handleClearSearch = () => {
+    setSearchTerm('');
+    setSelectedCuisine('');
+    setSelectedIngredients([]);
+    fetchRecipesWithFilters();
   };
 
 
-  const handleKeyPress = (e) => {
+  const handleEnterKeyPress = (e) => {
     if (e.key === 'Enter') {
-      searchRecipes();
+      e.preventDefault(); // Prevent the default form submission behavior
+      handleSearch(); // Call handleSearch function when Enter key is pressed
     }
   };
 
-  
-    const handleCuisineChange = async (cuisine) => {
-    try {
-      setSelectedCuisine(cuisine); 
-      // Fetch recipes with the selected cuisine filter
-      const { data } = await axiosReq.get(`/recipes/?cuisine=${cuisine}`);
-      
-      setRecipeData((prevData) => ({
-        ...prevData,
-        results: data.results,
-      }));
-    } catch (err) {
-      console.log(err);
-    }
+  const handleCuisineChange = (cuisine) => {
+    setSelectedCuisine(cuisine);
+    fetchRecipesWithFilters();
   };
 
-  const handleIngredientsChange = async (selectedIngredients) => {
-    try {
-
-      // Format the selected ingredients as a comma-separated list
-      const ingredientsList = selectedIngredients.map(ingredient => ingredient.value).join(',');
-
-      // Fetch recipes with the selected ingredients filter
-      const { data } = await axiosReq.get(`/recipes/?ingredients=${ingredientsList}`);
-      
-      setRecipeData((prevData) => ({
-        ...prevData,
-        results: data.results,
-      }));
-    } catch (err) {
-      console.log(err);
-    }
+  const handleIngredientsChange = (selectedIngredients) => {
+    setSelectedIngredients(selectedIngredients.map(ingredient => ingredient.value));
+    fetchRecipesWithFilters();
   };
 
+  // Function to reset the cuisine filter
+  const resetCuisineFilter = () => {
+    setSelectedCuisine('');
+    // Refetch recipes without cuisine filter
+    fetchRecipesWithFilters();
+  };
 
   
   return (
     <div className='d-flex justify-content-center'>
+      <div>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        onKeyPress={handleEnterKeyPress}
+      />
       <Dropdown>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
         {selectedCuisine || 'Pick Cuisine'} 
         </Dropdown.Toggle>
         <Dropdown.Menu>
+          <>
           {cuisineChoices.map((cuisine, index) => (
             <Dropdown.Item key={index} onClick={() => handleCuisineChange(cuisine)}>
               {cuisine.charAt(0).toUpperCase() + cuisine.slice(1)}
             </Dropdown.Item>
           ))}
+          <Dropdown.Item onClick={resetCuisineFilter}>All Cuisines</Dropdown.Item>
+          </>
         </Dropdown.Menu>
       </Dropdown>
       <Select
@@ -115,6 +110,9 @@ const fetchRecipesWithFilters = async (filterOptions) => {
         onChange={handleIngredientsChange}
         placeholder="Select Ingredients"
       />
+      <button onClick={handleSearch}>Search</button>
+      <button onClick={handleClearSearch}>Clear Search</button>
+      </div>          
     </div>
   );
 };
