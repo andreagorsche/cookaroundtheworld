@@ -9,7 +9,6 @@ import appStyles from "../../App.module.css";
 
 import Header from "../../components/Header";
 import FoodFeedHeader  from "../../assets/images/FoodFeedHeader.jpeg"
-import SearchBar from "../../components/SearchBar";
 import Filters from "../../components/Filters";
 
 import RecipeCard from "../../components/RecipeCard";

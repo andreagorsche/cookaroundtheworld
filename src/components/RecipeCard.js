@@ -32,13 +32,7 @@ const isOwner = currentUser?.username === owner;
           </Link>
           <div>
             <span>{updated_at}</span>
-            {isOwner ?  
-              (
-                <Link to={`/recipes/${id}`}>
-                  <button>Edit Recipe</button>
-                </Link>
-              ) : null
-            }
+            <button>Bookmark</button>
           </div>
       </Media>
       </Card.Body>
