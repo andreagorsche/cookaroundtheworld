@@ -33,7 +33,9 @@ const [saved, setSaved] = useState(false);
 // Function to handle bookmarking/unbookmarking
 const handleBookmarkToggle = async () => {
   try {
-    const response = await axiosReq.post(`/saved/${id}/`);
+    const response = await axiosReq.put(`/saved/${id}/`, {
+    saved: true,
+    });
     if (response.status === 200) {
       const { saved } = response.data;
       // Update UI or perform any other actions based on the saved status
