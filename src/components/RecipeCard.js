@@ -1,11 +1,15 @@
 // RecipeCard.jsx
-import React from "react";
+import React, {useState} from "react";
+import { axiosReq } from "../api/axiosDefaults";
 import { Card, Media } from "react-bootstrap";
 import styles from "../styles/components/RecipeCard.module.css"; 
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import { useCurrentUser } from "../contexts/CurrentUserContext";
 import AverageRatingDisplay from '../components/Rating/AverageRatingDisplay';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+
 
 function RecipeCard({ recipe }) {
   const {
@@ -23,6 +27,27 @@ function RecipeCard({ recipe }) {
 const currentUser = useCurrentUser();
 const isOwner = currentUser?.username === owner; 
 
+// State to track whether the recipe is saved as a favorite
+const [saved, setSaved] = useState(false);
+
+// Function to handle bookmarking/unbookmarking
+const handleBookmarkToggle = async () => {
+  try {
+    const response = await axiosReq.post(`/saved/${id}/`);
+    if (response.status === 200) {
+      const { saved } = response.data;
+      // Update UI or perform any other actions based on the saved status
+      if (saved) {
+        console.log("Recipe bookmarked");
+      } else {
+        console.log("Recipe unbookmarked");
+      }
+    }
+  } catch (error) {
+    console.error("Error toggling save status:", error);
+  }
+};
+
   return (
     <Card className={styles.recipeCard}>
       <Card.Body>
@@ -32,7 +57,9 @@ const isOwner = currentUser?.username === owner;
           </Link>
           <div>
             <span>{updated_at}</span>
-            <button>Bookmark</button>
+            <button onClick={handleBookmarkToggle}>
+            {saved ? <FontAwesomeIcon icon={faToggleOn} /> : <FontAwesomeIcon icon={faToggleOff} />}
+            </button>          
           </div>
       </Media>
       </Card.Body>
