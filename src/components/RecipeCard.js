@@ -31,24 +31,6 @@ const isOwner = currentUser?.username === owner;
 // State to track whether the recipe is saved as a favorite
 const [saved, setSaved] = useState(false);
 
-// Function to handle bookmarking/unbookmarking
-const handleBookmarkToggle = async () => {
-  try {
-    // Toggle the saved state locally
-    setSaved(prevSaved => !prevSaved);
-    
-    // Send the updated saved status to the backend
-    const response = await axiosReq.put(`/saved/${id}/`, { saved: !saved });
-    
-    if (response.status === 200) {
-      console.log("Recipe save status toggled successfully");
-    }
-  } catch (error) {
-    console.error("Error toggling save status:", error);
-    // If an error occurs, revert the local saved state
-    setSaved(prevSaved => !prevSaved);
-  }
-};
 
   return (
     <Card className={styles.recipeCard}>
@@ -58,10 +40,7 @@ const handleBookmarkToggle = async () => {
               {owner}
           </Link>
           <div>
-            <span>{updated_at}</span>
-            <button onClick={handleBookmarkToggle}>
-            {saved ? <FontAwesomeIcon icon={solidBookmark} /> : <FontAwesomeIcon icon={regularBookmark} />}
-            </button>         
+            <span>{updated_at}</span>       
           </div>
       </Media>
       </Card.Body>

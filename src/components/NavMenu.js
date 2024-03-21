@@ -47,8 +47,14 @@ const NavMenu = () => {
     <NavLink 
       className = {navStyles.NavLink} 
       activeClassName = {navStyles.Active} 
-      to = "/favorites">
-      <i className="fa-solid fa-thumbs-up"></i> Favorites 
+      to = "/friendsfeed">
+      <i className="fa-solid fa-thumbs-up"></i> Friends-Feed 
+    </NavLink>
+    <NavLink 
+      className = {navStyles.NavLink} 
+      activeClassName = {navStyles.Active} 
+      to = "/yourrecipes">
+      <i className="fa-solid fa-thumbs-up"></i> Your Recipes 
     </NavLink>
     <NavLink 
       className = {navStyles.NavLink}  

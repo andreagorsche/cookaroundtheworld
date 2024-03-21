@@ -19,7 +19,7 @@ import { useRecipeData, useFetchRecipes, useSetRecipeData } from '../../contexts
 import { useParams, useLocation } from "react-router";
 
 
-function FoodFeed({message}) {
+function FoodFeed({message, filter = ""}) {
 const recipes = useRecipeData();
 const setRecipeData = useSetRecipeData();
 const fetchRecipes = useFetchRecipes();
@@ -29,8 +29,9 @@ const { pathname } = useLocation();
 
 useEffect(() => {
   setHasLoaded(true);
-  fetchRecipes(`/recipes/?${id}`);
-}, [id, pathname]);
+  fetchRecipes(`/recipes/?${filter}`);
+
+}, [filter, pathname]);
 
   return (
     <>

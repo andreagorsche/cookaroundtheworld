@@ -16,8 +16,12 @@ import FoodFeed from "./pages/posts/FoodFeed";
 import ConfirmationPage from "./pages/auth/ConfirmationPage";
 import InactiveAccount from "./pages/auth/InactiveAccount";
 import VerifyEmail from "./pages/auth/VerifyEmail";
+import { useCurrentUser } from "./contexts/CurrentUserContext";
 
 function App() {
+
+  const currentUser = useCurrentUser();
+  const profile_id = currentUser?.profile_id || "";
 
   return (
     <div className={styles.App}>
@@ -28,8 +32,13 @@ function App() {
           <Route exact path ="/foodfeed" render = {() => <FoodFeed 
           message ="No recipes found for these search criteria. Please adjust your search."
           />}/>
-          <Route exact path ="/favorites" render = {() => <FoodFeed message="No saved recipes found. 
-          Please save recipes in the food feed for display here." filter="?saved=true" 
+          <Route exact path ="/friendsfeed" render = {() => <FoodFeed 
+          message="No recipes found. Please follow other users for recipes to display here." 
+          filter={`owner__followed__owner__profile=${profile_id}&`}
+          />}/>
+          <Route exact path ="/yourrecipes" render = {() => <FoodFeed 
+          message="No  recipes found. Please post recipes for recipes to display here." 
+          filter={`owner__profile=${profile_id}&`}
           />}/>
           <Route exact path="/recipes/create" render={() => <CreateRecipeForm />} /> 
           <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
