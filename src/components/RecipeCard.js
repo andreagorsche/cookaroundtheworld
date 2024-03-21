@@ -7,8 +7,9 @@ import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import { useCurrentUser } from "../contexts/CurrentUserContext";
 import AverageRatingDisplay from '../components/Rating/AverageRatingDisplay';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookmark as solidBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark as regularBookmark } from '@fortawesome/free-regular-svg-icons';
 
 
 function RecipeCard({ recipe }) {
@@ -33,20 +34,19 @@ const [saved, setSaved] = useState(false);
 // Function to handle bookmarking/unbookmarking
 const handleBookmarkToggle = async () => {
   try {
-    const response = await axiosReq.put(`/saved/${id}/`, {
-    saved: true,
-    });
+    // Toggle the saved state locally
+    setSaved(prevSaved => !prevSaved);
+    
+    // Send the updated saved status to the backend
+    const response = await axiosReq.put(`/saved/${id}/`, { saved: !saved });
+    
     if (response.status === 200) {
-      const { saved } = response.data;
-      // Update UI or perform any other actions based on the saved status
-      if (saved) {
-        console.log("Recipe bookmarked");
-      } else {
-        console.log("Recipe unbookmarked");
-      }
+      console.log("Recipe save status toggled successfully");
     }
   } catch (error) {
     console.error("Error toggling save status:", error);
+    // If an error occurs, revert the local saved state
+    setSaved(prevSaved => !prevSaved);
   }
 };
 
@@ -60,8 +60,8 @@ const handleBookmarkToggle = async () => {
           <div>
             <span>{updated_at}</span>
             <button onClick={handleBookmarkToggle}>
-            {saved ? <FontAwesomeIcon icon={faToggleOn} /> : <FontAwesomeIcon icon={faToggleOff} />}
-            </button>          
+            {saved ? <FontAwesomeIcon icon={solidBookmark} /> : <FontAwesomeIcon icon={regularBookmark} />}
+            </button>         
           </div>
       </Media>
       </Card.Body>
