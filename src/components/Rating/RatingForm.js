@@ -45,39 +45,31 @@ const RatingForm = ({ owner, recipe_id }) => {
 
   const handleRatingSubmit = async () => {
     try {
-      if (existingRating) {
-        // If there's an existing rating, update it with a PUT request
-        const response = await axiosReq.put(`/ratings/${existingRating.id}/`, {
-          stars: stars,
-        });
-
-        console.log('Rating updated successfully:', response.data);
-      } else {
-        console.log('Sending data:', {
-          owner: owner,
-          recipe_id: recipe_id,
-          stars: stars,
-        });
-
-        // If there's no existing rating, create a new one with a POST request
-        const response = await axiosReq.post('/ratings/', {
-          owner: owner,
-          recipe: recipe_id,
-          stars: stars,
-        });
-
-        if (isMounted) {
-          setShowThankYouMessage(true);
-        }
-
-        console.log('Rating submitted successfully:', response.data);
+      console.log('Sending data:', {
+        owner: owner,
+        recipe_id: recipe_id,
+        stars: stars,
+      });
+  
+      // Create a new rating with a POST request
+      const response = await axiosReq.post('/ratings/', {
+        owner: owner,
+        recipe: recipe_id,
+        stars: stars,
+      });
+  
+      if (isMounted) {
+        setShowThankYouMessage(true);
       }
+  
+      console.log('Rating submitted successfully:', response.data);
     } catch (error) {
       if (isMounted) {
-        console.error('Error submitting/updating rating:', error.response?.data);
+        console.error('Error submitting rating:', error.response?.data);
       }
     }
   };
+  
 
   return (
     <div>
