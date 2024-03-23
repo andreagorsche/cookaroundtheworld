@@ -52,9 +52,6 @@ const [saved, setSaved] = useState(false);
           <button>View Recipe</button>
         </Link>
       </Card.Body>
-      <Card.Body>
-      <AverageRatingDisplay recipeId={id} />
-      </Card.Body>
     </Card>
   );
 }

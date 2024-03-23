@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
+import AverageRatingDisplay from './AverageRatingDisplay';
 
 const RatingForm = ({ owner, recipe_id }) => {
   const [stars, setStars] = useState(1);

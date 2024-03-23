@@ -24,7 +24,7 @@ export const RatingProvider = ({ children }) => {
   
   useEffect(() => {
     fetchRating();
-  }, [id]);
+  }, []);
 
   return (
     <RatingContext.Provider value={rating}>  
