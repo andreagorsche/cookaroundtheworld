@@ -31,12 +31,12 @@ function CreateRecipeForm() {
   const [postRecipe, setRecipeData] = useState({
     title: "",
     cuisine: "",
-    timeeffort: "",
+    time_effort: "",
     ingredients: "",
     description: "",
     image: "",
     });
-  const { title, cuisine, timeeffort, ingredients, description, image } = postRecipe;
+  const { title, cuisine, time_effort, ingredients, description, image } = postRecipe;
 
   const imageInput = useRef(null);
   const history = useHistory();
@@ -64,10 +64,12 @@ function CreateRecipeForm() {
 
     formData.append("title", title);
     formData.append("cuisine", cuisine);
-    formData.append("timeeffort", timeeffort);
+    formData.append("time_effort", time_effort);
     formData.append("ingredients", ingredients);
     formData.append("description", description);
     formData.append("image", imageInput.current.files[0]);
+
+    console.log([...formData.entries()]); // Log the entries of formData
 
     try {
       const { data } = await axiosReq.post("/recipes/", formData);
@@ -124,12 +126,12 @@ function CreateRecipeForm() {
         <Form.Label>Time Effort</Form.Label>
         <Form.Control
           type="text"
-          name="timeeffort"
-          value={timeeffort}
+          name="time_effort"
+          value={time_effort}
           onChange={handleChange}
         />
       </Form.Group>
-      {errors?.timeeffort?.map((message, idx) => (
+      {errors?.time_effort?.map((message, idx) => (
         <Alert variant="warning" key={idx}>
           {message}
         </Alert>
