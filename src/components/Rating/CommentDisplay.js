@@ -1,10 +1,9 @@
-// CommentDisplay.js
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { axiosReq } from '../../api/axiosDefaults';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Avatar from '../Avatar';
-import MarkAsInappropriateButton from '../Rating/MarkAsInappropriateButton'
+import MarkAsInappropriateButton from '../Rating/MarkAsInappropriateButton';
 
 const CommentDisplay = () => {
   const [comments, setComments] = useState([]);
@@ -29,7 +28,6 @@ const CommentDisplay = () => {
   useEffect(() => {
     console.log('Comments:', comments);
   }, []);
-
 
   const handleMarkedAsInappropriate = (commentId) => {
     setComments(prevComments =>
@@ -58,15 +56,21 @@ const CommentDisplay = () => {
         {comments.map((comment) => (
           <li key={comment.id}>
             <Avatar src={comment.profile_image} height={40} />
-            {comment.content}
-            {!currentUser.is_owner && !comment.is_owner && (
-              <MarkAsInappropriateButton
-                commentId={comment.id}
-                onMarkedAsInappropriate={handleMarkedAsInappropriate}
-              />
-            )}
-            {!currentUser.is_owner && comment.is_owner && (
-              <button onClick={() => handleDeleteComment(comment.id)}>Delete Comment</button>
+            {comment.is_inappropriate ? (
+              <p>This comment has been marked as inappropriate</p>
+            ) : (
+              <>
+                {comment.content}
+                {!currentUser.is_owner && !comment.is_owner && (
+                  <MarkAsInappropriateButton
+                    commentId={comment.id}
+                    onMarkedAsInappropriate={handleMarkedAsInappropriate}
+                  />
+                )}
+                {!currentUser.is_owner && comment.is_owner && (
+                  <button onClick={() => handleDeleteComment(comment.id)}>Delete Comment</button>
+                )}
+              </>
             )}
           </li>
         ))}

@@ -5,7 +5,7 @@ import '../styles/components/Footer.module.css';
 
 const Footer = () => {
   return (
-    <footer className="footer" style={{ backgroundColor: 'indigo', color: 'white', padding: '20px' }}>
+    <footer className="footer" style={{ backgroundColor: 'indigo', color: 'white', marginTop: 'auto', padding: '20px' }}>
       <Row>
         <Col xs={12} sm={6} md={4} lg={4} style={{ display: 'flex', justifyContent: 'space-around', alignItems:'center'}}>
           <Link to="/impressum" style={{ color: 'white' }}>Impressum</Link>
