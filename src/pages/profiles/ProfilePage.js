@@ -12,13 +12,11 @@ import { useCurrentUser, useSetCurrentUser } from "../../contexts/CurrentUserCon
 import btnStyles from "../../styles/components/Button.module.css";
 import axios from "axios";
 
-
 function ProfilePage() {
-  const [hasLoaded, setHasLoaded] = useState(false);
   const { id } = useParams();
   const { setProfileData, handleFollow, handleUnfollow } = useSetProfileData();
   const { pageProfile } = useProfileData();
-  const [profile] = pageProfile?.results || [];
+  const [profile, setProfile] = useState(null);
   const [showMultiStepForm, setShowMultiStepForm] = useState(false);
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
@@ -26,72 +24,82 @@ function ProfilePage() {
   const is_owner = currentUser?.username === profile?.owner;
   const followed_id = pageProfile?.results?.[0]?.id;
 
-// Declare state variables for followers and isCurrentUserFollowing
-const [followers, setFollowers] = useState([]);
-const [isCurrentUserFollowing, setIsCurrentUserFollowing] = useState(false);
+  // Declare state variables for followers and isCurrentUserFollowing
+  const [followers, setFollowers] = useState([]);
+  const [isCurrentUserFollowing, setIsCurrentUserFollowing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-const handleFollowButtonClick = async () => {
-  // Perform follow or unfollow action based on isCurrentUserFollowing
-  if (isCurrentUserFollowing) {
-    // Unfollow
-    await handleUnfollow(followed_id);
-  } else {
-    // Follow
-    await handleFollow(profile);
-  }
-
-  // After following or unfollowing, fetch data again to update the state
-  fetchData();
-};
-
-const fetchData = async () => {
-  try {
-    // Extracting the list of followers and followed users
-    const followersResponse = await axiosReq.get(`/followers/`);
-    const fetchedFollowers = followersResponse.data.results; // Access the 'results' property
-
-    // Check if fetchedFollowers is an array
-    if (Array.isArray(fetchedFollowers)) {
-      // Check if the current user is following the profile owner
-      const fetchedIsCurrentUserFollowing = fetchedFollowers.some(follower => follower.owner === currentUser?.username);
-
-      // Set state variables
-      setFollowers(fetchedFollowers);
-      setIsCurrentUserFollowing(fetchedIsCurrentUserFollowing);
-
-      // Fetch profile data
-      const response = await axiosReq.get(`/profiles/${id}/`);
-      const pageProfile = response.data;
-
-      console.log('pageProfile:', pageProfile);
-
-      setProfileData((prevState) => ({
-        ...prevState,
-        pageProfile: { results: [pageProfile] },
-      }));
-
-      // Log values for debugging
-      console.log('Is Owner:', is_owner);
-      console.log('Followed ID:', followed_id);
-      console.log('Followers:', fetchedFollowers);
-      console.log('Is Current User Following:', fetchedIsCurrentUserFollowing);
+  const handleFollowButtonClick = async () => {
+    // Perform follow or unfollow action based on isCurrentUserFollowing
+    if (isCurrentUserFollowing) {
+      // Unfollow
+      await handleUnfollow(followed_id);
     } else {
-      console.error("Invalid format for fetchedFollowers:", fetchedFollowers);
+      // Follow
+      await handleFollow(profile);
     }
 
-  } catch (err) {
-    console.log(err);
-  }
-};
+    // After following or unfollowing, fetch data again to update the state
+    fetchData();
+  };
 
-useEffect(() => {
-  fetchData();
-  setHasLoaded(true);
-}, [id, setProfileData, setHasLoaded]);
+  const fetchData = async () => {
+    try {
+      // Extracting the list of followers and followed users
+      const followersResponse = await axiosReq.get(`/followers/`);
+      const fetchedFollowers = followersResponse.data.results; // Access the 'results' property
+
+      // Check if fetchedFollowers is an array
+      if (Array.isArray(fetchedFollowers)) {
+        // Check if the current user is following the profile owner
+        const fetchedIsCurrentUserFollowing = fetchedFollowers.some(follower => follower.owner === currentUser?.username);
+
+        // Set state variables
+        setFollowers(fetchedFollowers);
+        setIsCurrentUserFollowing(fetchedIsCurrentUserFollowing);
+
+        // Fetch profile data
+        const response = await axiosReq.get(`/profiles/${id}/`);
+        const pageProfile = response.data;
+
+        console.log('pageProfile:', pageProfile);
+
+        setProfileData((prevState) => ({
+          ...prevState,
+          pageProfile: { results: [pageProfile] },
+        }));
+
+        // Update profile state
+        setProfile(pageProfile);
+
+        // Set isLoading to false after data is fetched
+        setIsLoading(false);
+
+        // Log values for debugging
+        console.log('Is Owner:', is_owner);
+        console.log('Followed ID:', followed_id);
+        console.log('Followers:', fetchedFollowers);
+        console.log('Is Current User Following:', fetchedIsCurrentUserFollowing);
+      } else {
+        console.error("Invalid format for fetchedFollowers:", fetchedFollowers);
+      }
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [id, setProfileData]);
 
   const handleEditButtonClick = () => {
     setShowMultiStepForm(true);
   };
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
@@ -102,16 +110,12 @@ useEffect(() => {
         <MultiStepForm profile={profile} />
       ) : (
         <>
-          {hasLoaded ? (
-            <Intro
-              firstWord="Chef"
-              secondWord={profile?.owner}
-              secondPhrase=""
-              firstParagraph={profile?.bio}
-            />
-          ) : (
-            <p>Loading...</p>
-          )}
+          <Intro
+            firstWord="Chef"
+            secondWord={profile?.owner}
+            secondPhrase=""
+            firstParagraph={profile?.bio}
+          />
         </>
       )}
       <p>{`Favorite Cuisine: ${profile?.favorite_cuisine}`}</p>
