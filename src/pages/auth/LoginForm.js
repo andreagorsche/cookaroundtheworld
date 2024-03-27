@@ -60,16 +60,12 @@ function LoginForm() {
 
         // Proceed with redirecting the user to the home page
         history.push("/");
-      } else {
-        console.log("User account is inactive.");
-        history.push("/inactive-account");
-      }
-
+      } 
         // Proceed with redirecting the user to the home page
         history.push("/");
       } catch (err) {
         console.error("Login error:", err);
-        setErrors(err.response?.data);
+        history.push("/inactive-account");
       }
     };
 
