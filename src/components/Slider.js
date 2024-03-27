@@ -20,8 +20,8 @@ function Slider({ slides }) {
             slide.image
           )}
           <Carousel.Caption style={{ backgroundColor: 'rgba(75, 0, 130, 0.7)' }}>
-            <h3 style={{ fontSize: '3rem' }}>{slide.title}</h3>
-            <p style={{ fontSize: '2rem', color:'white', fontWeight: 'bold' }}>{slide.message}</p>
+            <h3 style={{ fontSize: '2.2rem' }}>{slide.title}</h3>
+            <p style={{ fontSize: '1.2rem', color:'white', fontWeight: 'bold' }}>{slide.message}</p>
           </Carousel.Caption>
         </Carousel.Item>
       ))}

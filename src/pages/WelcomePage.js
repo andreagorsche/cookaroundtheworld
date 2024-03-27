@@ -40,13 +40,13 @@ const WelcomePage = () => {
   />
   {!currentUser && (
   <Row>
-    <Col lg={6} className="d-flex align-items-center justify-content-center">
+    <Col lg={6} className="d-flex justify-content-center">
      <Intro
           firstWord="Cook"
           secondWord="Around"
           secondPhrase="the World"
-          firstParagraph="Our cooks from all around the world inspire you to try new local recipes from all over the world."
-          secondParagraph="Stop always cooking the same 5 dishes on repeat. Get creative, get involved, become an international cook."
+          firstParagraph="Tired of the same old recipes? It's time to shake up your culinary routine and embark on a delicious journey around the world!"
+          secondParagraph="Our diverse community of passionate cooks from across the globe is here to inspire you with authentic local recipes and flavors. Break free from the monotony of repetitive meals and embrace the excitement of trying new dishes."
           />
     </Col>
     <Col lg={6}>
