@@ -1,9 +1,58 @@
-# Welcome to Cook Around The World (Code not Finished)
+# Welcome to Cook Around The World
 
-This app brings together chef's around the world to share recipes of different cuisines. Exchanging recipes was yesterday, Cook Around The World allows chefs to follow one another, like each others recipes and comment on them. All you need to do is register for free and login to your chef's account.
+This app brings together chef's around the world to share recipes of different cuisines. Users can get inspired by favorite dishes of other cultures.Registration is for free. 
 
-![Starting Page](/src/assets/img_readme/app/startingpage.png)
+Once logged in users can enjoy the following features:
+* create and manage their recipes
+* browse the food feed for inspiration
+* filter the food feed by search term, ingredients or cuisine
+* follow other chefs
+* manage their own profile
+* rate and comment on other recipes
 
+To create a safe space of exhange, logged in users can mark inappropriate comments as such. If a user keeps misbehaving the user account will be set to inactive (5 inappropriate comments or more).
+
+
+![Responsive Starting Page](/src/assets/img_readme/AmIResponsive.PNG)
+
+## USP
+Another recipe page, really? - Well most other recipe pages are editorial, meaning that a dedicated staff selects recipes. Although this effort is highly appreciated, it limits the variety, creativity and amount of recipes presented. At Cook-Around-The-World the recipes are user generated and feature interactions that are similar to an instagram for recipes!
+
+## Deployed Version
+The deployed application can be found here: [Cook-Around-The-World](https://cookingaroundtheworld.herokuapp.com/)
+
+# User Experience
+
+## User Stories
+
+### MVP - The Minimum Viable Product
+
+1. As a registered user I can log in so that I can manage my profile and recipes.
+
+2. As a user I can create an account so that I can post recipes, access my profile and follower other users.
+3. As a registered user I can log in so that I can manage my profile and recipes.
+4. As a user I can always see if I am logged in or logged out so that I know whether I am capable to use a certain feature with the current status.
+5. As a logged-in user I can post a new recipe so that I can share my unique recipes with the world.
+6. As a logged-in user I can access the details of a recipe so that I can try it myself.
+7. As a logged-in user I can rate recipes so that I can share my personal experience about other recipes.
+8. As a user I can view a list of recipes that were recently added so that I have an overview of the newest, added recipes.
+9. As a user, I can search for recipes by cuisine(drop down menu), by ingredients, by keywords so that I can find the recipes and chef profiles I am most interested in.
+10. As a recipe owner I can edit my recipe title, pic, time effort, ingredients and description so that I can make corrections or update my recipe after it was created.
+11. As a logged in user I can delete my own recipes so that I can get rid of information I don't want to share anymore.
+12. As a logged in user I can access my profile page so that I can manage the information about me.
+15. As a user I can navigate through pages fast so that I can view content without refreshing the page.
+16. As a **logged in user** I can **create comments** so that **I can share my thoughts on other chef's recipes.**
+17. As a logged-in user I can delete my own comments so that I have full control over my shared content.
+18. As a **logged-in user** I can **mark another comment as inappropriate** so that **I can help keep cyber mobbing and trolling in place.**
+19. As a logged-in user I can follow and unfollow other chef profiles so that I keep up to date with them.
+20. As a **logged-in user** I can **see a feed of my chef friends recipes** so that **I can access recipes of chefs I like quick and easy.**
+21. As a logged-in user, I can see a feed of my own posted recipes so that I can easily access and manage these posts easily.
+22. As a user, I can navigate through the application intuitively so that I can easily find the features I am looking for.
+23. As a user, I can access the application from different devices so that I can have a consistent user experience on all devices.
+24. As a user I want to see messages as feedback for my actions within the application so that I can know if my actions were successful.
+25. As a user I can confirm my registration via email so that my data is save and not used in a way I dont want it to be used (e.g. somebody else registers with my email)
+
+# alt
 # Functionality of the Cook Around The World App
 Similar to Facebook or Instagram Cook Around The World is an APP to interact. On the main page recently posted recipes are shown - also for not logged in users. As soon as a user is registered and logged in, they can create recipes, check the recipe feed, show their liked recipes and do basic editing of their profiles.
 Register:
