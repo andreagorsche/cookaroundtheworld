@@ -1,6 +1,18 @@
 # Welcome to Cook Around The World
 
-This app brings together chef's around the world to share recipes of different cuisines. Users can get inspired by favorite dishes of other cultures.Registration is for free. 
+This app brings together chef's around the world to share recipes of different cuisines. Users can get inspired by favorite dishes of other cultures.
+
+![Responsive Starting Page](/src/assets/img_readme/AmIResponsive.PNG)
+
+## Deployed Version
+The deployed application can be found here: [Cook-Around-The-World](https://cookingaroundtheworld.herokuapp.com/)
+
+# User Experience
+
+## Strategy Plane
+
+### Core Functionalities
+The core functionality of Cook-Around-The-World is posting your personal favorite recipes and interacting with other chefs around the world.
 
 Once logged in users can enjoy the following features:
 * create and manage their recipes
@@ -12,45 +24,150 @@ Once logged in users can enjoy the following features:
 
 To create a safe space of exhange, logged in users can mark inappropriate comments as such. If a user keeps misbehaving the user account will be set to inactive (5 inappropriate comments or more).
 
+### Target Group
+The target group of the Cook-Around-the-World Application are hobby chef's that want to connect with inspirational, like-minded people from around the world. 
 
-![Responsive Starting Page](/src/assets/img_readme/AmIResponsive.PNG)
-
-## USP
+### USP
 Another recipe page, really? - Well most other recipe pages are editorial, meaning that a dedicated staff selects recipes. Although this effort is highly appreciated, it limits the variety, creativity and amount of recipes presented. At Cook-Around-The-World the recipes are user generated and feature interactions that are similar to an instagram for recipes!
 
-## Deployed Version
-The deployed application can be found here: [Cook-Around-The-World](https://cookingaroundtheworld.herokuapp.com/)
+### Agile Development Method
+Following agile development practices, I created the user stories for the project in the Canban tool of Github.
 
-# User Experience
+Thereby I treated the backend and frontend as two separate subprojects with the  user stories and overarching end goals. First, I developed the backend  and then continued with the frontend. Both projects were developed in weekly cycles. For the backend sprint plan, please visit backend documentation.
+
+![Agile Develelopment](/src/assets/img_readme/AgileDevelopment.PNG)
+
+For the frontend development I had the following weekly sprint plan:
+
+Sprint 1: Basic Set up (Axios etc.), NavBar Component and basic navigation
+Sprint 2 and 3: Registration Set Up with Current User and Profile Context
+Sprint 4: Login Set Up, JWT Token connection
+Sprint 5: Debug Registration/Login Set up
+Sprint 6: Recipe Creation Form and Display
+Sprint 7: Profile Page and FoodFeed (Displaying of Data)
+Sprint 8: Welcome Page (Profile Card, Recipe Card, Slider, Intro Component)
+Sprint 9: Implementing Contexts for Recipe Card
+Sprint 10: Add Rating Functionality with Rating Context
+Sprint 11: Add Comments Functionality with Mark as Inappropriate
+Sprint 12: Add follow/unfollow functionality and multistep form on profile page
+Sprint 13: Add Filter and SearchBar Functionality to FoodFeed
+Sprint 14: Add Email verification functionality 
+Sprint 15: Add Routes to Filter FriendsFeed and Own Recipe Feed, Add Delete Recipe and Comment functionality
+Sprint 16: Debug Rating functionality and multistep form on profile page
+Sprint 17: Add User Feedback, Documentation and Clean Up
+
+### CRUD Functionality
+Cook-Around-The-World handles data with a Django Rest Framework API and provides  full CRUD Functionality:
+
+Create - Users can create, an account/profile, recipes, comments, ratings, follow other users.
+Read - Users can view their own recipes, other user recipes, their own profile, other profiles, all comments, average ratings.
+Update - Users can update their profile and recipes as well as mark comments as inappropriate.
+Delete - Users can delete their own recipes and comments.
+
+## Scope Plane
 
 ## User Stories
 
+The user stories were the North Star for both the frontend and backend development. For me it was clear from the start that the Minimum Viable Product needs to offer more than just basic CRUD functionality and interactivity for the user. One thing that was crucial for as well were security and user safety. 
+
+**Security**: Noone but the user themselves should be allowed to create an account on their behalf. So implementing a functional email verification was crucial for me.
+**Safety**: Cyber Mobbing and Trolling is a huge Topic of our Time, thus the ability to mark comments as inappropriate was a crucial functionality for me as well. This marking leads to immediate hiding of the comment. On top of that, users that repetitively troll or mob should be locked out of this application. Only this way the application can become a safe place of exchange.
+
+
 ### MVP - The Minimum Viable Product
 
-1. As a registered user I can log in so that I can manage my profile and recipes.
+The following user stories describe the feature scope of the Minimum Viable Product:
 
-2. As a user I can create an account so that I can post recipes, access my profile and follower other users.
-3. As a registered user I can log in so that I can manage my profile and recipes.
-4. As a user I can always see if I am logged in or logged out so that I know whether I am capable to use a certain feature with the current status.
-5. As a logged-in user I can post a new recipe so that I can share my unique recipes with the world.
-6. As a logged-in user I can access the details of a recipe so that I can try it myself.
-7. As a logged-in user I can rate recipes so that I can share my personal experience about other recipes.
-8. As a user I can view a list of recipes that were recently added so that I have an overview of the newest, added recipes.
-9. As a user, I can search for recipes by cuisine(drop down menu), by ingredients, by keywords so that I can find the recipes and chef profiles I am most interested in.
-10. As a recipe owner I can edit my recipe title, pic, time effort, ingredients and description so that I can make corrections or update my recipe after it was created.
-11. As a logged in user I can delete my own recipes so that I can get rid of information I don't want to share anymore.
-12. As a logged in user I can access my profile page so that I can manage the information about me.
-15. As a user I can navigate through pages fast so that I can view content without refreshing the page.
-16. As a **logged in user** I can **create comments** so that **I can share my thoughts on other chef's recipes.**
-17. As a logged-in user I can delete my own comments so that I have full control over my shared content.
-18. As a **logged-in user** I can **mark another comment as inappropriate** so that **I can help keep cyber mobbing and trolling in place.**
-19. As a logged-in user I can follow and unfollow other chef profiles so that I keep up to date with them.
-20. As a **logged-in user** I can **see a feed of my chef friends recipes** so that **I can access recipes of chefs I like quick and easy.**
-21. As a logged-in user, I can see a feed of my own posted recipes so that I can easily access and manage these posts easily.
-22. As a user, I can navigate through the application intuitively so that I can easily find the features I am looking for.
-23. As a user, I can access the application from different devices so that I can have a consistent user experience on all devices.
-24. As a user I want to see messages as feedback for my actions within the application so that I can know if my actions were successful.
-25. As a user I can confirm my registration via email so that my data is save and not used in a way I dont want it to be used (e.g. somebody else registers with my email)
+1. As a **user** I can **create an account** so that **I can post recipes, access my profile and follower other users**.
+2. As a **registered user** I can **log in** so that **I can manage my profile and recipes**.
+3. As a **user** I can **always see if I am logged in or logged out** so that **I know whether I am capable to use a certain feature with the current status**.
+4. As a **logged-in user** I can **post a new recipe** so that **I can share my unique recipes with the world**.
+5. As a **logged-in user** I can **access the details of a recipe** so that **I can try it myself**.
+6. As a **logged-in user** I can **rate recipes** so that **I can share my personal experience about other recipes**.
+7. As a **user** I can **view a list of recipes** that were recently added so that **I have an overview of the newest, added recipes**.
+8. As a **user**, I can **search for recipes by cuisine(drop down menu), by ingredients, by keywords** so that **I can find the recipes and chef profiles I am most interested in**.
+9. As a **recipe owner** I can **edit my recipe title, pic, time effort, ingredients and description** so that **I can make corrections or update my recipe after it was created**.
+10. As a **logged in user** I can **delete my own recipes** so that **I can get rid of information I don't want to share anymore**.
+11. As a **logged in user** I can **access my profile page** so that **I can manage the information about me**.
+12. As a **user** I can **navigate through pages fast** so that **I can view content without refreshing the page**.
+13. As a **logged in user** I can **create comments** so that **I can share my thoughts on other chef's recipes.**
+14. As a **logged-in user** I can **delete my own comments** so that **I have full control over my shared content**.
+15. As a **logged-in user** I can **mark another comment as inappropriate** so that **I can help keep cyber mobbing and trolling in place.**
+16. As a **logged-in user** I can **follow and unfollow other chef profiles** so that I keep up to date with them.
+17. As a **logged-in user** I can **see a feed of my chef friends recipes** so that **I can access recipes of chefs I like quick and easy.**
+18. As a **logged-in user**, I can **see a feed of my own posted recipes** so that **I can easily access and manage these posts easily**.
+19. As a **user**, I can **navigate through the application intuitively** so that **I can easily find the features I am looking for**.
+20. As a **user**, I can **access the application from different devices** so that **I can have a consistent user experience on all devices**.
+21. As a **user** I want **to see messages as feedback for my actions within the application** so that **I can know if my actions were successful**.
+22. As a **user** I can **confirm my registration via email** so that **my data is save and not used in a way I dont want it to be used (e.g. somebody else registers with my email)**.
+
+### Future Features
+
+Features that should be implmented in future sprints and development cycles:
+
+*option to reset password (forgotten password)
+*option to login with social media accounts (gmail and facebook)
+*option to lable recipes as vegan, vegetarian, applicable for lactose-intolerant people etc.
+*option to add allergies information to recipes
+*social media sharing buttons to share recipes on other platforms (e.g. instagram, facebook etc.)
+
+
+## Structure Plane
+
+### Main Page Structure
+
+The main page structure of the application is:
+
+* starting page for logged out users
+* login page
+* registration page
+* welcome page for logged in users
+* food-feed
+* friends-feed
+* own recipes feed
+* profile page
+* recipe page
+
+### React
+
+#### Data Usage
+
+To use and display data about the current user, profiles, recipes and ratings across the application, I created the following contexts:
+
+* Current User Context
+* Profile Data Context
+* Rating Data Context
+* Recipe Data Context
+
+Since comments are currently only used locally with the recipe page, I decided against a comment data context for now, but for potential future features it might be a feasable decision to add one.
+
+#### React Components
+
+The frontend was programmed in React. Thus, the structure of the frontend can be broken down into components. Where applicable created components where reused across the application.
+
+ Each component comes with an individual CSS file in the styles folder (styles/components), following the naming convention: componentname.module.css
+ Most pages come with an individual CSS file in the styles folder as well (styles/pages), following the naming convention: pagename.module.css
+
+The following components where created for this Application:
+
+* NavMenu
+* Footer
+* Header
+* Slider
+* Intro
+* ImageBlock
+* ProfileCard
+* RecipeCard
+* Bulletin Board
+* TopProfiles
+
+
+## Skeleton Plane
+
+Database and wireframes
+
+## Surface Plane
+Design, colors, typography ...
 
 # alt
 # Functionality of the Cook Around The World App
