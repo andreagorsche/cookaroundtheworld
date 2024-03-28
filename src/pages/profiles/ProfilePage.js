@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
-import HeaderImageCircle from "../../components/HeaderImageCircle";
 import Intro from "../../components/Intro";
 import CircleRow from "../../components/CircleRow";
 import TopProfiles from "../../components/TopProfiles";
@@ -103,9 +102,6 @@ function ProfilePage() {
 
   return (
     <>
-      <div>
-        <HeaderImageCircle HeaderTitle={profile?.owner} imageUrl={profile?.image} style={{ height: '100vh' }} />
-      </div>
       {showMultiStepForm ? (
         <MultiStepForm profile={profile} />
       ) : (

@@ -40,20 +40,35 @@ Thereby I treated the backend and frontend as two separate subprojects with the 
 For the frontend development I had the following weekly sprint plan:
 
 Sprint 1: Basic Set up (Axios etc.), NavBar Component and basic navigation
+
 Sprint 2 and 3: Registration Set Up with Current User and Profile Context
+
 Sprint 4: Login Set Up, JWT Token connection
+
 Sprint 5: Debug Registration/Login Set up
+
 Sprint 6: Recipe Creation Form and Display
+
 Sprint 7: Profile Page and FoodFeed (Displaying of Data)
+
 Sprint 8: Welcome Page (Profile Card, Recipe Card, Slider, Intro Component)
+
 Sprint 9: Implementing Contexts for Recipe Card
+
 Sprint 10: Add Rating Functionality with Rating Context
+
 Sprint 11: Add Comments Functionality with Mark as Inappropriate
+
 Sprint 12: Add follow/unfollow functionality and multistep form on profile page
+
 Sprint 13: Add Filter and SearchBar Functionality to FoodFeed
+
 Sprint 14: Add Email verification functionality 
+
 Sprint 15: Add Routes to Filter FriendsFeed and Own Recipe Feed, Add Delete Recipe and Comment functionality
+
 Sprint 16: Debug Rating functionality and multistep form on profile page
+
 Sprint 17: Add User Feedback, Documentation and Clean Up
 
 ### CRUD Functionality
@@ -66,7 +81,7 @@ Delete - Users can delete their own recipes and comments.
 
 ## Scope Plane
 
-## User Stories
+### User Stories
 
 The user stories were the North Star for both the frontend and backend development. For me it was clear from the start that the Minimum Viable Product needs to offer more than just basic CRUD functionality and interactivity for the user. One thing that was crucial for as well were security and user safety. 
 
@@ -74,7 +89,7 @@ The user stories were the North Star for both the frontend and backend developme
 **Safety**: Cyber Mobbing and Trolling is a huge Topic of our Time, thus the ability to mark comments as inappropriate was a crucial functionality for me as well. This marking leads to immediate hiding of the comment. On top of that, users that repetitively troll or mob should be locked out of this application. Only this way the application can become a safe place of exchange.
 
 
-### MVP - The Minimum Viable Product
+#### MVP - The Minimum Viable Product
 
 The following user stories describe the feature scope of the Minimum Viable Product:
 
@@ -101,15 +116,15 @@ The following user stories describe the feature scope of the Minimum Viable Prod
 21. As a **user** I want **to see messages as feedback for my actions within the application** so that **I can know if my actions were successful**.
 22. As a **user** I can **confirm my registration via email** so that **my data is save and not used in a way I dont want it to be used (e.g. somebody else registers with my email)**.
 
-### Future Features
+#### Future Features
 
 Features that should be implmented in future sprints and development cycles:
 
-*option to reset password (forgotten password)
-*option to login with social media accounts (gmail and facebook)
-*option to lable recipes as vegan, vegetarian, applicable for lactose-intolerant people etc.
-*option to add allergies information to recipes
-*social media sharing buttons to share recipes on other platforms (e.g. instagram, facebook etc.)
+* option to reset password (forgotten password)
+* option to login with social media accounts (gmail and facebook)
+* option to lable recipes as vegan, vegetarian, applicable for lactose-intolerant people etc.
+* option to add allergies information to recipes
+* social media sharing buttons to share recipes on other platforms (e.g. instagram, facebook etc.)
 
 
 ## Structure Plane
@@ -118,15 +133,28 @@ Features that should be implmented in future sprints and development cycles:
 
 The main page structure of the application is:
 
-* starting page for logged out users
-* login page
-* registration page
-* welcome page for logged in users
-* food-feed
-* friends-feed
-* own recipes feed
-* profile page
-* recipe page
+* Welcome Page: renders once a user is logged in successfully and gives an overview of what to discover (recipes, profiles)
+
+**Auth**
+* **login page**: page with form to login
+* **registration page**: page with form to register
+* **verify email page**: page that matches the verification code in the url  
+  the one stored in the backend, showing the status of verification to the user
+* **confirmation page**: a page the user is redirected to after successful email verification
+* **inactive account page**: in case the user is inactive, it is directed to this page, getting information about possible causes (email verification or set to inactive due to inappropriate comments) and contact details/recommendations
+
+**Posts**
+* **create recipe form**: a form page where the users can enter their recipe data and upload the recipe picture and upload everything to the database.
+* **food feed**: page displaying the recipe cards in a feed with search and filter options
+* **recipe display**: page handling the display of a specific recipe including associated comments and ratings. If the current user is the owner of the recipe the edit and delete button is shown, otherwise a rating and comment form is shown.
+* **recipe edit**: form page handling the editing of a recipe data, including the change of the image file
+* **recipe page**: handling the logic of displaying either the recipe display or the recipe edit page
+
+**Profiles**
+* **multi step form**: If the current user is the owner of a profile, a multistep form encourages the user to enter additional data(bio and favorite cuisine, image)
+* **profile page**: page displaying the profile of a user (name, image, bio, favorite cuisine, stats, other profiles)
+
+
 
 ### React
 
@@ -134,10 +162,11 @@ The main page structure of the application is:
 
 To use and display data about the current user, profiles, recipes and ratings across the application, I created the following contexts:
 
-* Current User Context
-* Profile Data Context
-* Rating Data Context
-* Recipe Data Context
+* **Current User Context**: handling the user data and refresh tokens
+* **Profile Data Context**: handling the profile data, the follow/unfollow  
+  logic and the ordering of the profiles by updated_at - used in the application as top profiles
+* **Rating Data Context**: handling rating data
+* **Recipe Data Context**: handling the recipe data
 
 Since comments are currently only used locally with the recipe page, I decided against a comment data context for now, but for potential future features it might be a feasable decision to add one.
 
@@ -149,22 +178,48 @@ The frontend was programmed in React. Thus, the structure of the frontend can be
  Most pages come with an individual CSS file in the styles folder as well (styles/pages), following the naming convention: pagename.module.css
 
 The following components where created for this Application:
+* **Asset**: This component serves to render an asset which can be a spinner, 
+  src (image), and message.
+* **Avatar**: reusable component to show the picture of the profile in various 
+  parts of the application, e.g. in the navbar as identification icon, in profile cards or next to comments.
+* **Bulletin Board**: reusable component to show the 3 most recent recipes in 
+  an appealing design
+* **Circle Row**: reusable component to display data in 3 columns next to each 
+  other.
+* **Filters**: component to filter recipes by search term, selected cuisine/s 
+  or selected ingredients
+* **Footer**: optical component at the end of the page, with copyright and 
+  contact information
+* **Header**: reused component to implement individual Header Images for 
+  individual pages
+* **ImageBlock**: reusable sub-component that is part of the intro but can 
+  also be used separately
+* **Intro**: A reuseable component to provide an intro text and custom image 
+  choices as an introduction to a page, like e.g. starting and profile page
+* **NavMenu**: Navigation for logged in and logged out users
+* **ProfileCard**: reusable component to show the most recent profiles on the 
+  welcome page and the profile page
+* **RecipeCard**: reusable to component to show the key facts of a recipe plus 
+  image on various places in the application, like e.g. in the bulleting board or in the food feed.
+* **Slider**: A reuseable component to create an image slider with chosen 
+  images for e.g. starting Page and welcome Page teasing the amazing content ahead
+* **TopProfiles**:reusable component to show the 6 most recent profiles in 
+  an appealing design
 
-* NavMenu
-* Footer
-* Header
-* Slider
-* Intro
-* ImageBlock
-* ProfileCard
-* RecipeCard
-* Bulletin Board
-* TopProfiles
+
+* **AverageRatingDisplay**: reusable component to calculate and display the 
+  average rating of the associated recipe
+* **CommentDisplay**: reusable component to display the comments associated    with a certain recipe
+* **CommentForm**:
+* **MarkAsInappropriateButton**:
+* **RatingDisplay**:
+* **RatingForm**:
+* **RatingSelect**:
 
 
 ## Skeleton Plane
 
-Database and wireframes
+Database, Authentification Process and wireframes (im wireframe e drin?)
 
 ## Surface Plane
 Design, colors, typography ...
