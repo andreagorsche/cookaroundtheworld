@@ -27,7 +27,7 @@ import btnStyles from "../../styles/components/Button.module.css";
 function CreateRecipeForm() {
 
   const [errors, setErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState(""); 
+  const [showThankYouMessage, setShowThankYouMessage] = useState(false);
   
   const [postRecipe, setRecipeData] = useState({
     title: "",
@@ -74,8 +74,7 @@ function CreateRecipeForm() {
 
     try {
       const { data } = await axiosReq.post("/recipes/", formData);
-      setSuccessMessage("Recipe created successfully!"); 
-      console.log(successMessage);
+      setShowThankYouMessage(true);
       history.push(`/recipes/${data.id}`);
     } catch (err) {
       console.log(err);
@@ -106,7 +105,7 @@ function CreateRecipeForm() {
         <Form.Control as="select" name="cuisine" onChange={handleChange}>
           <option value="american">American</option>
           <option value="austrian">Austrian</option>
-          <option value="caribean">Caribean</option>
+          <option value="caribbean">Caribbean</option>
           <option value="chinese">Chinese</option>
           <option value="french">French</option>
           <option value="german">German</option>
@@ -184,7 +183,7 @@ function CreateRecipeForm() {
   return (
     <>
     <Header imageUrl={CreateRecipes} title = "Create your new Recipes" />
-    {successMessage && <Alert variant="success">{successMessage}</Alert>} 
+    {showThankYouMessage && <p>Recipe saved successfully!</p>}
     <Form onSubmit={handleSubmit}>
       <Row className = "d-flex justify-content-center" >
         <Col className="py-2 p-0 p-md-2" md={7} lg={8}>

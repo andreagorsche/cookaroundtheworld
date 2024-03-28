@@ -7,6 +7,8 @@ import { axiosRes } from "../../api/axiosDefaults";
 
 function CommentForm(props) {
   const { recipeId, setRecipe, setComments, profileImage, profileId } = props;
+  const [showThankYouMessage, setShowThankYouMessage] = useState(false);
+
   
   const [content, setContent] = useState("");
 console.log(props)
@@ -37,6 +39,7 @@ console.log(props)
           ],
         }));
         setContent("");
+        setShowThankYouMessage(true);
         console.log('Sending data:', {
           content,
           recipeId,
@@ -54,6 +57,8 @@ console.log(props)
   
 
   return (
+    <div>
+    {showThankYouMessage && <p>Comment submitted successfully!</p>}
     <Form className="mt-2" onSubmit={handleSubmit}>
       <Form.Group>
         <InputGroup>
@@ -77,6 +82,7 @@ console.log(props)
         post
       </button>
     </Form>
+    </div>
   );
 }
 
