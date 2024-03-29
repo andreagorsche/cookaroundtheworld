@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
 import RecipeDisplay from './RecipeDisplay';
-import RecipeEdit from './RecipeEdit';
-import { useCurrentRecipe } from '../../contexts/RecipeDataContext';
+import EditRecipeForm from './EditRecipeForm';
 
 
 const RecipePage = () => {
-  const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
-  const history = useHistory();
-  const currentRecipe = useCurrentRecipe();
-
 
   // Function to handle the "Edit Recipe" button click
   const handleEditClick = () => {
@@ -26,7 +20,7 @@ const RecipePage = () => {
   return (
     <div>
       {isEditing ? (
-        <RecipeEdit currentRecipe={currentRecipe} setIsEditing={setIsEditing} handleCancelEdit={handleCancelEdit} />
+        <EditRecipeForm setIsEditing={setIsEditing} handleCancelEdit={handleCancelEdit} />
       ) : (
         <RecipeDisplay handleEditClick={handleEditClick} />
       )}

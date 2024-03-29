@@ -28,7 +28,6 @@ function CreateRecipeForm() {
 
   const [errors, setErrors] = useState({});
   const [showThankYouMessage, setShowThankYouMessage] = useState(false);
-  
   const [postRecipe, setRecipeData] = useState({
     title: "",
     cuisine: "",
@@ -62,20 +61,23 @@ function CreateRecipeForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
-
+  
     formData.append("title", title);
     formData.append("cuisine", cuisine);
     formData.append("time_effort", time_effort);
     formData.append("ingredients", ingredients);
     formData.append("description", description);
     formData.append("image", imageInput.current.files[0]);
-
+  
     console.log([...formData.entries()]); // Log the entries of formData
-
+  
     try {
       const { data } = await axiosReq.post("/recipes/", formData);
-      setShowThankYouMessage(true);
-      history.push(`/recipes/${data.id}`);
+      setShowThankYouMessage(true); // Set state to display success message
+      setTimeout(() => {
+        setShowThankYouMessage(false); // Hide success message after a delay
+        history.push(`/recipes/${data.id}`); // Redirect after hiding message
+      }, 3000); // Delay in milliseconds
     } catch (err) {
       console.log(err);
       if (err.response?.status !== 401) {
@@ -83,6 +85,7 @@ function CreateRecipeForm() {
       }
     }
   };
+  
 
   const textFields = (
     <div className="text-center">
