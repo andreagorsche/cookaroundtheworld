@@ -13,3 +13,7 @@
 .container{
   min-height: 343px;
 }
+
+.form-container {
+  margin: 15%;
+}

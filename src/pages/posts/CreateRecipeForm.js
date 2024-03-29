@@ -169,12 +169,12 @@ function CreateRecipeForm() {
       ))}
     
       <Button
-        className={`${btnStyles.Button} ${btnStyles.Blue}`}
+        style={{ backgroundColor: 'indigo', margin: '10px', borderColor: 'transparent' }}
         onClick={() => history.goBack()}
       >
         cancel
       </Button>
-      <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
+      <Button style={{ backgroundColor: 'indigo', margin: '10px', borderColor: 'transparent' }} type="submit">
         create
       </Button>
     </div>
@@ -184,9 +184,10 @@ function CreateRecipeForm() {
     <>
     <Header imageUrl={CreateRecipes} title = "Create your new Recipes" />
     {showThankYouMessage && <p>Recipe saved successfully!</p>}
-    <Form onSubmit={handleSubmit}>
+    <div className="form-container">
+    <Form onSubmit={handleSubmit} style={{ padding: '5rem' }}>
       <Row className = "d-flex justify-content-center" >
-        <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
+        <Col className="py-2 p-0 p-md-2" md={5} lg={5}>
           <Container
             className={`${appStyles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
           >
@@ -239,6 +240,7 @@ function CreateRecipeForm() {
         </Col>
       </Row>
     </Form>
+    </div>
     </>
   );
 }
