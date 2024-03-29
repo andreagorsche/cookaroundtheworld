@@ -20,7 +20,7 @@ import { useCurrentRecipe, useSetCurrentRecipe, useFetchRecipeById } from '../..
 
 
 
-function RecipeEditForm() {
+function RecipeEditForm({ setIsEditing }) {
   const [errors, setErrors] = useState({});
   const [showThankYouMessage, setShowThankYouMessage] = useState(false);
   const currentRecipe = useCurrentRecipe();
@@ -94,6 +94,7 @@ function RecipeEditForm() {
       setShowThankYouMessage(true); // Show thank you message on successful submission
       setTimeout(() => {
         setShowThankYouMessage(false); // Hide thank you message after a certain time
+        setIsEditing(false);
         history.push(`/recipes/${id}`);
       }, 3000); // Redirect after 3 seconds
     } catch (err) {
@@ -171,15 +172,15 @@ function RecipeEditForm() {
         Cancel
       </Button>
       <Button type="submit" style={{ backgroundColor: "indigo", margin: "10px", borderColor: "transparent" }}>
-        Create
+        Update
       </Button>
+      {showThankYouMessage && <p>Recipe saved successfully!</p>}
     </div>
   );
 
   return (
     <>
       <Header imageUrl={CreateRecipes} title="Create your new Recipes" />
-      {showThankYouMessage && <p>Recipe saved successfully!</p>}
       <div className="form-container">
         <Form onSubmit={handleSubmit} style={{ padding: "5rem" }}>
           <Row className="d-flex justify-content-center">
