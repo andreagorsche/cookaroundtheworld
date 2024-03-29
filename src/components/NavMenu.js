@@ -90,7 +90,7 @@ const NavMenu = () => {
   );
 
   return (
-    <Navbar className={`${navStyles.NavMenu} ${navStyles.TransparentNav}`} collapseOnSelect expand="md" fixed="top">
+    <Navbar className={`${navStyles.NavMenu} ${navStyles.TransparentNav}`} collapseOnSelect expand="md">
       <Container>
         <NavLink to = "/">
           <Navbar.Brand>

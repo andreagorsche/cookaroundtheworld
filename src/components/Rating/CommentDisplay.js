@@ -7,6 +7,7 @@ import MarkAsInappropriateButton from '../Rating/MarkAsInappropriateButton';
 
 const CommentDisplay = () => {
   const [comments, setComments] = useState([]);
+  const [successMessage, setSuccessMessage] = useState('');
   const { id } = useParams();
   const currentUser = useCurrentUser();
   const history = useHistory();
@@ -23,7 +24,7 @@ const CommentDisplay = () => {
     };
 
     fetchComments();
-  }, [id, comments]);
+  }, [id]);
 
   useEffect(() => {
     console.log('Comments:', comments);
@@ -43,7 +44,12 @@ const CommentDisplay = () => {
         await axiosReq.delete(`/comments/${commentId}/`);
         // Update comments after deletion
         setComments(prevComments => prevComments.filter(comment => comment.id !== commentId));
+        setSuccessMessage('Comment deleted successfully.');
       }
+      // Clear success message after 3 seconds (3000 milliseconds)
+      setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
     } catch (error) {
       console.error('Error deleting comment:', error);
     }
@@ -52,10 +58,12 @@ const CommentDisplay = () => {
   return (
     <div>
       <h3>Comments</h3>
+      {successMessage && <p style={{ color: 'red' }}>{successMessage}</p>}
       <ul className="list-unstyled">
         {comments.map((comment) => (
           <li key={comment.id}>
             <Avatar src={comment.profile_image} height={40} />
+            <span style={{ marginLeft: '1rem', marginRight:'1rem' }}>{comment.owner}</span>
             {comment.is_inappropriate ? (
               <p>This comment has been marked as inappropriate</p>
             ) : (
@@ -68,7 +76,7 @@ const CommentDisplay = () => {
                   />
                 )}
                 {!currentUser.is_owner && comment.is_owner && (
-                  <button onClick={() => handleDeleteComment(comment.id)}>Delete Comment</button>
+                  <button style={{ marginLeft: '1rem', marginRight:'1rem' }} onClick={() => handleDeleteComment(comment.id)}>Delete Comment</button>
                 )}
               </>
             )}

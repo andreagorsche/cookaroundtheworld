@@ -17,7 +17,7 @@ function Intro({
   const paragraphStyle = {
     fontFamily: 'Roboto',
     fontSize: '1.2rem',
-    textAlign: 'left',
+    textAlign: 'center',
     paddingLeft: '1rem',
     paddingRight: '1rem',
   };

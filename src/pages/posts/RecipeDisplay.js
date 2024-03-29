@@ -22,6 +22,7 @@ function RecipeDisplay({handleEditClick}) {
   const profile_image = currentUser?.profile_image;
   const [comments, setComments] = useState({ results: [] });
   const history = useHistory(); 
+  const [successMessage, setSuccessMessage] = useState('');
 
 
   useEffect(() => {
@@ -45,13 +46,14 @@ function RecipeDisplay({handleEditClick}) {
 
   if (!currentRecipe || !currentRecipe.id) {
     // If the current recipe is not yet available, display a loading message or spinner
-    return <div>Loading...</div>;
+    return <div style={{ textAlign: 'center', fontSize: '1.5rem', marginTop: '1rem', color: 'indigo' }}>Loading...</div>;
   }
 
   const handleDeleteClick = async () => {
     try {
       if (window.confirm('Are you sure you want to delete this recipe?')) {
         await axiosReq.delete(`/recipes/${id}/`);
+        setSuccessMessage('Recipe deleted successfully.');
         history.push('/'); 
       }
     } catch (error) {
@@ -106,6 +108,7 @@ function RecipeDisplay({handleEditClick}) {
             )}
             <AverageRatingDisplay currentRecipe={currentRecipe} />
             <CommentDisplay currentRecipe={currentRecipe} />
+            {successMessage && <p style={{ color: 'red' }}>{successMessage}</p>}
           </Container>
         </Col>
       </Row>
