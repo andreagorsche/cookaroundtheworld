@@ -46,29 +46,29 @@ function LoginForm() {
     
         console.log("Login successful. Access Token:", accessToken);
     
-        //Store other user-related data
+        // Store other user-related data
         const user = response.data.user;
         localStorage.setItem('user', JSON.stringify(user));
     
         // Use setCurrentUser or any other logic to manage the user state
         setCurrentUser(user);
-
-          // Check if the user's account is active or inactive
-      if (user.is_active) {
-        // Use setCurrentUser or any other logic to manage the user state
-        setCurrentUser(user);
-
-        // Proceed with redirecting the user to the home page
-        history.push("/");
-      } 
+    
         // Proceed with redirecting the user to the home page
         history.push("/");
       } catch (err) {
         console.error("Login error:", err);
-        history.push("/inactive-account");
-      }
-    };
-
+    
+        // Check if the error response contains validation errors
+        if (err.response && err.response.data && err.response.data.non_field_errors) {
+          // Display validation errors to the user
+          setErrors({ non_field_errors: [
+              "Login Unsuccessful. Please try again.", 
+              "The issue persists? Your account could be inactive.", 
+              <Link to="/inactive-account">Inactive Account Information</Link>,
+            ]});
+    }
+  }
+}
     console.log('---', username, password)
   return (
     <div>
