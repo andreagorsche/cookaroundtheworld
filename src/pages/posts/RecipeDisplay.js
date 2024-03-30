@@ -56,7 +56,7 @@ function RecipeDisplay({handleEditClick}) {
         setSuccessMessage('Recipe deleted successfully.');
         setTimeout(() => {
           setSuccessMessage('');
-          history.push('/');
+          history.push('/foodfeed');
         }, 3000);
       }
     } catch (error) {

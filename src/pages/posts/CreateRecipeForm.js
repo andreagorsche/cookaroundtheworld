@@ -170,7 +170,7 @@ function CreateRecipeForm() {
           {message}
         </Alert>
       ))}
-    
+      {showThankYouMessage && <p style={{ color: 'green' }}>Recipe saved successfully!</p>}
       <Button
         style={{ backgroundColor: 'indigo', margin: '10px', borderColor: 'transparent' }}
         onClick={() => history.goBack()}
@@ -185,8 +185,7 @@ function CreateRecipeForm() {
 
   return (
     <>
-    <Header imageUrl={CreateRecipes} title = "Create your new Recipes" />
-    {showThankYouMessage && <p>Recipe saved successfully!</p>}
+    <Header imageUrl={CreateRecipes} title = "Create your new Recipe" />
     <div className="form-container">
     <Form onSubmit={handleSubmit} style={{ padding: '5rem' }}>
       <Row className = "d-flex justify-content-center" >
@@ -194,21 +193,21 @@ function CreateRecipeForm() {
           <Container
             className={`${appStyles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
           >
-            <Form.Group className="text-center d-flex justify-content-center">
-              {image ? (
-                <>
-                  <figure>
-                    <Image className={appStyles.Image} src={image} rounded />
-                  </figure>
-                  <div>
-                    <Form.Label
-                      className={`${btnStyles.Button} ${btnStyles.Blue} btn`}
-                      htmlFor="image-upload"
-                    >
-                      Change the image
-                    </Form.Label>
-                  </div>
-                </>
+           <Form.Group className="text-center d-flex flex-column align-items-center">
+            {image && (
+              <figure>
+                <Image className={appStyles.Image} src={image} rounded />
+              </figure>
+            )}
+            <div>
+              <Form.Label
+                className={`${btnStyles.Button} ${btnStyles.Blue} btn`}
+                htmlFor="image-upload"
+              >
+                Change the image
+              </Form.Label>
+            </div>
+          </Form.Group>
               ) : (
                 <Form.Label
                   className="d-flex justify-content-center mr-2"
