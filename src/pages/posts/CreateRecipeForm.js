@@ -183,66 +183,46 @@ function CreateRecipeForm() {
     </div>
   );
 
-  return (
+    return (
     <>
-    <Header imageUrl={CreateRecipes} title = "Create your new Recipe" />
-    <div className="form-container">
-    <Form onSubmit={handleSubmit} style={{ padding: '5rem' }}>
-      <Row className = "d-flex justify-content-center" >
-        <Col className="py-2 p-0 p-md-2" md={5} lg={5}>
-          <Container
-            className={`${appStyles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
-          >
-           <Form.Group className="text-center d-flex flex-column align-items-center">
-            {image && (
-              <figure>
-                <Image className={appStyles.Image} src={image} rounded />
-              </figure>
-            )}
-            <div>
-              <Form.Label
-                className={`${btnStyles.Button} ${btnStyles.Blue} btn`}
-                htmlFor="image-upload"
-              >
-                Change the image
-              </Form.Label>
-            </div>
-          </Form.Group>
-              ) : (
-                <Form.Label
-                  className="d-flex justify-content-center mr-2"
-                  htmlFor="image-upload"
-                >
-                  <Asset
-                    src={upload}
-                    message="Click or tap to upload an image"
-                  />
-                </Form.Label>
-              )}
-                
-                <Form.File
-                id="image-upload"
-                accept="image/*"
-                onChange={handleChangeImage}
-                ref={imageInput}
-                style={{ display: 'none' }}
-
-              />
-
-            </Form.Group>
-            {errors?.image?.map((message, idx) => (
-              <Alert variant="warning" key={idx}>
-                {message}
-              </Alert>
-            ))}
-          </Container>
-        </Col>
-        <Col md={5} lg={4} >
-          <Container className={appStyles.Content}>{textFields}</Container>
-        </Col>
-      </Row>
-    </Form>
-    </div>
+      <Header imageUrl={CreateRecipes} title="Create your new Recipes" />
+      <div className="form-container">
+        <Form onSubmit={handleSubmit} style={{ padding: "5rem" }}>
+          <Row className="d-flex justify-content-center">
+            <Col className="py-2 p-0 p-md-2" md={5} lg={5}>
+              <Container className={`${styles.Container} d-flex flex-column justify-content-center`}>
+                <Form.Group className="text-center flex-column d-flex justify-content-center">
+                  {image ? (
+                    <>
+                      <figure>
+                        <Image className={appStyles.Image} src={image} rounded />
+                      </figure>
+                      <div>
+                        <Form.Label className={`${btnStyles.Button} ${btnStyles.Blue} btn`} htmlFor="image-upload">
+                          Change the image
+                        </Form.Label>
+                      </div>
+                    </>
+                  ) : (
+                    <Form.Label className="d-flex justify-content-center mr-2" htmlFor="image-upload">
+                      <Asset src={upload} message="Click or tap to upload an image" />
+                    </Form.Label>
+                  )}
+                  <Form.File id="image-upload" accept="image/*" onChange={handleChangeImage} ref={imageInput} style={{ display: "none" }} />
+                </Form.Group>
+                {errors?.image?.map((message, idx) => (
+                  <Alert variant="warning" key={idx}>
+                    {message}
+                  </Alert>
+                ))}
+              </Container>
+            </Col>
+            <Col md={5} lg={4}>
+              <Container className={appStyles.Content}>{textFields}</Container>
+            </Col>
+          </Row>
+        </Form>
+      </div>
     </>
   );
 }
