@@ -54,16 +54,23 @@ function RecipeDisplay({handleEditClick}) {
       if (window.confirm('Are you sure you want to delete this recipe?')) {
         await axiosReq.delete(`/recipes/${id}/`);
         setSuccessMessage('Recipe deleted successfully.');
-        history.push('/'); 
+        setTimeout(() => {
+          setSuccessMessage('');
+          history.push('/');
+        }, 3000);
       }
     } catch (error) {
       console.error('Error deleting recipe:', error);
     }
   };
 
+
+
+
   return (
     <>
       <Header imageUrl={headerImageUrl} />
+      {successMessage && <p style={{ color: 'red' }}>{successMessage}</p>}
       <Intro
         firstWord="Cooking"
         secondWord={title}
@@ -108,7 +115,6 @@ function RecipeDisplay({handleEditClick}) {
             )}
             <AverageRatingDisplay currentRecipe={currentRecipe} />
             <CommentDisplay currentRecipe={currentRecipe} />
-            {successMessage && <p style={{ color: 'red' }}>{successMessage}</p>}
           </Container>
         </Col>
       </Row>
