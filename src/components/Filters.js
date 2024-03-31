@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Select from 'react-select';
-import { useFetchRecipes } from '../contexts/RecipeDataContext';
+import { useFetchRecipes, useRecipeData } from '../contexts/RecipeDataContext';
 import { axiosReq } from '../api/axiosDefaults';
 
 const Filters = ({ cuisineChoices, popularIngredients }) => {
   const fetchRecipes = useFetchRecipes();
+  const recipeData = useRecipeData();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCuisine, setSelectedCuisine] = useState('');
   const [selectedIngredients, setSelectedIngredients] = useState([]);
@@ -13,7 +14,6 @@ const Filters = ({ cuisineChoices, popularIngredients }) => {
   const fetchRecipesWithFilters = async () => {
     try {
       const endpoint = `/recipes/?cuisine=${selectedCuisine}&ingredients=${selectedIngredients.join(',')}&search=${searchTerm}`;
-      const { data } = await axiosReq.get(endpoint);
       fetchRecipes(endpoint); // Trigger data fetching with filters
     } catch (err) {
       console.error(err);
@@ -28,7 +28,11 @@ const Filters = ({ cuisineChoices, popularIngredients }) => {
     setSearchTerm('');
     setSelectedCuisine('');
     setSelectedIngredients([]);
-    fetchRecipesWithFilters();
+    fetchAllRecipes();
+  };
+
+  const fetchAllRecipes = () => {
+    fetchRecipes('/recipes');
   };
 
   const handleEnterKeyPress = (e) => {
@@ -54,6 +58,11 @@ const Filters = ({ cuisineChoices, popularIngredients }) => {
   };
 
   return (
+    <>
+    <div>
+      <p>Please enter your search criteria here:</p>
+      <p>Click the search button or press enter to begin searching.</p>
+    </div>
     <div className='d-flex justify-content-center'>
       <div>
         <input
@@ -87,6 +96,7 @@ const Filters = ({ cuisineChoices, popularIngredients }) => {
         <button onClick={handleClearSearch}>Clear Search</button>
       </div>          
     </div>
+  </>
   );
 };
 

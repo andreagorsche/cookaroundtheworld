@@ -285,6 +285,8 @@ The application works mostly with user-generated content, this includes user-gen
 
 ## Validators
 
+## Bug Fixes
+
 # Deployment
 
 # Credits

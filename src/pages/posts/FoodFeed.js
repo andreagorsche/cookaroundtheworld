@@ -62,6 +62,22 @@ function FoodFeed({ message }) {
     { value: 'cheese', label: 'Cheese' },
   ];
 
+   // Function to handle clearing search in FoodFeed
+   const handleClearSearch = () => {
+    setFilter(''); // Clear the filter state
+  };
+
+  useEffect(() => {
+    console.log("Fetching recipes without filters");
+    fetchRecipes()
+      .then(recipes => {
+        console.log("Recipes without filters:", recipes);
+      })
+      .catch(error => {
+        console.error("Error fetching recipes without filters:", error);
+      });
+  }, [filter]);
+
   return (
     <>
       <Header imageUrl={FoodFeedHeader} />
