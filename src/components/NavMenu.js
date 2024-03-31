@@ -20,7 +20,6 @@ const NavMenu = () => {
     try {
       await axios.post("dj-rest-auth/logout/");
       setCurrentUser(null);
-      removeTokenTimestamp();
     } catch (err) {
       console.log(err);
     }
@@ -42,18 +41,6 @@ const NavMenu = () => {
       activeClassName = {navStyles.Active} 
       to = "/foodfeed">
       <i className="fa-solid fa-scroll"></i> Food-Feed 
-    </NavLink>
-    <NavLink 
-      className = {navStyles.NavLink} 
-      activeClassName = {navStyles.Active} 
-      to = "/friendsfeed">
-      <i className="fa-solid fa-thumbs-up"></i> Friends-Feed 
-    </NavLink>
-    <NavLink 
-      className = {navStyles.NavLink} 
-      activeClassName = {navStyles.Active} 
-      to = "/yourrecipes">
-      <i className="fa-solid fa-thumbs-up"></i> Your Recipes 
     </NavLink>
     <NavLink 
       className = {navStyles.NavLink}  

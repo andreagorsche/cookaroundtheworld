@@ -15,7 +15,7 @@ import NoCooking from "../../assets/images/no_cooking.png";
 
 import { useRecipeData, useFetchRecipes } from "../../contexts/RecipeDataContext";
 
-function FoodFeed({ message }) {
+function FoodFeed({ message, profile_Id }) {
   const recipes = useRecipeData();
   const fetchRecipes = useFetchRecipes();
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -56,7 +56,7 @@ function FoodFeed({ message }) {
     { value: 'cheese', label: 'Cheese' },
   ];
 
-
+  
   return (
     <>
       <Header imageUrl={FoodFeedHeader} />

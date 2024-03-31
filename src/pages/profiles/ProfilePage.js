@@ -4,12 +4,10 @@ import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
 import Intro from "../../components/Intro";
 import CircleRow from "../../components/CircleRow";
-import TopProfiles from "../../components/TopProfiles";
 import MultiStepForm from "./MultiStepForm";
 import { Col, Button } from "react-bootstrap";
 import { useCurrentUser, useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import btnStyles from "../../styles/components/Button.module.css";
-import axios from "axios";
 
 function ProfilePage() {
   const { id } = useParams();
@@ -131,7 +129,6 @@ function ProfilePage() {
         </Button>
       )}
       </Col>
-      <TopProfiles />
     </>
   );
 }

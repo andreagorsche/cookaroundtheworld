@@ -279,35 +279,44 @@ The complete application was tested by comparing  expected result and actual res
 ### Registration
 **User story: As a user I can create an account so that I can post recipes, access my profile and follower other users.**
 
-**Expected Result**: A User can register with username, email and password. 
+**Expected Result**: A User can register with username, email and password.
 
 **Actual Result**: Works as Expected
 
 <details><summary>Registration</summary>
     <img src="/src/assets/img_readme/ManualTesting/6.RegistrationEntry.png">
     <br>
-    <img src="/src/assets/img_readme/ManualTesting/2_Register_Feedback.png">
+    <img src="/src/assets/img_readme/ManualTesting/3_ThankYouRegistration.png">
 </details>
 
 ### Login
 
 **User story: As a registered user I can log in so that I can manage my profile and recipes.**
 
-**Expected Result**: Users can login with their credentials and are given feedback in case the login was unsuccessful.
+**Expected Result**: Users can login with their credentials.
 
 **Actual Result**: Works as Expected
 
 <details><summary>Login</summary>
-    <img src="assets/ManualTesting/8_UnableToLogin.png">
+     <img src="/src/assets/img_readme/ManualTesting/11_Login.png">
     <br>
-    <img src="assets/ManualTesting/9_SuccessfulLogin.png">
+     <img src="/src/assets/img_readme/ManualTesting/12_WelcomeScreen.png">
 </details>
 
 ### Login Status
 
 **User story: As a user I can always see if I am logged in or logged out so that I know whether I am capable to use a certain feature with the current status.**
 
-**Comment**: Not applicable for the backend, this is a requirement for the frontend only. Although in the screenshot under Login you can see that the Login is visible on the top right-hand side.
+**Expected Result**: Users always know their login status.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Login</summary>
+     <img src="/src/assets/img_readme/ManualTesting/1_StartPage.png">
+    <br>
+     <img src="/src/assets/img_readme/ManualTesting/12_WelcomeScreen.png">
+</details>
+
 
 ### New Recipe
 
