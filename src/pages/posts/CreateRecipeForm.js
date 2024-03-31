@@ -1,25 +1,17 @@
 import React, { useRef, useState } from "react";
-
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-
 import { useHistory } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
-
-// Components
 import Asset from "../../components/Asset.js";
 import Alert from "react-bootstrap/Alert";
 import Header from "../../components/Header.js"
 import CreateRecipes from '../../assets/images/CreateRecipes.jpg'
-
-//Images 
 import upload from "../../assets/upload.png";
 import { Image } from "react-bootstrap";
-
-// styles
 import styles from "../../styles/pages/posts/CreateRecipeEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/components/Button.module.css";

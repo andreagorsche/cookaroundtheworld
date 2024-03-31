@@ -1,5 +1,9 @@
 import React from 'react';
-import { Container, Row, Col, Card, Media } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
+import Media from 'react-bootstrap/Media';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { useProfileData } from '../contexts/ProfileDataContext';
 import Avatar from './Avatar';
 import { Link } from 'react-router-dom';

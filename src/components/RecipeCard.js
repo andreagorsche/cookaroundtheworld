@@ -1,30 +1,19 @@
-// RecipeCard.jsx
-import React, {useState} from "react";
-import { axiosReq } from "../api/axiosDefaults";
-import { Card, Media } from "react-bootstrap";
+import React from "react";
+import Card from 'react-bootstrap/Card';
+import Media from 'react-bootstrap/Media';
 import styles from "../styles/components/RecipeCard.module.css"; 
 import { Link } from "react-router-dom";
-import Avatar from "./Avatar";
-import { useCurrentUser } from "../contexts/CurrentUserContext";
 
 function RecipeCard({ recipe }) {
   const {
     id,
     owner,
     profile_id,
-    profile_image,
     title,
     cuisine, 
     image,
     updated_at,
-    recipePage,
 } = recipe || {};
-
-const currentUser = useCurrentUser();
-const isOwner = currentUser?.username === owner; 
-
-// State to track whether the recipe is saved as a favorite
-const [saved, setSaved] = useState(false);
 
 
   return (

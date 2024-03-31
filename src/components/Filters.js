@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Select from 'react-select';
-import { useFetchRecipes, useRecipeData } from '../contexts/RecipeDataContext';
+import { useFetchRecipes } from '../contexts/RecipeDataContext';
 import Button from "react-bootstrap/Button";
 
-const Filters = ({ cuisineChoices, popularIngredients, hasLoaded, setHasLoaded }) => {
+const Filters = ({ cuisineChoices, popularIngredients, setHasLoaded }) => {
   const fetchRecipes = useFetchRecipes();
-  const recipeData = useRecipeData();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCuisine, setSelectedCuisine] = useState('');
   const [selectedIngredients, setSelectedIngredients] = useState([]);

@@ -1,31 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { axiosReq } from "../../api/axiosDefaults";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-
 import appStyles from "../../App.module.css";
 
 import Header from "../../components/Header";
 import FoodFeedHeader from "../../assets/images/FoodFeedHeader.jpeg";
-import Filters from "../../components/Filters"; // Import the Filters component
+import Filters from "../../components/Filters";
 
 import RecipeCard from "../../components/RecipeCard";
 import Asset from "../../components/Asset";
 import NoCooking from "../../assets/images/no_cooking.png";
 
 import { useRecipeData, useFetchRecipes } from "../../contexts/RecipeDataContext";
-import { useParams, useLocation } from "react-router";
 
 function FoodFeed({ message }) {
   const recipes = useRecipeData();
   const fetchRecipes = useFetchRecipes();
-  const { id } = useParams();
-  const { pathname } = useLocation();
-
   const [hasLoaded, setHasLoaded] = useState(false);
-  const [filter, setFilter] = useState(""); // State to manage filter values
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     fetchRecipes(`/recipes/?${filter}`)

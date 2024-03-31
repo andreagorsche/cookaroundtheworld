@@ -10,10 +10,9 @@ import IntroPic1 from '../assets/images/IntroPic1.jpg';
 import IntroPic2 from '../assets/images/IntroPic2.jpg';
 import TopProfiles from '../components/TopProfiles';
 import ImageBlock from '../components/ImageBlock'
-import { Row, Col } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import { useCurrentUser } from "../contexts/CurrentUserContext";
-import MultiStepForm from './profiles/MultiStepForm';
-
 
 const WelcomePage = () => {
   const currentUser = useCurrentUser();

@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { useRecipeData, useHasLoaded, useSetHasLoaded, useFetchRecipes } from '../contexts/RecipeDataContext';
+import React from 'react';
+import { useRecipeData, useHasLoaded } from '../contexts/RecipeDataContext';
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import RecipeCard from "./RecipeCard";
-import { axiosReq } from "../api/axiosDefaults";
 import styles from "../styles/components/BulletinBoard.module.css"; 
  
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { axiosReq } from "../../api/axiosDefaults";
-
+import Header from "../../components/Header";
+import JoinHeader from "../../assets/images/JoinHeader.jpg"
 
 const VerifyEmail = () => {
   const { key } = useParams();
@@ -40,6 +41,7 @@ const VerifyEmail = () => {
 
   return (
     <div>
+      <Header imageUrl={JoinHeader} />
       {/* Conditional rendering based on verification status */}
       {verificationStatus === 'verifying' && <p>Verifying email address...</p>}
       {verificationStatus === 'verified' && <p>Email address verified successfully. Redirecting...</p>}

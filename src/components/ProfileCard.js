@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Media } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import Media from 'react-bootstrap/Media';
 import { Link } from 'react-router-dom';
 import { useProfileData, useSetProfileData } from "../contexts/ProfileDataContext";
 import Avatar from './Avatar';

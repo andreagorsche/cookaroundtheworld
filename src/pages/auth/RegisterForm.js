@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
 import styles from "../../styles/pages/auth/LoginRegister.module.css";
 import btnStyles from "../../styles/components/Button.module.css";
 import appStyles from "../../App.module.css";
-
-import { Form, Button, Col, Row, Container, Alert } from "react-bootstrap";
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import axios from "axios";
-
 import Header from "../../components/Header";
 import JoinHeader from "../../assets/images/JoinHeader.jpg"
-
 
 const RegisterForm = () => {
 		const [registerData, setRegisterData] = useState({

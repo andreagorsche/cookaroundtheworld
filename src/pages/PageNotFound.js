@@ -4,8 +4,6 @@ import NoCooking from "../assets/images/no_cooking.png";
 import JoinHeader from "../assets/images/JoinHeader.jpg"
 import Header from "../components/Header";
 
-
-
 const PageNotFound = () => {
   return (
     <>
