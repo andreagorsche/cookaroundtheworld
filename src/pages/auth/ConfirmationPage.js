@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from "../../components/Header";
 import JoinHeader from "../../assets/images/JoinHeader.jpg"
+import Button from 'react-bootstrap/Button';
 
 function ConfirmationPage() {
   return (
@@ -11,7 +12,8 @@ function ConfirmationPage() {
       <p>Your email has been successfully verified. You can now access all features of our website.</p>
       <p>You can now proceed to login:</p>
       <Link to="/login">
-        <button>Login</button>
+      <Button style={{ backgroundColor: 'indigo', margin: '10px', borderColor: 'transparent', display: 'flex', justifyContent: 'center' }}>        Login
+        </Button>
       </Link>
     
     </div>
