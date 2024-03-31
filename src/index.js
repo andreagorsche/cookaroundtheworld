@@ -8,7 +8,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { CurrentUserProvider } from "./contexts/CurrentUserContext";
 import { ProfileDataProvider } from "./contexts/ProfileDataContext";
 import { RecipeDataProvider } from "./contexts/RecipeDataContext";
-import { RatingProvider } from './contexts/RatingDataContext';
 
 
 ReactDOM.render(
@@ -17,9 +16,7 @@ ReactDOM.render(
         <CurrentUserProvider>
           <ProfileDataProvider>
             <RecipeDataProvider>
-              <RatingProvider>
             <App />
-              </RatingProvider>
             </RecipeDataProvider>
           </ProfileDataProvider>
         </CurrentUserProvider>

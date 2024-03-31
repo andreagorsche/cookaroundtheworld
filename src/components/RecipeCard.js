@@ -6,11 +6,6 @@ import styles from "../styles/components/RecipeCard.module.css";
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import { useCurrentUser } from "../contexts/CurrentUserContext";
-import AverageRatingDisplay from '../components/Rating/AverageRatingDisplay';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark as solidBookmark } from '@fortawesome/free-solid-svg-icons';
-import { faBookmark as regularBookmark } from '@fortawesome/free-regular-svg-icons';
-
 
 function RecipeCard({ recipe }) {
   const {

@@ -6,11 +6,9 @@ import Container from 'react-bootstrap/Container';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
 import { useFetchRecipeById, useCurrentRecipe, useSetCurrentRecipe } from '../../contexts/RecipeDataContext';
-import CommentForm from '../../components/Rating/CommentForm';
-import CommentDisplay from '../../components/Rating/CommentDisplay';
+import CommentForm from '../../components/CommentForm';
+import CommentDisplay from '../../components/CommentDisplay';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
-import RatingForm from '../../components/Rating/RatingForm';
-import AverageRatingDisplay from '../../components/Rating/AverageRatingDisplay';
 import { axiosReq } from '../../api/axiosDefaults';
 
 function RecipeDisplay({handleEditClick}) {
@@ -94,7 +92,6 @@ function RecipeDisplay({handleEditClick}) {
               </>
             ) : (
               <>
-                <RatingForm owner={currentRecipe?.owner} recipe_id={parseInt(id, 10)} />
                 <CommentForm
                   profileId={currentUser.profile_id}
                   profileImage={profile_image}
@@ -104,7 +101,6 @@ function RecipeDisplay({handleEditClick}) {
                   />
               </>
             )}
-            <AverageRatingDisplay currentRecipe={currentRecipe} />
             <CommentDisplay currentRecipe={currentRecipe} />
           </Container>
         </Col>

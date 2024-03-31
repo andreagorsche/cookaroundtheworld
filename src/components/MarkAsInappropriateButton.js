@@ -1,5 +1,5 @@
 import React from 'react';
-import { axiosReq } from '../../api/axiosDefaults';
+import { axiosReq } from '../api/axiosDefaults';
 
 const MarkAsInappropriateButton = ({ commentId, onMarkedAsInappropriate }) => {
   const handleMarkAsInappropriate = async () => {

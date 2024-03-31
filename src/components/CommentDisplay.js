@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { axiosReq } from '../../api/axiosDefaults';
-import { useCurrentUser } from '../../contexts/CurrentUserContext';
-import Avatar from '../Avatar';
-import MarkAsInappropriateButton from '../Rating/MarkAsInappropriateButton';
+import { axiosReq } from '../api/axiosDefaults';
+import { useCurrentUser } from '../contexts/CurrentUserContext';
+import Avatar from './Avatar';
+import MarkAsInappropriateButton from './MarkAsInappropriateButton';
 
 const CommentDisplay = () => {
   const [comments, setComments] = useState([]);
