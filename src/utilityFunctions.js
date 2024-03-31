@@ -6,7 +6,6 @@ export const fetchRecipeById = async (id, setRecipeData) => {
       const [{ data: pageRecipe }] = await Promise.all([
         axiosReq.get(`/recipes/${id}/`),
       ]);
-      console.log('pageRecipe:', pageRecipe);
       setRecipeData((prevState) => ({
         ...prevState,
         pageRecipe: { results: [pageRecipe] },

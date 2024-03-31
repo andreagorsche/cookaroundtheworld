@@ -30,9 +30,6 @@ const MultiStepForm = () => {
     image: profileData.pageProfile.results[0]?.image || '',
     favorite_cuisine: profileData.pageProfile.results[0]?.favorite_cuisine || '',
   });
-  
-  console.log('Bio from profileData:', formData.bio);
-  console.log('Cuisine from profileData:', formData.favorite_cuisine);
 
 
   const [imageFile, setImageFile] = useState(null);
@@ -52,16 +49,11 @@ const MultiStepForm = () => {
   const handleChangeImage = (event) => {
     if (event.target.files.length) {
       const file = event.target.files[0];
-    
-      console.log('Selected file:', file); // Log the selected file
-    
+        
       // Check if the image height is larger than 1024px
       if (file.type.startsWith('image/') && file.size > 0) {
         const img = new Image();
-    
         img.onload = function () {
-          console.log('Image height:', img.height); // Log the image height
-    
           if (img.height > 1024) {
             setErrors({ image: ['Image height larger than 1024px!'] });
           } else {

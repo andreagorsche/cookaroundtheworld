@@ -13,10 +13,7 @@ const VerifyEmail = () => {
     const fetchVerificationStatus = async () => {
       try {
         const response = await axiosReq.get(`/verify-email/${key}`);
-        // Log the response received from the server
-        console.log(response);
         const message = response.data.message;
-        console.log(message);
         if (response.status === 200 && message === "Email verified successfully") {
           // Email address verified successfully
           setVerificationStatus('verified');

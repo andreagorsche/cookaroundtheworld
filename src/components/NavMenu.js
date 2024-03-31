@@ -14,11 +14,6 @@ import { removeTokenTimestamp } from "../utilityFunctions";
 const NavMenu = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
-
-  console.log(currentUser)
-  console.log('NavMenu is rendering...');
-
-
   const {expanded, setExpanded, ref} = useClickOutsideToggle();
 
   const handleSignOut = async () => {

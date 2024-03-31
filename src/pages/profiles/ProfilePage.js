@@ -60,9 +60,6 @@ function ProfilePage() {
         // Fetch profile data
         const response = await axiosReq.get(`/profiles/${id}/`);
         const pageProfile = response.data;
-
-        console.log('pageProfile:', pageProfile);
-
         setProfileData((prevState) => ({
           ...prevState,
           pageProfile: { results: [pageProfile] },
@@ -73,16 +70,9 @@ function ProfilePage() {
 
         // Set isLoading to false after data is fetched
         setIsLoading(false);
-
-        // Log values for debugging
-        console.log('Is Owner:', is_owner);
-        console.log('Followed ID:', followed_id);
-        console.log('Followers:', fetchedFollowers);
-        console.log('Is Current User Following:', fetchedIsCurrentUserFollowing);
       } else {
         console.error("Invalid format for fetchedFollowers:", fetchedFollowers);
       }
-
     } catch (err) {
       console.log(err);
     }

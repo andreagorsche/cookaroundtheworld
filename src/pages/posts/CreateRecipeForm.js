@@ -60,9 +60,7 @@ function CreateRecipeForm() {
     formData.append("ingredients", ingredients);
     formData.append("description", description);
     formData.append("image", imageInput.current.files[0]);
-  
-    console.log([...formData.entries()]); // Log the entries of formData
-  
+    
     try {
       const { data } = await axiosReq.post("/recipes/", formData);
       setShowThankYouMessage(true); // Set state to display success message

@@ -26,8 +26,6 @@ function RecipeDisplay({handleEditClick}) {
     fetchRecipeById(id, setCurrentRecipe);
   }, [id, setCurrentRecipe]);
 
-  console.log("Current Recipe:", currentRecipe);
-
   const {
     title,
     cuisine,

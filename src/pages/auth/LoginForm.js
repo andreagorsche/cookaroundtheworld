@@ -49,9 +49,7 @@ function LoginForm() {
 
         // Store the access token in localStorage
         localStorage.setItem('access_token', accessToken);
-    
-        console.log("Login successful. Access Token:", accessToken);
-    
+        
         // Store other user-related data
         const user = response.data.user;
         localStorage.setItem('user', JSON.stringify(user));
@@ -75,7 +73,6 @@ function LoginForm() {
     }
   }
 }
-    console.log('---', username, password)
   return (
     <div>
     <Header imageUrl={JoinHeader} />

@@ -30,7 +30,6 @@ export const RecipeDataProvider = ({ children }) => {
     try {
       if (id) {
         const response = await axiosReq.get(`/recipes/${id}/`);
-        console.log('Response:', response.data); // Log the data property of the response
         setCurrentRecipe(response.data);
         setHasLoaded(true);
       }

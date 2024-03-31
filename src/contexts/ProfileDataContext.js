@@ -58,7 +58,6 @@ export const ProfileDataProvider = ({ children }) => {
             ...prevState,
             pageProfile: { results: [data] },
           }));
-          console.log("Updated profileData:", profileData);
         }
       } catch (err) {
         console.error('Error fetching profile data:', err);
@@ -75,7 +74,6 @@ export const ProfileDataProvider = ({ children }) => {
         const { data } = await axiosReq.get(
           "/profiles/?ordering=-updated_at"
         );
-        console.log("Updated topProfiles:", data);
 
         setProfileData((prevState) => ({
           ...prevState,

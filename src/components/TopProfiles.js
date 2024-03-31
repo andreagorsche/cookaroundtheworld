@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 
 const TopProfiles = () => {
   const { topProfiles } = useProfileData();
-  console.log(topProfiles);
 
   return (
     <Container>

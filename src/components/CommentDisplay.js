@@ -10,7 +10,6 @@ const CommentDisplay = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const { id } = useParams();
   const currentUser = useCurrentUser();
-  const history = useHistory();
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -25,10 +24,6 @@ const CommentDisplay = () => {
 
     fetchComments();
   }, [id]);
-
-  useEffect(() => {
-    console.log('Comments:', comments);
-  }, []);
 
   const handleMarkedAsInappropriate = (commentId) => {
     setComments(prevComments =>

@@ -7,9 +7,6 @@ const MarkAsInappropriateButton = ({ commentId, onMarkedAsInappropriate }) => {
       await axiosReq.put(`/inappropriate/${commentId}/`, {
         is_inappropriate: true,
       });
-
-      // Log if the comment is marked as inappropriate
-      console.log('Comment marked as inappropriate:', commentId);
       
       // Update the local state to reflect the change
       onMarkedAsInappropriate(commentId);

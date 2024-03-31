@@ -35,7 +35,6 @@ const RegisterForm = () => {
 		};
 
 	const handleSubmit = async (event) => {
-		console.log("Register data: ", registerData)
 		event.preventDefault();
 		try {
 		  await axios.post("/dj-rest-auth/registration/", registerData);

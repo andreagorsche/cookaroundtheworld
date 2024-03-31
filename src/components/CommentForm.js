@@ -11,7 +11,6 @@ function CommentForm(props) {
 
   
   const [content, setContent] = useState("");
-console.log(props)
   const handleChange = (event) => {
     setContent(event.target.value);
   };
@@ -40,10 +39,6 @@ console.log(props)
         }));
         setContent("");
         setShowThankYouMessage(true);
-        console.log('Sending data:', {
-          content,
-          recipeId,
-        });
       } else {
         console.error('No data found in the response:', response);
       }
