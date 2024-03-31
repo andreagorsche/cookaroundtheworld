@@ -204,12 +204,9 @@ The following components where created for this Application:
   images for e.g. starting Page and welcome Page teasing the amazing content ahead
 * **TopProfiles**:reusable component to show the 6 most recent profiles in 
   an appealing design
-
-
-
-* **CommentDisplay**: reusable component to display the comments associated    with a certain recipe
-* **CommentForm**:
-* **MarkAsInappropriateButton**:
+* **CommentDisplay**: reusable component to display the comments associated with a certain recipe
+* **CommentForm**:  component to enter a comment and save it to the database
+* **MarkAsInappropriateButton**: component to mark a comment as inappropriate
 
 
 ## Skeleton Plane
@@ -276,6 +273,257 @@ The application works mostly with user-generated content, this includes user-gen
 
 # Testing
 ## Manuel Testing
+
+The complete application was tested by comparing  expected result and actual result of every functionality.
+
+### Registration
+**User story: As a user I can create an account so that I can post recipes, access my profile and follower other users.**
+
+**Expected Result**: A User can register with username, email and password. 
+
+**Actual Result**: Works as Expected
+
+<details><summary>Registration</summary>
+    <img src="/src/assets/img_readme/ManualTesting/6.RegistrationEntry.png">
+    <br>
+    <img src="/src/assets/img_readme/ManualTesting/2_Register_Feedback.png">
+</details>
+
+### Login
+
+**User story: As a registered user I can log in so that I can manage my profile and recipes.**
+
+**Expected Result**: Users can login with their credentials and are given feedback in case the login was unsuccessful.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Login</summary>
+    <img src="assets/ManualTesting/8_UnableToLogin.png">
+    <br>
+    <img src="assets/ManualTesting/9_SuccessfulLogin.png">
+</details>
+
+### Login Status
+
+**User story: As a user I can always see if I am logged in or logged out so that I know whether I am capable to use a certain feature with the current status.**
+
+**Comment**: Not applicable for the backend, this is a requirement for the frontend only. Although in the screenshot under Login you can see that the Login is visible on the top right-hand side.
+
+### New Recipe
+
+**User story: As a logged-in user I can post a new recipe so that I can share my unique recipes with the world.**
+
+**Expected Result**: A logged in user can post a recipe.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Recipe Post</summary>
+    <img src="assets/ManualTesting/12_RecipeCreate.png">
+    <br>
+    <img src="assets/ManualTesting/13_RecipeCreate.png">
+      <br>
+    <img src="assets/ManualTesting/14_RecipeSaved.png">
+</details>
+
+### Recipe Detail
+
+**User story: As a logged-in user I can access the details of a recipe so that I can try it myself.**
+
+**Expected Result**: Recipe Detail View is functional for logged in user.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Recipe Detail</summary>
+    <img src="assets/ManualTesting/15_RecipeDetailPermission1.png">
+    <br>
+    <img src="assets/ManualTesting/16_RecipeDetailPermission2.png">
+    <br>
+    <img src="assets/ManualTesting/17_RecipeDetailPermission3.png">
+</details>
+
+### Recipe List
+
+**User story: As a user I can view a list of recipes that were recently added so that I have an overview of the newest, added recipes.**
+
+**Expected Result**: At the recipes endpoint all recipes are listed to view.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Recipe List View</summary>
+    <img src="assets/ManualTesting/10_RecipeListView.png">
+</details>
+
+### Search for Recipes
+
+**User story: As a user, I can search for recipes by cuisine(drop down menu), by ingredients, by keywords so that I can find the recipes and chef profiles I am most interested in.**
+
+**Comment**: Since the filtering is only visible in the frontend this can't be tested here.
+
+**User story: As a recipe owner I can edit my recipe title, pic, time effort, ingredients and description so that I can make corrections or update my recipe after it was created.**
+
+**Expected Result**: At the recipe detail view I can edit recipes that I own, and save the changes.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Edit Recipe</summary>
+    <img src="assets/ManualTesting/2_Registration.png">
+    <br>
+    <img src="assets/ManualTesting/3_Registration_UserNotifications.png">
+</details>
+
+### Delete Recipes
+
+**User story: As a logged in user I can delete my own recipes so that I can get rid of information I don't want to share anymore.**
+
+**Expected Result**: At the detail view endpoint I can delete the recipe, if I own it.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Delete Recipes</summary>
+    <img src="assets/ManualTesting/2_Registration.png">
+    <br>
+    <img src="assets/ManualTesting/3_Registration_UserNotifications.png">
+</details>
+
+### Profile Update
+
+**User story: As a logged in user I can access my profile page so that I can manage the information about me.**
+
+**Expected Result**: At the profiles endpoint I can update my own profile information.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Profile Update</summary>
+    <img src="assets/ManualTesting/2_Registration.png">
+    <br>
+    <img src="assets/ManualTesting/3_Registration_UserNotifications.png">
+</details>
+
+### Fasts Navigation
+
+**User story: As a user I can navigate through pages fast so that I can view content without refreshing the page.**
+
+**Comment**: This is a frontend requirement that can't be tested in the backend.
+
+### Create Comments
+
+**User story: As a logged in user I can create comments so that I can share my thoughts on other chef's recipes.**
+
+**Expected Result**: At the comments endpoint I can choose a recipe and comment on it.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Add a Comment</summary>
+    <img src="assets/ManualTesting/18_CommentsAdd.png">
+    <br>
+    <img src="assets/ManualTesting/18_CommentsAdd2.png">
+</details>
+
+### Delete Comments
+
+**User story: As a logged-in user I can delete my own comments so that I have full control over my shared content.**
+
+**Expected Result**: At the comment detail endpoint I can delete the comment, if it is my own.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Delete a Comment</summary>
+    <img src="assets/ManualTesting/2_Registration.png">
+    <br>
+    <img src="assets/ManualTesting/3_Registration_UserNotifications.png">
+</details>
+
+### Mark as Inappropriate
+
+**User story: As a logged-in user I can mark another comment as inappropriate so that I can help keep cyber mobbing and trolling in place.**
+
+**Expected Result**: At the endpoint inappropriate I can mark a comment as inappropriate, if the comment is not my own.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Mark Comment as Inappropriate</summary>
+    <img src="assets/ManualTesting/27MarkAsInappropriate.png">
+    <br>
+    <img src="assets/ManualTesting/28MarkAsInappropriate.png">
+</details>
+
+### Follow/Unfollow
+
+**User story: As a logged-in user I can follow and unfollow other chef profiles so that I keep up to date with them.**
+
+**Expected Result**: At the follow endpoint I can follow other users, at the unfollow endpoint I can unfollow other users.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Follow and Unfollow Functionality</summary>
+    <img src="assets/ManualTesting/20_Followers.png">
+    <br>
+    <img src="assets/ManualTesting/21_Followers.png">
+    <br>
+    <img src="assets/ManualTesting/22_FollowersDetailView.png">
+    <br>
+    <img src="assets/ManualTesting/23_UnfollowEndpoint.png">
+    <br>
+    <img src="assets/ManualTesting/24_UnfollowEndpoint.png">
+    <br>
+    <img src="assets/ManualTesting/25_UnfollowEndpoint.png">
+</details>
+
+### Friends Feed
+
+**User story: As a logged-in user I can see a feed of my chef friends recipes so that I can access recipes of chefs I like quick and easy.**
+
+**Comment**: This is a frontend requirement that can't be tested in the backend.
+
+### Own Recipe Feed
+
+**User story: As a logged-in user, I can see a feed of my own posted recipes so that I can easily access and manage these posts easily.**
+
+**Comment**: This is a frontend requirement that can't be tested in the backend.
+
+### Ease-of-Navigation
+
+**User story: As a user, I can navigate through the application intuitively so that I can easily find the features I am looking for.**
+
+**Comment**: This is a frontend requirement that can't be tested in the backend.
+
+### Responsiveness
+
+**User story: As a user, I can access the application from different devices so that I can have a consistent user experience on all devices.**
+
+**Comment**: This is a frontend requirement that can't be tested in the backend.
+
+### User Feedback
+
+**User story: As a user I want to see messages as feedback for my actions within the application so that I can know if my actions were successful.**
+
+**Expected Result**: Registration Form, Login Form and Recipe Create Form are giving user feedback on potential data issues (e.g. size of image in recipe creation form)
+
+**Actual Result**: Works as Expected
+
+<details><summary>User Feedback (Backend Implementations)</summary>
+    <img src="assets/ManualTesting/3_Registration_UserNotifications.png">
+    <br>
+    <img src="assets/ManualTesting/8_UnableToLogin.png">
+     <br>
+    <img src="assets/ManualTesting/11_RecipeCreate_ImageHeight_ImageError.png">
+</details>
+
+### Email Confirmation
+
+**User story: As a user I can confirm my registration via email so that my data is save and not used in a way I dont want it to be used (e.g. somebody else registers with my email).**
+
+**Expected Result**: The registration endpoint gives feedback about sent registration email confirmation, the email is shown in the terminal and a link leads to the confirmation flow via the backend.
+
+**Actual Result**: Works as Expected
+
+<details><summary>Confirmation Mail</summary>
+    <img src="assets/ManualTesting/4_VerificationEmailSent.png">
+    <br>
+    <img src="assets/ManualTesting/5_ConfirmationMailTerminal.png">
+    <br>
+    <img src="assets/ManualTesting/5_ConfirmationMail.png">
+</details>
 
 ## Validators
 
