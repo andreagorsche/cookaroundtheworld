@@ -22,7 +22,6 @@ function RecipeDisplay({handleEditClick}) {
   const profile_image = currentUser?.profile_image;
   const [comments, setComments] = useState({ results: [] });
   const history = useHistory(); 
-  const [successMessage, setSuccessMessage] = useState('');
 
 
   useEffect(() => {
@@ -46,31 +45,23 @@ function RecipeDisplay({handleEditClick}) {
 
   if (!currentRecipe || !currentRecipe.id) {
     // If the current recipe is not yet available, display a loading message or spinner
-    return <div style={{ textAlign: 'center', fontSize: '1.5rem', marginTop: '1rem', color: 'indigo' }}>Loading...</div>;
+    return <div>Loading...</div>;
   }
 
   const handleDeleteClick = async () => {
     try {
       if (window.confirm('Are you sure you want to delete this recipe?')) {
         await axiosReq.delete(`/recipes/${id}/`);
-        setSuccessMessage('Recipe deleted successfully.');
-        setTimeout(() => {
-          setSuccessMessage('');
-          history.push('/foodfeed');
-        }, 3000);
+        history.push('/'); 
       }
     } catch (error) {
       console.error('Error deleting recipe:', error);
     }
   };
 
-
-
-
   return (
     <>
       <Header imageUrl={headerImageUrl} />
-      {successMessage && <p style={{ color: 'red' }}>{successMessage}</p>}
       <Intro
         firstWord="Cooking"
         secondWord={title}

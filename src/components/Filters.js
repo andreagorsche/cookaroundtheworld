@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Select from 'react-select';
 import { useFetchRecipes, useRecipeData } from '../contexts/RecipeDataContext';
-import { axiosReq } from '../api/axiosDefaults';
+import Button from "react-bootstrap/Button";
 
-const Filters = ({ cuisineChoices, popularIngredients }) => {
+const Filters = ({ cuisineChoices, popularIngredients, hasLoaded, setHasLoaded }) => {
   const fetchRecipes = useFetchRecipes();
   const recipeData = useRecipeData();
   const [searchTerm, setSearchTerm] = useState('');
@@ -13,26 +13,18 @@ const Filters = ({ cuisineChoices, popularIngredients }) => {
 
   const fetchRecipesWithFilters = async () => {
     try {
+      setHasLoaded(false); 
       const endpoint = `/recipes/?cuisine=${selectedCuisine}&ingredients=${selectedIngredients.join(',')}&search=${searchTerm}`;
-      fetchRecipes(endpoint); // Trigger data fetching with filters
+      await fetchRecipes(endpoint); // Trigger data fetching with filters
+      setHasLoaded(true); // Set loading to false after successful fetching
     } catch (err) {
       console.error(err);
+      setHasLoaded(false); // Set loading to false in case of an error
     }
   };
 
   const handleSearch = () => {
     fetchRecipesWithFilters();
-  };
-
-  const handleClearSearch = () => {
-    setSearchTerm('');
-    setSelectedCuisine('');
-    setSelectedIngredients([]);
-    fetchAllRecipes();
-  };
-
-  const fetchAllRecipes = () => {
-    fetchRecipes('/recipes');
   };
 
   const handleEnterKeyPress = (e) => {
@@ -44,12 +36,10 @@ const Filters = ({ cuisineChoices, popularIngredients }) => {
 
   const handleCuisineChange = (cuisine) => {
     setSelectedCuisine(cuisine);
-    fetchRecipesWithFilters();
   };
 
   const handleIngredientsChange = (selectedIngredients) => {
     setSelectedIngredients(selectedIngredients.map(ingredient => ingredient.value));
-    fetchRecipesWithFilters();
   };
 
   const resetCuisineFilter = () => {
@@ -60,8 +50,7 @@ const Filters = ({ cuisineChoices, popularIngredients }) => {
   return (
     <>
     <div>
-      <p>Please enter your search criteria here:</p>
-      <p>Click the search button or press enter to begin searching.</p>
+      <p style={{ margin: '2rem' }}>Please enter your search criteria here:</p>
     </div>
     <div className='d-flex justify-content-center'>
       <div>
@@ -88,13 +77,17 @@ const Filters = ({ cuisineChoices, popularIngredients }) => {
         </Dropdown>
         <Select
           isMulti
+          value={selectedIngredients.value}
           options={popularIngredients}
           onChange={handleIngredientsChange}
           placeholder="Select Ingredients"
         />
-        <button onClick={handleSearch}>Search</button>
-        <button onClick={handleClearSearch}>Clear Search</button>
+        <Button style={{ backgroundColor: 'indigo', margin: '10px', borderColor: 'transparent' }}  onClick={handleSearch}>Search</Button>
+   
       </div>          
+    </div>
+    <div>
+      <p style={{ margin: '2rem' }}>Click the search button or press enter to begin searching.</p>
     </div>
   </>
   );

@@ -62,11 +62,6 @@ function FoodFeed({ message }) {
     { value: 'cheese', label: 'Cheese' },
   ];
 
-   // Function to handle clearing search in FoodFeed
-   const handleClearSearch = () => {
-    setFilter(''); // Clear the filter state
-  };
-
   useEffect(() => {
     console.log("Fetching recipes without filters");
     fetchRecipes()
@@ -84,7 +79,7 @@ function FoodFeed({ message }) {
       <Row className="d-flex justify-content-center h-100">
         <Col className="p-0" lg={4}>
           {/* Passing filter, handleFilterChange, cuisineChoices, and popularIngredients as props */}
-          <Filters style={{ width: "300px" }} filter={filter} onFilterChange={handleFilterChange} cuisineChoices={cuisineChoices} popularIngredients={popularIngredients} />
+          <Filters style={{ width: "300px" }} filter={filter} onFilterChange={handleFilterChange} cuisineChoices={cuisineChoices} popularIngredients={popularIngredients} hasLoaded={hasLoaded} setHasLoaded={setHasLoaded}/>
         </Col>
         <Col className="py-2 p-0 p-lg-2" lg={8}>
           {hasLoaded ? (
