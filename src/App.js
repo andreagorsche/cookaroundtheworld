@@ -17,6 +17,7 @@ import ConfirmationPage from "./pages/auth/ConfirmationPage";
 import InactiveAccount from "./pages/auth/InactiveAccount";
 import VerifyEmail from "./pages/auth/VerifyEmail";
 import { useCurrentUser } from "./contexts/CurrentUserContext";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
 
@@ -37,7 +38,7 @@ function App() {
           filter={`owner__followed__owner__profile=${profile_id}&`}
           />}/>
           <Route exact path ="/yourrecipes" render = {() => <FoodFeed 
-          message="No  recipes found. Please post recipes for recipes to display here." 
+          message="No recipes found. Please post recipes for recipes to display here." 
           filter={`owner__profile=${profile_id}&`}
           />}/>
           <Route exact path="/recipes/create" render={() => <CreateRecipeForm />} /> 
@@ -48,7 +49,7 @@ function App() {
           <Route path="/verify-email/:key" render={() => <VerifyEmail />}/>
           <Route path="/inactive-account" render={() => <InactiveAccount />}/>
           <Route exact path ="/login" render = {() => <LoginForm />}/>
-          <Route render = {()=><p>Page not found!</p>}/>
+          <Route render={() => <PageNotFound />} />
           <Route path="/dataprotection" element={<DataProtection />} />
           <Route path="/impressum" element={<Impressum />} />
         </Switch>
