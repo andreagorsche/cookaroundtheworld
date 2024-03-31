@@ -11,6 +11,7 @@ import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import Header from "../../components/Header";
 
 import axios from "axios";
+import { setTokenTimestamp } from "../../utilityFunctions";
 
 function LoginForm() {
     const setCurrentUser = useSetCurrentUser();
@@ -37,11 +38,14 @@ function LoginForm() {
       event.preventDefault();
       try {
         const response = await axios.post("/dj-rest-auth/login/", loginData);
-    
+
         // Extract the access token from the response
         const accessToken = response.data.access_token;
-    
-        // Store the access token in localStorage (you can also use sessionStorage)
+        
+        // setToken Timestamp
+        setTokenTimestamp(accessToken);
+
+        // Store the access token in localStorage
         localStorage.setItem('access_token', accessToken);
     
         console.log("Login successful. Access Token:", accessToken);
