@@ -20,7 +20,7 @@ Once logged in users can enjoy the following features:
 * filter the food feed by search term, ingredients or cuisine
 * follow other chefs
 * manage their own profile
-* rate and comment on other recipes
+* comment on other recipes
 
 To create a safe space of exhange, logged in users can mark inappropriate comments as such. If a user keeps misbehaving the user account will be set to inactive (5 inappropriate comments or more).
 
@@ -69,13 +69,13 @@ Sprint 15: Add Routes to Filter FriendsFeed and Own Recipe Feed, Add Delete Reci
 
 Sprint 16: Debug Rating functionality and multistep form on profile page
 
-Sprint 17: Add User Feedback, Documentation and Clean Up
+Sprint 17: Add User Feedback, Documentation and Clean Up, Remove of rating functionality due to time constraints
 
 ### CRUD Functionality
 Cook-Around-The-World handles data with a Django Rest Framework API and provides  full CRUD Functionality:
 
-Create - Users can create, an account/profile, recipes, comments, ratings, follow other users.
-Read - Users can view their own recipes, other user recipes, their own profile, other profiles, all comments, average ratings.
+Create - Users can create, an account/profile, recipes, comments, follow other users.
+Read - Users can view their own recipes, other user recipes, their own profile, other profiles, all comments.
 Update - Users can update their profile and recipes as well as mark comments as inappropriate.
 Delete - Users can delete their own recipes and comments.
 
@@ -98,23 +98,22 @@ The following user stories describe the feature scope of the Minimum Viable Prod
 3. As a **user** I can **always see if I am logged in or logged out** so that **I know whether I am capable to use a certain feature with the current status**.
 4. As a **logged-in user** I can **post a new recipe** so that **I can share my unique recipes with the world**.
 5. As a **logged-in user** I can **access the details of a recipe** so that **I can try it myself**.
-6. As a **logged-in user** I can **rate recipes** so that **I can share my personal experience about other recipes**.
-7. As a **user** I can **view a list of recipes** that were recently added so that **I have an overview of the newest, added recipes**.
-8. As a **user**, I can **search for recipes by cuisine(drop down menu), by ingredients, by keywords** so that **I can find the recipes and chef profiles I am most interested in**.
-9. As a **recipe owner** I can **edit my recipe title, pic, time effort, ingredients and description** so that **I can make corrections or update my recipe after it was created**.
-10. As a **logged in user** I can **delete my own recipes** so that **I can get rid of information I don't want to share anymore**.
-11. As a **logged in user** I can **access my profile page** so that **I can manage the information about me**.
-12. As a **user** I can **navigate through pages fast** so that **I can view content without refreshing the page**.
-13. As a **logged in user** I can **create comments** so that **I can share my thoughts on other chef's recipes.**
-14. As a **logged-in user** I can **delete my own comments** so that **I have full control over my shared content**.
-15. As a **logged-in user** I can **mark another comment as inappropriate** so that **I can help keep cyber mobbing and trolling in place.**
-16. As a **logged-in user** I can **follow and unfollow other chef profiles** so that I keep up to date with them.
-17. As a **logged-in user** I can **see a feed of my chef friends recipes** so that **I can access recipes of chefs I like quick and easy.**
-18. As a **logged-in user**, I can **see a feed of my own posted recipes** so that **I can easily access and manage these posts easily**.
-19. As a **user**, I can **navigate through the application intuitively** so that **I can easily find the features I am looking for**.
-20. As a **user**, I can **access the application from different devices** so that **I can have a consistent user experience on all devices**.
-21. As a **user** I want **to see messages as feedback for my actions within the application** so that **I can know if my actions were successful**.
-22. As a **user** I can **confirm my registration via email** so that **my data is save and not used in a way I dont want it to be used (e.g. somebody else registers with my email)**.
+6. As a **user** I can **view a list of recipes** that were recently added so that **I have an overview of the newest, added recipes**.
+7. As a **user**, I can **search for recipes by cuisine(drop down menu), by ingredients, by keywords** so that **I can find the recipes and chef profiles I am most interested in**.
+8. As a **recipe owner** I can **edit my recipe title, pic, time effort, ingredients and description** so that **I can make corrections or update my recipe after it was created**.
+9. As a **logged in user** I can **delete my own recipes** so that **I can get rid of information I don't want to share anymore**.
+10. As a **logged in user** I can **access my profile page** so that **I can manage the information about me**.
+11. As a **user** I can **navigate through pages fast** so that **I can view content without refreshing the page**.
+12. As a **logged in user** I can **create comments** so that **I can share my thoughts on other chef's recipes.**
+13. As a **logged-in user** I can **delete my own comments** so that **I have full control over my shared content**.
+14. As a **logged-in user** I can **mark another comment as inappropriate** so that **I can help keep cyber mobbing and trolling in place.**
+15. As a **logged-in user** I can **follow and unfollow other chef profiles** so that I keep up to date with them.
+16. As a **logged-in user** I can **see a feed of my chef friends recipes** so that **I can access recipes of chefs I like quick and easy.**
+17. As a **logged-in user**, I can **see a feed of my own posted recipes** so that **I can easily access and manage these posts easily**.
+18. As a **user**, I can **navigate through the application intuitively** so that **I can easily find the features I am looking for**.
+19. As a **user**, I can **access the application from different devices** so that **I can have a consistent user experience on all devices**.
+20. As a **user** I want **to see messages as feedback for my actions within the application** so that **I can know if my actions were successful**.
+21. As a **user** I can **confirm my registration via email** so that **my data is save and not used in a way I dont want it to be used (e.g. somebody else registers with my email)**.
 
 #### Future Features
 
@@ -126,7 +125,7 @@ Features that should be implmented in future sprints and development cycles:
 * option to add allergies information to recipes
 * social media sharing buttons to share recipes on other platforms (e.g. instagram, facebook etc.)
 * option to mark recipes as inappropriate, after all postings themselves can be a source of mobbing, trolling or otherwise inappropriate behavior
-
+* 5 star rating for recipes 
 
 ## Structure Plane
 
@@ -147,7 +146,7 @@ The main page structure of the application is:
 **Posts**
 * **create recipe form**: a form page where the users can enter their recipe data and upload the recipe picture and upload everything to the database.
 * **food feed**: page displaying the recipe cards in a feed with search and filter options
-* **recipe display**: page handling the display of a specific recipe including associated comments and ratings. If the current user is the owner of the recipe the edit and delete button is shown, otherwise a rating and comment form is shown.
+* **recipe display**: page handling the display of a specific recipe including associated comments. If the current user is the owner of the recipe the edit and delete button is shown, otherwise a comment form is shown.
 * **recipe edit**: form page handling the editing of a recipe data, including the change of the image file
 * **recipe page**: handling the logic of displaying either the recipe display or the recipe edit page
 
@@ -161,12 +160,11 @@ The main page structure of the application is:
 
 #### Data Usage
 
-To use and display data about the current user, profiles, recipes and ratings across the application, I created the following contexts:
+To use and display data about the current user, profiles and recipes across the application, I created the following contexts:
 
 * **Current User Context**: handling the user data and refresh tokens
 * **Profile Data Context**: handling the profile data, the follow/unfollow  
   logic and the ordering of the profiles by updated_at - used in the application as top profiles
-* **Rating Data Context**: handling rating data
 * **Recipe Data Context**: handling the recipe data
 
 Since comments are currently only used locally with the recipe page, I decided against a comment data context for now, but for potential future features it might be a feasable decision to add one.
@@ -208,14 +206,10 @@ The following components where created for this Application:
   an appealing design
 
 
-* **AverageRatingDisplay**: reusable component to calculate and display the 
-  average rating of the associated recipe
+
 * **CommentDisplay**: reusable component to display the comments associated    with a certain recipe
 * **CommentForm**:
 * **MarkAsInappropriateButton**:
-* **RatingDisplay**:
-* **RatingForm**:
-* **RatingSelect**:
 
 
 ## Skeleton Plane
@@ -244,7 +238,7 @@ Once logged in successfully, the user is directed to a **welcome page**. There t
 
 Through the navigation menu the user can easily switch between welcome page, create recipe form, the food feeds and the profile page of the current user. In cases where the user lands on the own profile page or the own recipe page - editing options are given to the user. Own recipes can also be deleted. 
 
-In case the user lands on another persons profile, the user can follow/unfollow that user. When the user lands on the recipe page of another user the option to rate and comment these recipes are given.
+In case the user lands on another persons profile, the user can follow/unfollow that user. When the user lands on the recipe page of another user the option to comment these recipes are given.
 
 The complete user flow is also summed up in this graphic that combines User Flow and wireframes:
 
