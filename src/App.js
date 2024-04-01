@@ -9,8 +9,6 @@ import CreateRecipeForm from "./pages/posts/CreateRecipeForm";
 import RecipePage from "./pages/posts/RecipePage"; 
 import ProfilePage from "./pages/profiles/ProfilePage"; 
 import WelcomePage from "./pages/WelcomePage"; 
-import Impressum from "./legal/Impressum";
-import DataProtection from "./legal/DataProtection";
 import Footer from "./components/Footer";
 import FoodFeed from "./pages/posts/FoodFeed";
 import ConfirmationPage from "./pages/auth/ConfirmationPage";
@@ -38,8 +36,6 @@ function App() {
           <Route path="/inactive-account" render={() => <InactiveAccount />}/>
           <Route exact path ="/login" render = {() => <LoginForm />}/>
           <Route render={() => <PageNotFound />} />
-          <Route path="/dataprotection" element={<DataProtection />} />
-          <Route path="/impressum" element={<Impressum />} />
         </Switch>
       </Container>
       <Footer />

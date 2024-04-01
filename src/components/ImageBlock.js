@@ -1,5 +1,5 @@
 import React from 'react';
-import Asset from './Asset';
+import RoundedImage from './RoundedImage';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -30,10 +30,10 @@ function ImageBlock({ image1, image2 }) {
     <Container className="image-block-container" style={customStyle.imageBlockContainer}>
       <Row className='p-2'>
         <Col className="mt-2" md={6}>
-          <Asset src={image1} style={customStyle} />
+          <RoundedImage img={image1} style={customStyle} />
         </Col>
         <Col className="mt-2">
-          <Asset src={image2} style={customStyle} />
+          <RoundedImage img={image2} style={customStyle} />
         </Col>
       </Row>
     </Container>
