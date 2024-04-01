@@ -16,11 +16,9 @@ export const CurrentUserProvider = ({ children }) => {
   const handleMount = async () => {
     try {
       const { data } = await axiosRes.get("dj-rest-auth/user/");
-     // console.log("Received user data:", data);
       setCurrentUser(data);
     } catch (err) {
       console.log(err);
-     // console.log("Error fetching user data:", err);
     }
   };
 
@@ -70,7 +68,6 @@ export const CurrentUserProvider = ({ children }) => {
     );
   }, [history]);
 
-  //console.log('-----------', currentUser)
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <SetCurrentUserContext.Provider value={setCurrentUser}>
