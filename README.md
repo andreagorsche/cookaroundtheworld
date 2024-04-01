@@ -248,7 +248,7 @@ The following components where created for this Application:
 
 ### Database Models and Relations
 
-The database models structure is illustrated in the ReadMe File of the Backend.
+The database models structure is illustrated in the ReadMe File of the Backend. The link is here: https://github.com/andreagorsche/cooking-api/blob/main/README.md
 
 ### UserFlow and Wireframes  
 
