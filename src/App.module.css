@@ -48,23 +48,21 @@ figure {
   padding-left: 1%;
   margin-left: 2%;
   color: indigo;
-  transition: color ease-in-out 0.3 sec;
-  text-decoration: none;
+  transition: color ease-in-out 0.3s;
 }
 
 .App a:hover {
-  text-decoration: none;
-  color: white,
+  color: #ffffff,
 }
 
 .App a:hover i {
-  color: white;
+  color: #ffffff;
   transition: color ease-in-out 0.3s;
 }
 
 .App i {
   color: indigo;
-  transition: color ease-in-out 0.3 sec;
+  transition: color ease-in-out 0.3s;
   text-decoration: none;
 }
 

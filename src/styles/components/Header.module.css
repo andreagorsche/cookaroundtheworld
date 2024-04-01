@@ -18,7 +18,7 @@ h1 {
 
   .fullWidthImage {
     width: 100%;
-    position: center top;
+    position: center;
     height: 40vh;
     opacity: 0.45;
   }
