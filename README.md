@@ -7,6 +7,39 @@ This app brings together chef's around the world to share recipes of different c
 ## Deployed Version
 The deployed application can be found here: [Cook-Around-The-World](https://cookingaroundtheworld.herokuapp.com/)
 
+## Table of Contents
+  1. [User Experience](#user-experience)
+      1. [Strategy Plane](#strategy-plane)
+          1. [Core Functionalities](#core-functionalities)
+          2. [Target Group](#target-group)
+          3. [USP](#usp)
+          4. [Agile Development Method](#agile-development-method)
+          5. [CRUD Functionality](#crud-functionality)
+      2. [Scope Plane](#scope-plane)
+          1. [User Stories](#user-stories)
+          2. [MVP](#minimum-viable-product)
+          3. [Future Features](#future-features)
+      3. [Structure Plane](#structure-plane)
+          1. [Main Page Structure](#main-page-structure)
+          2. [React](#react)
+      4. [Skeleton Plane](#skeleton-plane)
+          1. [Database Models and Relations](#database-models-and-relations)
+          2. [UserFlow and Wireframes](#userflow-and-wireframes)
+      5. [Surface Plane](#surface-plane)
+          1. [Color Scheme](#color-scheme)
+          2. [UserFlow and Wireframes](#typography)
+          3. [Logo](#logo)
+          4. [Imagery](#imagery)
+  2. [Technologies Used](#technologies-used)
+  3. [Testing](#testing)
+      1. [Manual Testing](#manual-testing)
+      2. [Validators](#validators)
+      3. [Bug Fixes](#bug-fixes)
+      4. [Remaining Issues](#remaining-issues)
+  4. [Deployment](#deployment)
+  5. [Credits](#credits)
+  6. [Acknowledgements](#acknowledgements)
+
 # User Experience
 
 ## Strategy Plane
@@ -125,7 +158,11 @@ Features that should be implmented in future sprints and development cycles:
 * option to add allergies information to recipes
 * social media sharing buttons to share recipes on other platforms (e.g. instagram, facebook etc.)
 * option to mark recipes as inappropriate, after all postings themselves can be a source of mobbing, trolling or otherwise inappropriate behavior
-* 5 star rating for recipes 
+* 5 star rating for recipes
+* infinite scroll
+* a clear search button that clears the filters in the food feed and rerenders the foodfeed with all recipes
+* More custom feeds, e.g. a friends feed, a feed to scroll through once own recipes
+* profiles component showing the newest profiles added to the application in the welcome page
 
 ## Structure Plane
 
@@ -274,24 +311,42 @@ The application works mostly with user-generated content, this includes user-gen
 The npm list command shows the following technologies in use:
 
 cookaroundtheworld@0.1.0 /workspace/cookaroundtheworld
-├── @fortawesome/fontawesome-svg-core@6.5.1
-├── @fortawesome/free-regular-svg-icons@6.5.1
-├── @fortawesome/free-solid-svg-icons@6.5.1
-├── @fortawesome/react-fontawesome@0.2.0
-├── @testing-library/jest-dom@5.17.0
-├── @testing-library/react@11.2.7
-├── @testing-library/user-event@12.8.3
-├── axios@0.21.4
-├── bootstrap@4.6.2
-├── msw@0.35.0
-├── react-bootstrap@1.6.8
-├── react-dom@17.0.2
-├── react-infinite-scroll-component@6.1.0
-├── react-router-dom@5.3.4
-├── react-scripts@5.0.1
-├── react-select@5.8.0
-├── react@17.0.2
-└── web-vitals@1.1.2
+
+@fortawesome/fontawesome-svg-core@6.5.1
+
+@fortawesome/free-regular-svg-icons@6.5.1
+
+@fortawesome/free-solid-svg-icons@6.5.1
+
+@fortawesome/react-fontawesome@0.2.0
+
+@testing-library/jest-dom@5.17.0
+
+@testing-library/react@11.2.7
+
+@testing-library/user-event@12.8.3
+
+axios@0.21.4
+
+bootstrap@4.6.2
+
+msw@0.35.0
+
+react-bootstrap@1.6.8
+
+react-dom@17.0.2
+
+react-infinite-scroll-component@6.1.0
+
+react-router-dom@5.3.4
+
+react-scripts@5.0.1
+
+react-select@5.8.0
+
+react@17.0.2
+
+web-vitals@1.1.2
 
 ### Fontawesome
 I installed parts of the Fontawesome library to use icons where required in the application.
@@ -770,11 +825,20 @@ I looked extra closely at the API data and its useage on the frontend. Unnecessa
 
 ## Remaining Issues
 
+### Comment Refresh
+An issue that has stuck with me for a while is that when a user posts a comment it is not shown in the display immediately. I wanted to fix that but ran out of time. My initial solution was to add the comment to the dependency array, but this caused an infinite loop in the console. Thus, I searched for other solutions. I am aware that I need to make the comment form component and the comment display component talk to each other on status - the easiest solution would be (in my opinion) to create a comment context to work with. This will be part of a next release.
+
+### Comment Retrieval (one time error)
+In one occasion I had a console log error regarding the comments as I opened a recipe page with no comments in there. This never showed up again. Thus, I could not fix it. I want to mention it here in case it comes up during assessment. I will definitely keep an eye out for the error and in case it is still there, find the cause and fix it.
+
 ### CSS
 In some areas of the application the CSS is not perfect. In the profile page the edit profile button is not completely centrally alligned, it is slanted to the right. Also in the FoodFeed when clicking on the filter for cuisines, the filter expands beyond the height of the application causing a white space underneath the footer. The mobile view of the menu has no background so the menu items are a bit harder to read. Again, time constraints forced me to prioritize issues and since the menu in the mobile is readable just not ideal, I had to drop this for this release.
 
 ### Console Errors and Warnings
 There are three 401 errors in the console which are caused by the API returning 401 errors when the user is not logged in. This is expected behaviour and does not affect the application's functionality.
+
+### Commit Message
+Over the course of the last couple of days, I once accidentally wrote a commit message in German (my mother tongue). I immediately search for the commit in my github and commented the english translation there.
 
 # Deployment
 
@@ -782,33 +846,46 @@ The application was deployed to Heroku. A live version of the application can be
 
 Please follow these steps to deploy the application:
 
-    Deploy your own version of the Sonic Explorers API by following the deployment instructions for the Sonic Explorers API.
+Deploy your own version of the Sonic Explorers API by following the deployment instructions for the Sonic Explorers API.
 
-    Clone or fork this repository. For forking it, go to https://github.com/andreagorsche/cookaroundtheworld, click on Fork and follow the instructions. For cloning the repository, run git clone https://github.com/andreagorsche/cookaroundtheworld.git in your terminal.
+Clone or fork this repository. For forking it, go to https://github.com/andreagorsche/cookaroundtheworld, click on Fork and follow the instructions. For cloning the repository, run git clone https://github.com/andreagorsche/cookaroundtheworld.git in your terminal.
    
-    Go to the repository folder and edit the file src/api/axiosDefaults.js. In the file, change the value of axios.defaults.baseURL to the URL of your deployed API. You can find the URL by clicking on your API app from the Heroku dashboard and then copying the URL from the Open app button.
+Go to the repository folder and edit the file src/api/axiosDefaults.js. In the file, change the value of axios.defaults.baseURL to the URL of your deployed API. You can find the URL by clicking on your API app from the Heroku dashboard and then copying the URL from the Open app button.
 
-    If you haven't done so yet, login to your Heroku account at https://heroku.com. Now start a new app from the Heroku dashboard by clicking on New and then on Create new app.
+If you haven't done so yet, login to your Heroku account at https://heroku.com. Now start a new app from the Heroku dashboard by clicking on New and then on Create new app.
    
-    Give your app an available name and choose your region (US or Europe).
+Give your app an available name and choose your region (US or Europe).
 
-    Click on the Deploy tab and connect the Heroku app to your GitHub repository.
+Click on the Deploy tab and connect the Heroku app to your GitHub repository.
 
-    Scroll down and select the branch you want to deploy in the Manual deploy section. Now click on Deploy Branch for the first deployment of the application.
+Scroll down and select the branch you want to deploy in the Manual deploy section. Now click on Deploy Branch for the first deployment of the application.
 
-    In case you run into any issues while deploying your App you can access Heroku logs by clicking on More and then View logs or you can check the Activity tab for debugging.
+In case you run into any issues while deploying your App you can access Heroku logs by clicking on More and then View logs or you can check the Activity tab for debugging.
    
-    After successful deployment, click on View to open your deployed app.
+After successful deployment, click on View to open your deployed app.
   
-    If everything went well, you should see the Cook Around The World starting page.
+If everything went well, you should see the Cook Around The World starting page.
 
 
 # Credits
 
 Besides the walkthrough project moments of Code Institute I used the following sources for this project:
 
-React documentation
-Bootstrap documentation
+* React documentation
+* Bootstrap documentation
+
+Furthermore I used online ressources mainly for 
+
+#### Email Verification Process Frontend
+https://dev.to/sammychris/how-to-implement-user-registration-and-email-verification-in-react-1map
+
+#### Apply multiple Filters
+https://stackoverflow.com/questions/64048890/react-apply-multiple-filters-to-array
+
+#### Filtering Data in React
+https://retool.com/blog/filtering-data-in-react-filter-map-and-for-loops
+
+The research material was a much vaster scope but these where the actual material that gave me the answers I seeked. A lot of material I found was not applicable to my situation.
 
 # Acknowledgements
 
