@@ -53,7 +53,6 @@ function CommentForm(props) {
 
   return (
     <div>
-    {showThankYouMessage && <p>Comment submitted successfully!</p>}
     <Form className="mt-2" onSubmit={handleSubmit}>
       <Form.Group>
         <InputGroup>
@@ -76,6 +75,7 @@ function CommentForm(props) {
       >
         post
       </button>
+      {showThankYouMessage && <p style={{ color: 'green' }}>Comment submitted successfully!</p>}
     </Form>
     </div>
   );

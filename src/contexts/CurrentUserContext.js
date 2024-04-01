@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useHistory } from "react-router";
-import { removeTokenTimestamp, shouldRefreshToken } from "../utilityFunctions";
 
 export const CurrentUserContext = createContext();
 export const SetCurrentUserContext = createContext();
@@ -17,9 +16,11 @@ export const CurrentUserProvider = ({ children }) => {
   const handleMount = async () => {
     try {
       const { data } = await axiosRes.get("dj-rest-auth/user/");
+     // console.log("Received user data:", data);
       setCurrentUser(data);
     } catch (err) {
       console.log(err);
+     // console.log("Error fetching user data:", err);
     }
   };
 
@@ -30,19 +31,16 @@ export const CurrentUserProvider = ({ children }) => {
   useMemo(() => {
     axiosReq.interceptors.request.use(
       async (config) => {
-        if (shouldRefreshToken()) {
-          try {
-            await axios.post("/dj-rest-auth/token/refresh/");
-          } catch (err) {
-            setCurrentUser((prevCurrentUser) => {
-              if (prevCurrentUser) {
-                history.push("/signin");
-              }
-              return null;
-            });
-            removeTokenTimestamp();
-            return config;
-          }
+        try {
+          await axios.post("/dj-rest-auth/token/refresh/");
+        } catch (err) {
+          setCurrentUser((prevCurrentUser) => {
+            if (prevCurrentUser) {
+              history.push("/login");
+            }
+            return null;
+          });
+          return config;
         }
         return config;
       },
@@ -60,11 +58,10 @@ export const CurrentUserProvider = ({ children }) => {
           } catch (err) {
             setCurrentUser((prevCurrentUser) => {
               if (prevCurrentUser) {
-                history.push("/signin");
+                history.push("/login");
               }
               return null;
             });
-            removeTokenTimestamp();
           }
           return axios(err.config);
         }
@@ -73,6 +70,7 @@ export const CurrentUserProvider = ({ children }) => {
     );
   }, [history]);
 
+  //console.log('-----------', currentUser)
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <SetCurrentUserContext.Provider value={setCurrentUser}>

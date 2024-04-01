@@ -1,7 +1,5 @@
 import React from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
+import {Navbar, Container, Nav} from "react-bootstrap";
 import cookbook from "../assets/cookbook.png";
 import navStyles from "../styles/components/NavMenu.module.css"
 import {NavLink} from "react-router-dom";
@@ -9,11 +7,15 @@ import { useCurrentUser, useSetCurrentUser } from "../contexts/CurrentUserContex
 import Avatar from "./Avatar";
 import axios from "axios";
 import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
-import { removeTokenTimestamp } from "../utilityFunctions";
 
 const NavMenu = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
+
+  console.log(currentUser)
+  console.log('NavMenu is rendering...');
+
+
   const {expanded, setExpanded, ref} = useClickOutsideToggle();
 
   const handleSignOut = async () => {
@@ -41,6 +43,18 @@ const NavMenu = () => {
       activeClassName = {navStyles.Active} 
       to = "/foodfeed">
       <i className="fa-solid fa-scroll"></i> Food-Feed 
+    </NavLink>
+    <NavLink 
+      className = {navStyles.NavLink} 
+      activeClassName = {navStyles.Active} 
+      to = "/friendsfeed">
+      <i className="fa-solid fa-thumbs-up"></i> Friends-Feed 
+    </NavLink>
+    <NavLink 
+      className = {navStyles.NavLink} 
+      activeClassName = {navStyles.Active} 
+      to = "/yourrecipes">
+      <i className="fa-solid fa-thumbs-up"></i> Your Recipes 
     </NavLink>
     <NavLink 
       className = {navStyles.NavLink}  

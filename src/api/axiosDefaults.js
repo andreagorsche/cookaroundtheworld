@@ -33,10 +33,12 @@ axiosRes.interceptors.response.use(
     async (err) => {
       if (err.response?.status === 401) {
         try {
+          console.log("Attempting to refresh token...");
           // Refresh token before retrying the original request
-          await axios.post("/dj-rest-auth/token/refresh/");
+          // await axios.post("/dj-rest-auth/token/refresh/");
+          console.log("Token refresh successful. Retrying the original request...");
           // Retry the original request
-          return axiosRes(err.config);
+          // return axiosRes(err.config);
         } catch (refreshError) {
           // Handle error (e.g., token refresh failed)
           console.error("Response interceptor error - Token refresh failed", refreshError);

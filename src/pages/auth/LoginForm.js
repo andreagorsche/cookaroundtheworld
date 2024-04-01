@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Form, Button, Col, Row, Container, Alert } from "react-bootstrap";
+
 import JoinHeader from "../../assets/images/JoinHeader.jpg"
+
 import styles from "../../styles/pages/auth/LoginRegister.module.css";
 import btnStyles from "../../styles/components/Button.module.css";
 import appStyles from "../../App.module.css";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import Header from "../../components/Header";
+
 import axios from "axios";
-import { setTokenTimestamp } from "../../utilityFunctions";
 
 function LoginForm() {
     const setCurrentUser = useSetCurrentUser();
@@ -40,16 +37,15 @@ function LoginForm() {
       event.preventDefault();
       try {
         const response = await axios.post("/dj-rest-auth/login/", loginData);
-
+    
         // Extract the access token from the response
         const accessToken = response.data.access_token;
-        
-        // setToken Timestamp
-        setTokenTimestamp(accessToken);
-
-        // Store the access token in localStorage
+    
+        // Store the access token in localStorage (you can also use sessionStorage)
         localStorage.setItem('access_token', accessToken);
-        
+    
+        console.log("Login successful. Access Token:", accessToken);
+    
         // Store other user-related data
         const user = response.data.user;
         localStorage.setItem('user', JSON.stringify(user));
@@ -73,6 +69,7 @@ function LoginForm() {
     }
   }
 }
+    console.log('---', username, password)
   return (
     <div>
     <Header imageUrl={JoinHeader} />
