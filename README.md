@@ -550,9 +550,10 @@ The complete application was tested by comparing  expected result and actual res
 **Actual Result**: Works as Expected
 
 <details><summary>Follow and Unfollow Functionality</summary>
-      <img src="/src/assets/img_readme/ManualTesting/44_FollowUnfollow.png">
+    <img src="/src/assets/img_readme/ManualTesting/1_Follow.png">
     <br>
-      <img src="/src/assets/img_readme/ManualTesting/45_Unfollow.png">
+    <img src="/src/assets/img_readme/ManualTesting/2_Unfollow.png">
+     
 </details>
 
 ### Ease-of-Navigation
