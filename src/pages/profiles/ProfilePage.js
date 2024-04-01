@@ -103,9 +103,10 @@ function ProfilePage() {
         data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
         labels={['Recipes', 'Followers', 'Following']}
       />
-      <Col lg={3} className="text-lg-right">
+      <Col lg={7} className="text-lg-right">
        {is_owner && !showProfileForm && ( // Conditionally render the edit button
         <Button
+          style={{ backgroundColor: 'indigo', margin: '10px', borderColor: 'transparent' }} 
           className={`${btnStyles.Button} ${btnStyles.Black}`}
           onClick={() => setShowProfileForm(true)} // Set showProfileForm to true to show the form
         >

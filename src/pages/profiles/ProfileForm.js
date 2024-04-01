@@ -1,7 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { axiosReq } from '../../api/axiosDefaults';
-import { useParams } from 'react-router';
-import { useHistory } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
 
 const ProfileForm = () => {
@@ -9,7 +8,7 @@ const ProfileForm = () => {
   const CUISINE_CHOICES = [
     'american',
     'austrian',
-    'caribean',
+    'caribbean',
     'chinese',
     'french',
     'german',
@@ -88,9 +87,12 @@ const ProfileForm = () => {
           ...prevState,
           pageProfile: { results: [data] },
         }));
-        setSuccessMessage('Profile successfully updated!');
-        // Redirect to update profile page after setting success message
-        history.push(`/`);
+        setSuccessMessage('Profile successfully updated! Redirecting to frontpage ...');
+        
+        setTimeout(() => {
+          setSuccessMessage(null);
+          history.push('/'); // Redirect to home page
+        }, 3000); // Redirect after 3 seconds
       } else {
         console.error('Unexpected response status:', response.status);
         setErrors({ image: ['Unexpected response status'] });
