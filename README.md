@@ -588,10 +588,121 @@ The generated HTML passes the W3C Markup Validator with no erros. The warnings a
 </details>
 
 
-
 ### CSS Validator
 
 ## Bug Fixes
+
+Regarding the Bug fixes I focused heavily on the not met assessment criteria and debugged accordingly.
+
+### UX Design
+**Bug**: Design a Front-End for a Full-Stack web application that meets accessibility guidelines, follows the principles of UX design, meets its given purpose and provides a set of user interactions.
+
+**Bug Fix**
+I optimized the application with regards to its appearance. This included 
+
+* choosing Roboto over Dancing Script as a main font
+* debug the CSS error regarding the footer - now it is finally stuck to the bottom of the page
+* the button colors were aligned to indigo (instead of blue)
+* the buttons regarding registration and user handling stayed in the defined gray shade
+
+### Data Manipulation and responses to user actions
+**Bug** Implement custom JSX (HTML, JavaScript and CSS) code to create a responsive, dynamic Front-End application consisting of one or more pages with relevant responses to user actions and a set of data manipulation functions.
+
+**Bug Fix**
+I went through all user interactions, identified console errors and fixed them. My fixes inluded:
+
+* creating a new recipe edit form, for better handling of input data and sending data 
+* stepping away from a multistep form in the profile update and creating a new function form version here as well
+* fixed console errors when marking a comment as inappropriate
+* the search feature in the foodfeed is not causing an infinite loop anymore
+* sending a comment is not causing an infinite loop anymore either
+
+### Email Verification
+**Bug**
+Email verification leading the user to the backend
+
+**Bug Fix**
+This was probably my biggest win in this application. I managed to program a custom frontend url with the django all auth verification key and with that navigate the user to the frontend directly. In the frontend the verify email component is handling the verification (checking key in url with key in database) and then redirects to the confirmation page component. I am very proud of this one.
+
+### Comments
+**Bug**
+Comments not being submit effectively and all comments displaying under all recipes
+
+**Bug Fix** 
+This was fixed effectively. Comments are now sent to the database without issues, the right comments are filtered below the associated recipe and a success message is displayed 
+
+### ReadMe File
+**Bug** Not really a bug but the ReadMe File was lacking due to running out of time in previous submissions.
+
+**Bug Fix**
+I made sure of adding the following information in the ReadMe File:
+
+* my UX Design process
+* the agile methode in use
+* the reusable react component structure
+* the database structure
+* the user flow and wireframes
+* the manual testing
+* the validation
+* the deployment
+* technologies used
+
+### Favorites Route
+**Bug** 
+Favourites route was not filtering correctly.
+
+**Bug Fix**
+I sadly had to drop this issue for now. There were so many bugs in the application, and interferences with each other I had to prioritize which features to fix and which to drop for this application. The goal was a MVP that offers basic functionality.
+
+### Interactions
+**Bug**
+Write code that correctly handles user interactions such as clicks, changes to input fields etc.
+
+**Bug Fix**
+As mentioned above already I made sure that the interactions remaining are causing no issues anymore.
+
+### CRUD Functionality
+**Bug**
+CRUD functionalities on the front end work without issues and update records on the back end, with exceptions
+
+**Bug Fix**
+I eliminated the issues in the CRUD functionalities and focused on less is more for MVP and deadline reasons. CRUD works for:
+
+Recipes - create, retrieve, update, delete
+Comments - create, retrieve, delete
+Profile - create, retrieve, update
+
+### User Feedback
+**Bug**
+All changes to the data should be notified to the relevant user on the Front-End application. Implement exception-handling for user actions when communicating with the API, and relay any relevant feedback to the user on the Front-End application.
+
+**Bug Fix**
+I added user feedback to almost all functionlities, namely:
+
+* registration process
+* create recipe
+* update recipe
+* create comment
+* delete comment
+* update profile
+
+The only exception is the delete of the recipe. Because the recipe page itself is deleted, the status is not shown on the page. But there is a message asking if the user really wants to delete before deletion. Then the user is redirected to the main page.
+
+I also took a closer look at exception handling and optimized where I could.
+
+### Improve API data displayed on the Front-End 
+**Bug**
+API data is largely effectively displayed on the Front-End however implementation can be improved. (e.g not all relevant fields on a model are displayed or are editable where the option to have these displayed and to be editable would enhance the overall user experience)
+
+**Bug Fix**
+I looked extra closely at the API data and its useage on the frontend. Unnecessary data in the API was removed, functionalities on the frontend improved. The only exception is the filter set for the recipes view - the filters for the user feed and the following feed I left in the API on purpose. This will be my first fix once the application is free for me to work on.
+
+
+
+## Remaining Issues
+
+### CSS
+In some areas of the application the CSS is not perfect. In the profile page the edit profile button is not completely centrally alligned, it is slanted to the right. Also in the FoodFeed when clicking on the filter for cuisines, the filter expands beyond the height of the application causing a white space underneath the footer. The mobile view of the menu has no background so the menu items are a bit harder to read. Again, time constraints forced me to prioritize issues and since the menu in the mobile is readable just not ideal, I had to drop this for this release.
 
 ### Console Errors and Warnings
 There are three 401 errors in the console which are caused by the API returning 401 errors when the user is not logged in. This is expected behaviour and does not affect the application's functionality.
