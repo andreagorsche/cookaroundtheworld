@@ -201,7 +201,7 @@ To use and display data about the current user, profiles and recipes across the 
 
 * **Current User Context**: handling the user data and refresh tokens
 * **Profile Data Context**: handling the profile data, the follow/unfollow  
-  logic and the ordering of the profiles by updated_at - used in the application as top profiles
+  logic
 * **Recipe Data Context**: handling the recipe data
 
 Since comments are currently only used locally with the recipe page, I decided against a comment data context for now, but for potential future features it might be a feasable decision to add one.
@@ -239,8 +239,6 @@ The following components where created for this Application:
   image on various places in the application, like e.g. in the bulleting board or in the food feed.
 * **Slider**: A reuseable component to create an image slider with chosen 
   images for e.g. starting Page and welcome Page teasing the amazing content ahead
-* **TopProfiles**:reusable component to show the 6 most recent profiles in 
-  an appealing design
 * **CommentDisplay**: reusable component to display the comments associated with a certain recipe
 * **CommentForm**:  component to enter a comment and save it to the database
 * **MarkAsInappropriateButton**: component to mark a comment as inappropriate
@@ -268,7 +266,7 @@ The **login** is performed by the user with their credentials. In case their are
 * missing email verification
 * malpractice in inappropriate comments
 
-Once logged in successfully, the user is directed to a **welcome page**. There the bulletin board shows newest recipes and the top profiles component shows most recent profiles. This information is supposed to inspire the user to browse through the application and give incentives to do so.
+Once logged in successfully, the user is directed to a **welcome page**. There the bulletin board shows newest recipes. This information is supposed to inspire the user to browse through the application and give incentives to do so.
 
 Through the navigation menu the user can easily switch between welcome page, create recipe form, the food feeds and the profile page of the current user. In cases where the user lands on the own profile page or the own recipe page - editing options are given to the user. Own recipes can also be deleted. 
 
