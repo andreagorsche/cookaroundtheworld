@@ -271,6 +271,64 @@ The application works mostly with user-generated content, this includes user-gen
 
 # Technologies Used
 
+The npm list command shows the following technologies in use:
+
+cookaroundtheworld@0.1.0 /workspace/cookaroundtheworld
+├── @fortawesome/fontawesome-svg-core@6.5.1
+├── @fortawesome/free-regular-svg-icons@6.5.1
+├── @fortawesome/free-solid-svg-icons@6.5.1
+├── @fortawesome/react-fontawesome@0.2.0
+├── @testing-library/jest-dom@5.17.0
+├── @testing-library/react@11.2.7
+├── @testing-library/user-event@12.8.3
+├── axios@0.21.4
+├── bootstrap@4.6.2
+├── msw@0.35.0
+├── react-bootstrap@1.6.8
+├── react-dom@17.0.2
+├── react-infinite-scroll-component@6.1.0
+├── react-router-dom@5.3.4
+├── react-scripts@5.0.1
+├── react-select@5.8.0
+├── react@17.0.2
+└── web-vitals@1.1.2
+
+### Fontawesome
+I installed parts of the Fontawesome library to use icons where required in the application.
+
+### Testing Libraries
+I installed testing libraries like JEST to play around with. And after successful assessment I will definitely keep playing with it. That's why I keep these libraries installed.
+
+### Axios
+Obiviously for the data handling with the backend.
+
+### Bootstrap
+For responsive design of components.
+
+### MSW
+I didn't install this myself, it came with the creation of create React app. But MSW is short for Mock Service Worker, which is a library for intercepting and mocking HTTP requests made by applications during development or testing
+
+### React 17
+The main framework used for this application.
+
+## React Bootstrap
+For designing purposes and implement wireframe and UX design as planned.
+
+### React DOM
+It provides the necessary functionality to render React components into the browser DOM and interact with the DOM elements
+
+## React Select
+I used this react component in the filters component, for filtering the ingredients.
+
+## React Infinite Scroll Component
+One high priority missing feature that I also want to implement in a next step, is the infinite scroll. Thus the library is set up.
+
+## React Scripts
+Part of the Create React App tool chain, simplifies the build and development process for React applications.
+
+## Summary
+As you can see I minimize the use of additional libraries. I am aware there is a lot out there. But I did not want to show the assessors that I can use pre-programmed libraries but rather show them what I am capable of as programmer with as few libraries as possible. Also a combination of libraries also threatens the stability of an application due to interferences. Thus my choice was to keep the libraries slim.
+
 # Testing
 ## Manuel Testing
 
@@ -590,6 +648,16 @@ The generated HTML passes the W3C Markup Validator with no erros. The warnings a
 
 ### CSS Validator
 
+Initially I had 6 errors with the CSS Validator. 5 of those 6 errors I could eliminated. The other seems not to be part of the CSS files I created. I searched for the error in the whole environment but didn't find it. So for me this one error in the Validator can be ignored.
+
+
+<details><summary>HTML Validator</summary>
+     <img src="/src/assets/img_readme/Validators/CSSValidator.png">
+    <br>
+     <img src="/src/assets/img_readme/Validators/NoParseErrorFound.png">
+</details>
+
+
 ## Bug Fixes
 
 Regarding the Bug fixes I focused heavily on the not met assessment criteria and debugged accordingly.
@@ -731,7 +799,6 @@ Please follow these steps to deploy the application:
    
     After successful deployment, click on View to open your deployed app.
   
-
     If everything went well, you should see the Cook Around The World starting page.
 
 
