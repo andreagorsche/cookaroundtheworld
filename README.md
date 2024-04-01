@@ -467,7 +467,13 @@ The complete application was tested by comparing  expected result and actual res
 **Actual Result**: Works as Expected
 
 <details><summary>Mark Comment as Inappropriate</summary>
-   
+      <img src="/src/assets/img_readme/ManualTesting/34_MarkAsInappropriate.png">
+      <br>
+      <img src="/src/assets/img_readme/ManualTesting/35_MarkAsInappropriate.png">
+        <br>
+      <img src="/src/assets/img_readme/ManualTesting/36_MarkAsInappropriate.png">
+      <br>
+      <img src="/src/assets/img_readme/ManualTesting/37_MarkAsInappropriate.png">
 </details>
 
 ### Follow/Unfollow
