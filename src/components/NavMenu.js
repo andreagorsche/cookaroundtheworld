@@ -45,18 +45,6 @@ const NavMenu = () => {
       <i className="fa-solid fa-scroll"></i> Food-Feed 
     </NavLink>
     <NavLink 
-      className = {navStyles.NavLink} 
-      activeClassName = {navStyles.Active} 
-      to = "/friendsfeed">
-      <i className="fa-solid fa-thumbs-up"></i> Friends-Feed 
-    </NavLink>
-    <NavLink 
-      className = {navStyles.NavLink} 
-      activeClassName = {navStyles.Active} 
-      to = "/yourrecipes">
-      <i className="fa-solid fa-thumbs-up"></i> Your Recipes 
-    </NavLink>
-    <NavLink 
       className = {navStyles.NavLink}  
       to = "/" 
       onClick={handleSignOut}
