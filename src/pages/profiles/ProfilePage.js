@@ -4,7 +4,7 @@ import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
 import Intro from "../../components/Intro";
 import CircleRow from "../../components/CircleRow";
-import MultiStepForm from "./MultiStepForm";
+import ProfileForm from "./ProfileForm"; // Import the ProfileForm component
 import { Col, Button } from "react-bootstrap";
 import { useCurrentUser, useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import btnStyles from "../../styles/components/Button.module.css";
@@ -14,7 +14,7 @@ function ProfilePage() {
   const { setProfileData, handleFollow, handleUnfollow } = useSetProfileData();
   const { pageProfile } = useProfileData();
   const [profile, setProfile] = useState(null);
-  const [showMultiStepForm, setShowMultiStepForm] = useState(false);
+  const [showProfileForm, setShowProfileForm] = useState(false); // Rename from showMultiStepForm to showProfileForm
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
   const history = useHistory(); 
@@ -80,18 +80,14 @@ function ProfilePage() {
     fetchData();
   }, [id, setProfileData]);
 
-  const handleEditButtonClick = () => {
-    setShowMultiStepForm(true);
-  };
-
   if (isLoading) {
     return <p>Loading...</p>;
   }
 
   return (
     <>
-      {showMultiStepForm ? (
-        <MultiStepForm profile={profile} />
+      {showProfileForm ? ( // Conditionally render the ProfileForm component
+        <ProfileForm profile={profile} />
       ) : (
         <>
           <Intro
@@ -100,18 +96,18 @@ function ProfilePage() {
             secondPhrase=""
             firstParagraph={profile?.bio}
           />
+          <p>{`Favorite Cuisine: ${profile?.favorite_cuisine}`}</p>
         </>
       )}
-      <p>{`Favorite Cuisine: ${profile?.favorite_cuisine}`}</p>
       <CircleRow
         data={[profile?.recipes_count, profile?.followers_count, profile?.following_count]}
         labels={['Recipes', 'Followers', 'Following']}
       />
       <Col lg={3} className="text-lg-right">
-       {is_owner && (
+       {is_owner && !showProfileForm && ( // Conditionally render the edit button
         <Button
           className={`${btnStyles.Button} ${btnStyles.Black}`}
-          onClick={handleEditButtonClick}
+          onClick={() => setShowProfileForm(true)} // Set showProfileForm to true to show the form
         >
           Edit Profile
         </Button>

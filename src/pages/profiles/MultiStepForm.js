@@ -1,15 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { axiosReq } from '../../api/axiosDefaults';
-import { useParams } from 'react-router';
-import { useHistory } from 'react-router';
 import { useProfileData, useSetProfileData } from "../../contexts/ProfileDataContext";
+import { useHistory, useParams } from 'react-router-dom';
 
 const MultiStepForm = () => {
   const { id } = useParams();
   const CUISINE_CHOICES = [
     'american',
     'austrian',
-    'caribean',
+    'caribbean',
     'chinese',
     'french',
     'german',
@@ -24,6 +23,7 @@ const MultiStepForm = () => {
 
   const profileData = useProfileData();
   const { setProfileData } = useSetProfileData();
+  const history = useHistory();
 
   const [formData, setFormData] = useState({
     bio: profileData.pageProfile.results[0]?.bio || '',
@@ -31,12 +31,12 @@ const MultiStepForm = () => {
     favorite_cuisine: profileData.pageProfile.results[0]?.favorite_cuisine || '',
   });
 
-
   const [imageFile, setImageFile] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
+  const [editing, setEditing] = useState(true); // Initially set to true for editing mode
+
   const imageInput = useRef(null);
   const [errors, setErrors] = useState({});
-  const history = useHistory();
   const [successMessage, setSuccessMessage] = useState(null);
 
   const handleChange = (event) => {
@@ -70,8 +70,6 @@ const MultiStepForm = () => {
       }
     }
   };
-  
-  
 
   const handleNext = () => {
     setCurrentStep((prevStep) => prevStep + 1);
@@ -101,6 +99,10 @@ const MultiStepForm = () => {
             pageProfile: { results: [data] },
           }));
           setSuccessMessage('Profile successfully updated!');
+          // Redirect to update profile page after setting success message
+          history.push(`/profiles/${id}`);
+          // Set editing to false after successful submission
+          setEditing(false);
         } else {
           console.error('Unexpected response status:', response.status);
           setErrors({ image: ['Unexpected response status'] });
@@ -111,8 +113,7 @@ const MultiStepForm = () => {
       }
     }
   };
-   
-  
+
   const renderStep = () => {
     if (profileData.loading) {
       return <p>Loading...</p>;
@@ -168,27 +169,27 @@ const MultiStepForm = () => {
             <button onClick={handleNext}>Next</button>
           </div>
         );
-        case 4: // Fourth step for form submission
-          return (
-            <div>
-              <p>Review your data:</p>
-              <p>Bio: {formData.bio}</p>
-              <p>Favorite Cuisine: {formData.favorite_cuisine}</p>
-              {/* Display the uploaded image if available */}
-              {imageFile && (
-                <div>
-                  <p>Uploaded Image:</p>
-                  <img src={URL.createObjectURL(imageFile)} alt="Uploaded" style={{ maxWidth: '100%' }} />
-                </div>
-              )}
-              <button onClick={handleSubmit}>Submit</button>
-            </div>
-          );
+      case 4: // Fourth step for form submission
+        return (
+          <div>
+            <p>Review your data:</p>
+            <p>Bio: {formData.bio}</p>
+            <p>Favorite Cuisine: {formData.favorite_cuisine}</p>
+            {/* Display the uploaded image if available */}
+            {imageFile && (
+              <div>
+                <p>Uploaded Image:</p>
+                <img src={URL.createObjectURL(imageFile)} alt="Uploaded" style={{ maxWidth: '100%' }} />
+              </div>
+            )}
+            {/* Conditional rendering for edit button */}
+            {editing && <button onClick={handleSubmit}>Submit</button>}
+          </div>
+        );
       default:
         return null;
     }
   };
-  
 
   return (
     <div>
